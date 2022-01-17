@@ -1,0 +1,31 @@
+#plant-grid {
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+
+    .plant-card {
+        position: relative;
+        display: flex;
+        flex-flow: column;
+        flex: 0 1 calc(25% - 1em);
+        margin: .5em;
+        padding: 0;
+
+        span {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.75);
+            margin: .5em;
+            padding: 0 .2em;
+            right: 0;
+
+            &:first-child {
+                top: 0;
+            }
+
+            &:last-child {
+                bottom: 0;
+            }
+
+        }
+    }
+}
