@@ -1,8 +1,11 @@
 :root {
-    --background-color: #1a1a1f;
+    --white: #fff;
+    --background-color: #262626;
+    --card-background: #3c3c3c;
     --accent-color: #97c83e;
-    --button-text: #fff;
-    --navlink-color: #fff;
+    --button-text: var(--white);
+    --navlink-color: var(--white);
+    --text-color: var(--white);
 
     --font-stack:
         -apple-system,

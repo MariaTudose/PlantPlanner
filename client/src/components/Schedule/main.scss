@@ -1,0 +1,23 @@
+#schedule {
+    height: 100%;
+    max-width: 40em;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    text-align: left;
+    margin: auto;
+
+    .title {
+        font-size: large;
+        margin: 0 0 1em 0;
+    }
+
+    .schedule-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--card-background);
+        margin: 1em;
+        padding: 1em;
+        border-radius: .5em;
+    }
+}
