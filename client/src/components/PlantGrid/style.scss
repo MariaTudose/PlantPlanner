@@ -33,3 +33,16 @@
         }
     }
 }
+
+@media (max-width: 600px) {
+    #plant-grid .plant-card {
+        flex: 0 1 calc(33% - 1em);
+        font-size: small;
+    }
+}
+
+@media (max-width: 410px) {
+    #plant-grid .plant-card {
+        flex: 0 1 calc(50% - 1em)
+    }
+}
