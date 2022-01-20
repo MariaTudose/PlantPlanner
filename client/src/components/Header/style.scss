@@ -1,0 +1,22 @@
+#header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5em;
+
+    >a {
+        color: var(--navlink-color);
+        text-decoration: none;
+        text-align: center;
+        flex: 1;
+        padding: .5em;
+        border-bottom: 2px solid var(--navlink-color);
+
+        &:visited {
+            color: var(--navlink-color);
+        }
+
+        &.active {
+            border-bottom: 2px solid var(--accent-color);
+        }
+    }
+}

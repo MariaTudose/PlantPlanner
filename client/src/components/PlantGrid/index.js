@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import plantData from '../vera-export/data.json';
+import plantData from '../../vera-export/data.json';
 
 const schedules = plantData
     .find(obj => obj.collectionName === 'schedules')
@@ -21,8 +21,8 @@ const PlantGrid = ({ plants = allPlants }) => {
                         className="plant-pic"
                         src={
                             plant.pictures.length
-                                ? require(`../vera-export/images/${plant.pictures[0]}.jpg`)
-                                : require('../vera-export/images/placeholder.png')
+                                ? require(`../../vera-export/images/${plant.pictures[0]}.jpg`)
+                                : require('../../vera-export/images/placeholder.png')
                         }
                         alt={plant.name}
                     ></img>

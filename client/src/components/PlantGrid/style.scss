@@ -11,6 +11,10 @@
         margin: .5em;
         padding: 0;
 
+        &:focus {
+            outline: 2px solid var(--accent-color);
+        }
+
         span {
             position: absolute;
             background: rgba(0, 0, 0, 0.75);
