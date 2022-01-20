@@ -1,51 +1,36 @@
 import React from 'react';
 import './main.scss';
-import plantData from '../../vera-export/data.json';
 import PlantGrid from '../PlantGrid';
 
-const calculateTimeDiff = seconds => Math.round((seconds - Date.now() / 1000) / (3600 * 24));
-
-const schedules = plantData
-    .find(obj => obj.collectionName === 'schedules')
-    .docs.map(schedule => ({ id: schedule.id, interval: schedule.daysInterval }));
-
-const plants = plantData
-    .find(obj => obj.collectionName === 'plants')
-    .docs.filter(plant => !plant.isDeleted)
-    .map(plant => ({
-        ...plant,
-        interval: schedules.find(schedule => schedule.id === plant.scheduleId).interval,
-        watering: calculateTimeDiff(plant.nextWateringDate._seconds),
-    }));
-
-const groupedPlants = plants.reduce(
-    (res, plant) => ({
-        ...res,
-        [plant.watering]: [...(res[plant.watering] || []), plant],
-    }),
-    {}
-);
-
-const ScheduleCard = ({ days }) => {
-    let title = `In ${days} days`;
-    if (days === '0') title = 'Today';
-    else if (days < '0') title = `${Math.abs(days)} days overdue`;
+const ScheduleCard = ({ day, plants }) => {
+    const dayForm = day < -1 || day > 1 ? 'days' : 'day';
+    let title = `In ${day} ${dayForm}`;
+    if (day === '0') title = 'Today';
+    else if (day < '0') title = `${Math.abs(day)} ${dayForm} overdue`;
 
     return (
-        <div key={days} className="schedule-card">
+        <div className="schedule-card">
             <p className="title">{title}</p>
-            <PlantGrid plants={groupedPlants[days]} />
+            <PlantGrid plants={plants} />
         </div>
     );
 };
 
-const Schedule = () => {
+const Schedule = ({ plants }) => {
+    const groupedPlants = plants.reduce(
+        (res, plant) => ({
+            ...res,
+            [plant.watering]: [...(res[plant.watering] || []), plant],
+        }),
+        {}
+    );
+
     return (
         <div id="schedule">
-            {Object.keys(groupedPlants)
-                .sort((a, b) => a - b)
-                .map(days => (
-                    <ScheduleCard days={days} />
+            {Object.entries(groupedPlants)
+                .sort((a, b) => a[0] - b[0])
+                .map(([day, plants]) => (
+                    <ScheduleCard key={day} day={day} plants={plants} />
                 ))}
         </div>
     );
