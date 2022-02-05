@@ -1,0 +1,110 @@
+#calendar {
+    display: flex;
+
+    .calendar {
+        flex: 1;
+    }
+
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        margin: .5em 0;
+
+        .date {
+            display: block;
+
+            button {
+                width: 1.5em;
+                border-radius: 50%;
+            }
+        }
+
+        button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            height: 1.5em;
+            margin: .5em;
+            text-align: center;
+            text-decoration: none;
+            background: #97c83e;
+            color: #ffffff;
+            cursor: pointer;
+            outline: none;
+        }
+    }
+
+
+    .month {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: auto;
+
+        .today {
+            border: 1px solid rgb(36, 132, 196);
+        }
+
+        >div {
+            padding: .5rem;
+            text-align: left;
+            border: .5px solid gray;
+
+            >button:hover {
+                background-color: var(--card-background);
+            }
+        }
+
+        .interval {
+            background: #97c83e;
+        }
+
+        button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            margin: 0 .3em .3em 0;
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 50%;
+            text-align: center;
+            text-decoration: none;
+            color: #ffffff;
+            cursor: pointer;
+            outline: none;
+        }
+    }
+
+    .aside {
+        max-height: 40em;
+        max-width: 30em;
+        min-width: 20em;
+        margin: 0 .5em;
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+
+        .calendar-header {
+            align-self: flex-end;
+        }
+
+        #plant-grid {
+            align-content: flex-start;
+            overflow-y: auto;
+        }
+
+        .plant-card {
+            flex: 0 1 calc(33% - 1em);
+            font-size: small;
+        }
+    }
+
+}
+
+@media (max-width: 820px) {
+    #calendar {
+        flex-direction: column;
+    }
+}

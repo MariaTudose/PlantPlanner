@@ -56,6 +56,10 @@ select {
 
 button {
     color: var(--button-text);
+
+    &:hover {
+        filter: brightness(.9);
+    }
 }
 
 #root,

@@ -1,6 +1,7 @@
 import React from 'react';
-import './main.scss';
 import PlantGrid from '../PlantGrid';
+
+import './style.scss';
 
 const ScheduleCard = ({ day, plants }) => {
     const dayForm = day < -1 || day > 1 ? 'days' : 'day';
@@ -20,7 +21,7 @@ const Schedule = ({ plants }) => {
     const groupedPlants = plants.reduce(
         (res, plant) => ({
             ...res,
-            [plant.watering]: [...(res[plant.watering] || []), plant],
+            [plant.wateringDiff]: [...(res[plant.wateringDiff] || []), plant],
         }),
         {}
     );

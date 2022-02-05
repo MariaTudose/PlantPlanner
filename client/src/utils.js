@@ -12,5 +12,6 @@ export const allPlants = plantData
     .map(plant => ({
         ...plant,
         interval: schedules.find(schedule => schedule.id === plant.scheduleId).interval,
-        watering: calculateTimeDiff(plant.nextWateringDate._seconds),
+        wateringDiff: calculateTimeDiff(plant.nextWateringDate._seconds),
+        wateringDay: new Date(plant.nextWateringDate._seconds * 1000),
     }));
