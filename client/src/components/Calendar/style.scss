@@ -40,8 +40,12 @@
         grid-template-columns: repeat(7, 1fr);
         grid-template-rows: auto;
 
-        .today {
+        .selected {
             background-color: var(--card-background);
+        }
+
+        .other-month {
+            color: gray
         }
 
         >div {
