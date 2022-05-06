@@ -18,13 +18,15 @@ const ScheduleCard = ({ day, plants }) => {
 };
 
 const Schedule = ({ plants }) => {
-    const groupedPlants = plants.reduce(
-        (res, plant) => ({
-            ...res,
-            [plant.wateringDiff]: [...(res[plant.wateringDiff] || []), plant],
-        }),
-        {}
-    );
+    const groupedPlants = plants
+        .filter(plant => plant.wateringDiff !== null)
+        .reduce(
+            (res, plant) => ({
+                ...res,
+                [plant.wateringDiff]: [...(res[plant.wateringDiff] || []), plant],
+            }),
+            {}
+        );
 
     return (
         <div id="schedule">
