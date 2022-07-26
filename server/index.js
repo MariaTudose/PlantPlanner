@@ -14,10 +14,18 @@ mongoose.connect(url);
 app.use(cors());
 app.use(middleware.requestLogger);
 
+app.use(express.static('public'));
+
 app.get('/api/plants', (req, res) => {
-    Plant.find({ isDeleted: false }).then(plants => {
-        res.json(plants);
-    });
+    const plants = middleware.allPlants.map(plant => ({ ...plant, id: plant._id }));
+    res.send(plants);
+    /* MONGODB
+    Plant.find({ isDeleted: false })
+        .populate('scheduleId')
+        .then(plants => {
+            res.json(plants);
+        });
+    */
 });
 
 app.listen(PORT, () => {
