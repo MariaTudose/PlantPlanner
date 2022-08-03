@@ -6,7 +6,7 @@ export const getLastWeekday = date => (new Date(date.getFullYear(), date.getMont
 export const getDaysInMonth = date => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
 export const plantsToday = (plants, selectedDate) =>
-    plants.filter(plant => new Date(plant.wateringDay).toDateString() === selectedDate.toDateString());
+    plants.filter(plant => new Date(plant.nextWateringDate).toDateString() === selectedDate.toDateString());
 
 export const getIntervals = (plants, date) =>
     plantsToday(plants, date)

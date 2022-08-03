@@ -13,5 +13,4 @@ export const allPlants = plantData
         ...plant,
         interval: schedules.find(schedule => schedule.id === plant.scheduleId)?.interval || 0,
         wateringDiff: plant.nextWateringDate ? calculateTimeDiff(plant.nextWateringDate) : null,
-        wateringDay: new Date(plant.nextWateringDate),
     }));

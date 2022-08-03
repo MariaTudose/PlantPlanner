@@ -25,11 +25,11 @@ const allPlants = data
         ...plant,
         interval: schedules.find(schedule => schedule.id === plant.scheduleId)?.interval || 0,
         wateringDiff: plant.nextWateringDate ? calculateTimeDiff(plant.nextWateringDate) : null,
-        wateringDay: new Date(plant.nextWateringDate),
     }));
 
 module.exports = {
     requestLogger,
     unknownEndpoint,
     allPlants,
+    calculateTimeDiff,
 };
