@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
+const Schedule = require('./schedule');
 
 const plantSchema = new mongoose.Schema({
+    _id: String,
     updatedAt: Object,
-    lastWaterignDate: Object,
+    lastWateringDate: Object,
     nextFertilizingDate: Object,
-    scheduleId: String,
+    lastFertilizingDate: Object,
+    nextMistingDate: Object,
+    scheduleId: { type: String, ref: Schedule },
     createdBy: String,
     notes: String,
     isDeleted: Boolean,
     location: String,
-    acquisitionDate: Date,
+    acquisitionDate: String,
     createdAt: Object,
     name: String,
     pictures: Array,
@@ -21,7 +25,6 @@ plantSchema.set('toJSON', {
     transform: (_, plant) => {
         plant.id = plant._id;
         delete plant._id;
-        delete plant.__v;
     },
 });
 
