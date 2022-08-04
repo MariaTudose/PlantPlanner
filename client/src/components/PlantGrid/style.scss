@@ -8,12 +8,12 @@
         display: flex;
         flex-flow: column;
         flex: 0 1 calc(25% - 1em);
-        border-radius: 25%;
+        border-radius: 2rem;
         margin: .5em;
         padding: 0;
 
-        > img {
-            border-radius: 25%;
+        >img {
+            border-radius: inherit;
         }
 
         &:focus {
