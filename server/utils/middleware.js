@@ -12,7 +12,22 @@ const unknownEndpoint = (_, response) => {
 
 const data = require('../build/formattedData.json');
 
-const calculateTimeDiff = seconds => Math.round((new Date(seconds) - Date.now()) / (1000 * 3600 * 24));
+const calculateTimeDiff = (first, second = Date.now()) =>
+    Math.round((new Date(first) - new Date(second)) / (1000 * 3600 * 24));
+
+const actions = data.find(obj => obj.collectionName === 'actions').docs.filter(item => item.action === 'water');
+
+const getPrevIntervals = plant => {
+    const intervals = [];
+    let dates = actions.filter(action => action.plantId === plant._id).map(action => action.date);
+    if (dates.length) {
+        dates.sort().reduce((a, b) => {
+            intervals.push(calculateTimeDiff(b, a));
+            return b;
+        });
+    }
+    return intervals.reverse();
+};
 
 const schedules = data
     .find(obj => obj.collectionName === 'schedules')
@@ -25,6 +40,7 @@ const allPlants = data
         ...plant,
         interval: schedules.find(schedule => schedule.id === plant.scheduleId)?.interval || 0,
         wateringDiff: plant.nextWateringDate ? calculateTimeDiff(plant.nextWateringDate) : null,
+        prevIntervals: getPrevIntervals(plant),
     }));
 
 module.exports = {
