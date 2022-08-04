@@ -7,19 +7,30 @@
     left: 0;
     opacity: 0;
     z-index: 999;
-    background-color: rgba(0, 0, 0, .5);
     transition: all .1s;
 
     &.visible {
         visibility: visible;
         opacity: 1;
+        transform: scale(1);
 
         .modal-content {
             transform: scale(1);
         }
     }
 
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, .3);
+        backdrop-filter: blur(2px);
+    }
+
     .modal-content {
+        position: relative;
         background-color: var(--card-background);
         border-radius: 4rem;
         width: 35em;
