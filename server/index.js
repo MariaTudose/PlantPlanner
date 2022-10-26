@@ -15,17 +15,25 @@ app.use(cors());
 app.use(middleware.requestLogger);
 
 app.use(express.static('public'));
+app.use(express.json());
 
 app.get('/api/plants', (req, res) => {
-    const plants = middleware.allPlants.map(plant => ({ ...plant, id: plant._id }));
-    res.send(plants);
-    /* MONGODB
+    //const plants = middleware.allPlants.map(plant => ({ ...plant, id: plant._id }));
+    //res.send(plants);
     Plant.find({ isDeleted: false })
         .populate('scheduleId')
         .then(plants => {
             res.json(plants);
         });
-    */
+});
+
+app.put('/api/plants/:id', (req, res, next) => {
+    Plant.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .then(updatedPlant => {
+            //console.log('updatedplant', updatedPlant);
+            res.json(updatedPlant);
+        })
+        .catch(error => next(error));
 });
 
 app.listen(PORT, () => {

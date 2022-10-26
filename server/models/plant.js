@@ -9,6 +9,7 @@ const plantSchema = new mongoose.Schema({
     lastFertilizingDate: Object,
     nextMistingDate: Object,
     scheduleId: { type: String, ref: Schedule },
+    interval: Number,
     createdBy: String,
     notes: String,
     isDeleted: Boolean,
@@ -24,6 +25,7 @@ const plantSchema = new mongoose.Schema({
 plantSchema.set('toJSON', {
     transform: (_, plant) => {
         plant.id = plant._id;
+        plant.interval = plant.scheduleId.daysInterval;
         delete plant._id;
     },
 });
