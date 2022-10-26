@@ -10,7 +10,7 @@ const unknownEndpoint = (_, response) => {
     response.status(404).send({ error: 'unknown endpoint' });
 };
 
-const data = require('../build/formattedData.json');
+/*const data = require('../build/formattedData.json');
 
 const calculateTimeDiff = (first, second = Date.now()) =>
     Math.round((new Date(first) - new Date(second)) / (1000 * 3600 * 24));
@@ -41,11 +41,11 @@ const allPlants = data
         interval: schedules.find(schedule => schedule.id === plant.scheduleId)?.interval || 0,
         wateringDiff: plant.nextWateringDate ? calculateTimeDiff(plant.nextWateringDate) : null,
         prevIntervals: getPrevIntervals(plant),
-    }));
+    }));*/
 
 module.exports = {
     requestLogger,
     unknownEndpoint,
-    allPlants,
-    calculateTimeDiff,
+    //allPlants,
+    //calculateTimeDiff,
 };
