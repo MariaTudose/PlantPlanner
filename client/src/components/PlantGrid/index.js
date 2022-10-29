@@ -41,20 +41,27 @@ const PlantGrid = ({ plants }) => {
     return (
         <div id="plant-grid">
             <PlantModal plant={selectedPlant} visibility={visibility} closeModal={() => setVisibility(false)} />
-            {plants.map(plant => (
-                <button
-                    key={plant.id}
-                    className="plant-card"
-                    onClick={() => {
-                        setSelectedPlant(plant);
-                        setVisibility(true);
-                    }}
-                >
-                    <span>{plant.interval}</span>
-                    <img className="plant-pic" src={getPhotoSrc(plant)} onError={setPlaceholder} alt={plant.name}></img>
-                    <span>{plant.name}</span>
-                </button>
-            ))}
+            {plants
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(plant => (
+                    <button
+                        key={plant.id}
+                        className="plant-card"
+                        onClick={() => {
+                            setSelectedPlant(plant);
+                            setVisibility(true);
+                        }}
+                    >
+                        <span>{plant.interval}</span>
+                        <img
+                            className="plant-pic"
+                            src={getPhotoSrc(plant)}
+                            onError={setPlaceholder}
+                            alt={plant.name}
+                        ></img>
+                        <span>{plant.name}</span>
+                    </button>
+                ))}
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { calculateTimeDiff } from '../../utils';
 import PlantGrid from '../PlantGrid';
 
 import './style.scss';
@@ -19,6 +20,10 @@ const ScheduleCard = ({ day, plants }) => {
 
 const Schedule = ({ plants }) => {
     const groupedPlants = plants
+        .map(plant => ({
+            ...plant,
+            wateringDiff: plant.nextWateringDate ? calculateTimeDiff(plant.nextWateringDate) : null,
+        }))
         .filter(plant => plant.wateringDiff !== null)
         .reduce(
             (res, plant) => ({

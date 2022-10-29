@@ -1,6 +1,6 @@
 import plantData from './vera-export/formattedData.json';
 
-const calculateTimeDiff = seconds => Math.round((new Date(seconds) - Date.now()) / (1000 * 3600 * 24));
+export const calculateTimeDiff = seconds => Math.round((new Date(seconds) - Date.now()) / (1000 * 3600 * 24));
 
 const schedules = plantData
     .find(obj => obj.collectionName === 'schedules')

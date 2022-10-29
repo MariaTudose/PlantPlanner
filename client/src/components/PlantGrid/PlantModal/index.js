@@ -18,8 +18,10 @@ const PlantModal = ({ plant, visibility, closeModal }) => (
                     <h1>{plant.name}</h1>
                     <p>{plant.userEnteredPlantType}</p>
                     <p>Interval: {plant.interval} days</p>
+                        {/*
                     <p>Calculated interval: {weightedAvg(plant.prevIntervals).toFixed(1)} days</p>
                     <p>Prev intervals: {plant.prevIntervals.slice(0, 10).join(', ')}</p>
+                        */}
                     <p>Next Watering date: {plant.nextWateringDate}</p>
                 </div>
                 <div className="plant-actions">
