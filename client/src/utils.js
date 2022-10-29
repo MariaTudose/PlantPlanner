@@ -1,8 +1,8 @@
-import plantData from './vera-export/formattedData.json';
+//import plantData from './vera-export/formattedData.json';
 
 export const calculateTimeDiff = seconds => Math.round((new Date(seconds) - Date.now()) / (1000 * 3600 * 24));
 
-const schedules = plantData
+/*const schedules = plantData
     .find(obj => obj.collectionName === 'schedules')
     .docs.map(schedule => ({ id: schedule._id, interval: schedule.daysInterval }));
 
@@ -13,4 +13,4 @@ export const allPlants = plantData
         ...plant,
         interval: schedules.find(schedule => schedule.id === plant.scheduleId)?.interval || 0,
         wateringDiff: plant.nextWateringDate ? calculateTimeDiff(plant.nextWateringDate) : null,
-    }));
+    }));*/
