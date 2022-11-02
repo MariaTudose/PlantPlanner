@@ -11,7 +11,8 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 clientsClaim();
 
@@ -46,27 +47,54 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
-// An example runtime caching route for requests that aren't handled by the
-// precache, in this case same-origin .png requests like those from in public/
-registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: 'images',
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  })
-);
-
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
-self.addEventListener('message', (event) => {
+self.addEventListener('message', event => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
 
-// Any other custom service worker logic can go here.
+// Cache CSS, JS, and Web Worker requests with a Stale While Revalidate strategy
+registerRoute(
+  ({ request }) =>
+    request.destination === 'style' || request.destination === 'script' || request.destination === 'worker',
+  new StaleWhileRevalidate({
+    cacheName: 'assets',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [200],
+      }),
+    ],
+  })
+);
+
+// Cache images with a Cache First strategy
+registerRoute(
+  ({ request, url }) => request.destination === 'image' || url.pathname.endsWith('.jpg'),
+  new CacheFirst({
+    cacheName: 'images',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [200],
+      }),
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+      }),
+    ],
+  })
+);
+
+// Cache plant data
+registerRoute(
+  ({ url }) => url.pathname.startsWith('/api/plants'),
+  new StaleWhileRevalidate({
+    cacheName: 'plants',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [200],
+      }),
+    ],
+  })
+);
