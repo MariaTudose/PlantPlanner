@@ -47,6 +47,19 @@ registerRoute(
   createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
+registerRoute(
+  ({ request, url }) => request.destination === 'image' || url.pathname.endsWith('.jpg'),
+  new StaleWhileRevalidate({
+    cacheName: 'images',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+      }),
+    ],
+  })
+);
+
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', event => {
@@ -64,23 +77,6 @@ registerRoute(
     plugins: [
       new CacheableResponsePlugin({
         statuses: [200],
-      }),
-    ],
-  })
-);
-
-// Cache images with a Cache First strategy
-registerRoute(
-  ({ request, url }) => request.destination === 'image' || url.pathname.endsWith('.jpg'),
-  new CacheFirst({
-    cacheName: 'images',
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [200],
-      }),
-      new ExpirationPlugin({
-        maxEntries: 50,
-        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
       }),
     ],
   })
