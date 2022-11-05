@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PlantModal from './PlantModal';
 import { getPhotoSrc, setPlaceholder } from './utils';
+import { ReactComponent as Done } from '../../static/done.svg';
 
 import './style.scss';
 
-const PlantGrid = ({ plants }) => {
+const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
     const [selectedPlant, setSelectedPlant] = useState(null);
     const [visibility, setVisibility] = useState(false);
 
@@ -38,30 +39,46 @@ const PlantGrid = ({ plants }) => {
         };
     }, [selectedPlant, handleKeyDown]);
 
+    const groupedPlants = plants.reduce(
+        (res, plant) => ({
+            ...res,
+            [plant.location]: [...(res[plant.location] || []), plant],
+        }),
+        {}
+    );
+
     return (
         <div id="plant-grid">
             <PlantModal plant={selectedPlant} visibility={visibility} closeModal={() => setVisibility(false)} />
-            {plants
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map(plant => (
-                    <button
-                        key={plant.id}
-                        className="plant-card"
-                        onClick={() => {
-                            setSelectedPlant(plant);
-                            setVisibility(true);
-                        }}
-                    >
-                        <span>{plant.interval}</span>
-                        <img
-                            className="plant-pic"
-                            src={getPhotoSrc(plant)}
-                            onError={setPlaceholder}
-                            alt={plant.name}
-                        ></img>
-                        <span>{plant.name}</span>
-                    </button>
-                ))}
+            {Object.entries(groupedPlants).map(([location, plants]) => (
+                <React.Fragment key={location}>
+                    <div className="location">{location}</div>
+                    {plants
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map(plant => (
+                            <button
+                                key={plant.id}
+                                className={`plant-card 
+                                ${selectPlant ? 'select-mode' : ''} 
+                                ${selectPlant && selectedPlants.includes(plant) ? 'selected' : ''}`}
+                                onClick={() => {
+                                    setSelectedPlant(plant);
+                                    selectPlant ? selectPlant(plant) : setVisibility(true);
+                                }}
+                            >
+                                <Done />
+                                <span>{plant.interval}</span>
+                                <img
+                                    className="plant-pic"
+                                    src={getPhotoSrc(plant)}
+                                    onError={setPlaceholder}
+                                    alt={plant.name}
+                                ></img>
+                                <span>{plant.name}</span>
+                            </button>
+                        ))}
+                </React.Fragment>
+            ))}
         </div>
     );
 };

@@ -7,9 +7,33 @@
     text-align: left;
     margin: auto;
 
-    .title {
-        font-size: large;
-        margin: 0 0 1em 0;
+    .card-header {
+        display: flex;
+        align-items: center;
+        margin: 0 .5rem;
+
+        .select-button {
+            border: 1px solid var(--accent-color);
+            border-radius: .5rem;
+            padding: .2rem .5rem;
+            margin-right: 1rem;
+        }
+
+        .water-button {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+
+            &.watering {
+                background-color: var(--accent-color);
+            }
+
+        }
+
+        .title {
+            flex: 1;
+            font-size: large;
+        }
     }
 
     .schedule-card {
@@ -19,5 +43,43 @@
         margin: 1em;
         padding: 1em;
         border-radius: .5em;
+    }
+
+    .action-popup {
+        visibility: hidden;
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
+        z-index: 999;
+        transform: translateY(100px);
+        transition: all .2s;
+        pointer-events: none;
+
+        .action-content {
+            display: flex;
+            width: max-content;
+            font-size: x-large;
+            background: var(--background-color);
+            border-radius: 1rem;
+            margin: 3rem auto;
+            padding: .5rem;
+            pointer-events: auto;
+        }
+
+        button {
+            background: var(--accent-color);
+            border-radius: 2rem;
+            margin: .5rem;
+            width: 5rem;
+        }
+
+        &.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0px);
+
+        }
     }
 }

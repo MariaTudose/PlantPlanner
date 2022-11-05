@@ -11,7 +11,7 @@
         justify-content: space-between;
         align-content: center;
         margin: .5em 0;
-        
+
         .date {
             display: flex;
             justify-content: space-between;
@@ -27,9 +27,8 @@
             margin: .5em;
             text-align: center;
             text-decoration: none;
-            background: #97c83e;
-            color: #ffffff;
-            cursor: pointer;
+            background: var(--accent-color);
+            color: var(--white);
             outline: none;
         }
     }
@@ -59,7 +58,7 @@
         }
 
         .interval {
-            background: #97c83e;
+            background: var(--accent-color);
         }
 
         button {
@@ -73,8 +72,7 @@
             border-radius: 50%;
             text-align: center;
             text-decoration: none;
-            color: #ffffff;
-            cursor: pointer;
+            color: var(--white);
             outline: none;
         }
     }

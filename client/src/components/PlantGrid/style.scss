@@ -3,6 +3,13 @@
     display: flex;
     flex-flow: row wrap;
 
+    .location {
+        width: 100%;
+        margin: .5rem;
+        padding: .2rem;
+        border-bottom: 1px solid white;
+    }
+
     .plant-card {
         position: relative;
         display: flex;
@@ -11,13 +18,35 @@
         border-radius: 2rem;
         margin: .5em;
         padding: 0;
+        cursor: pointer;
 
         >img {
             border-radius: inherit;
         }
 
-        &:focus {
+        &.select-mode {
+            svg {
+                display: block;
+            }
+        }
+
+        &.selected {
+            filter: brightness(90%);
+            outline: none;
+            box-shadow: none;
             outline: 2px solid var(--accent-color);
+
+            svg {
+                background: var(--accent-color);
+            }
+        }
+
+        svg {
+            display: none;
+            border-radius: 50%;
+            position: absolute;
+            left: .5rem;
+            top: .5rem;
         }
 
         span {

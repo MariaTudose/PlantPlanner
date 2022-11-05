@@ -7,3 +7,9 @@ export const getAllPlants = () => {
 
     return request.then(response => response.data).catch(e => console.log('error: ', e));
 };
+
+export const updatePlant = (id, plant) => {
+    const request = axios.put(`${baseUrl}/${id}`, plant);
+
+    return request.then(response => response.data).catch(e => console.log('error: ', e));
+};
