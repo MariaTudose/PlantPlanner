@@ -13,3 +13,9 @@ export const updatePlant = (id, plant) => {
 
     return request.then(response => response.data).catch(e => console.log('error: ', e));
 };
+
+export const updatePlants = plants => {
+    const request = axios.put(baseUrl, plants);
+
+    return request.then(response => response.data).catch(e => console.log('error: ', e));
+};

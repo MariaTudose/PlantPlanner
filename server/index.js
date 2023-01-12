@@ -36,6 +36,26 @@ app.put('/api/plants/:id', (req, res, next) => {
         .catch(error => next(error));
 });
 
+app.put('/api/plants', (req, res, next) => {
+    const bulkOps = req.body.map(plant => ({
+        updateOne: {
+            filter: {
+                _id: plant.id,
+            },
+            update: {
+                nextWateringDate: plant.nextWateringDate,
+            },
+        },
+    }));
+
+    Plant.bulkWrite(bulkOps)
+        .then(updatedPlants => {
+            res.json(updatedPlants);
+        })
+        .catch(error => next(error));
+});
+
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
