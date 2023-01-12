@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
-import PlantGrid from '../PlantGrid';
+import React, { useContext, useState } from 'react';
+import { add, parseISO } from 'date-fns';
+
 import { ReactComponent as Drink } from '../../static/drink.svg';
-import { getAllPlants, updatePlant } from '../../services/plants';
-import { differenceInCalendarDays, format, parseISO } from 'date-fns';
+import { getAllPlants, updatePlant, updatePlants } from '../../services/plants';
+import { createActions } from '../../services/actions';
+
+import { PlantContext } from '../App';
+import PlantGrid from '../PlantGrid';
+
+import { groupPlants } from './utils';
 
 import './style.scss';
 
@@ -83,29 +89,15 @@ const ScheduleCard = ({ day, plants }) => {
     );
 };
 
-const Schedule = ({ plants }) => {
-    const groupedPlants = plants
-        .map(plant => ({
-            ...plant,
-            wateringDiff: plant.nextWateringDate
-                ? differenceInCalendarDays(parseISO(plant.nextWateringDate), Date.now())
-                : null,
-        }))
-        .filter(plant => plant.wateringDiff !== null)
-        .reduce(
-            (res, plant) => ({
-                ...res,
-                [plant.wateringDiff]: [...(res[plant.wateringDiff] || []), plant],
-            }),
-            {}
-        );
+const Schedule = () => {
+    const { plants } = useContext(PlantContext);
 
     return (
         <div id="schedule">
-            {Object.entries(groupedPlants)
+            {Object.entries(groupPlants(plants))
                 .sort((a, b) => a[0] - b[0])
-                .map(([day, plants]) => (
-                    <ScheduleCard key={day} day={day} plants={plants} />
+                .map(([day, plantsByDay]) => (
+                    <ScheduleCard key={day} day={day} plants={plantsByDay} />
                 ))}
         </div>
     );
