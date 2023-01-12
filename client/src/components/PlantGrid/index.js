@@ -8,15 +8,18 @@ import './style.scss';
 const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
     const [selectedPlant, setSelectedPlant] = useState(null);
     const [visibility, setVisibility] = useState(false);
+    const sortedPlants = plants.sort((a, b) =>
+        a.location === b.location ? a.name.localeCompare(b.name) : a.location.localeCompare(b.location)
+    );
 
     const scrollPlant = useCallback(
         i => {
-            const n = plants.length;
-            const iCur = plants.indexOf(selectedPlant) + i;
+            const n = sortedPlants.length;
+            const iCur = sortedPlants.indexOf(selectedPlant) + i;
             const iNext = ((iCur % n) + n) % n;
-            setSelectedPlant(plants[iNext]);
+            setSelectedPlant(sortedPlants[iNext]);
         },
-        [plants, selectedPlant]
+        [sortedPlants, selectedPlant]
     );
 
     const handleKeyDown = useCallback(
@@ -39,7 +42,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
         };
     }, [selectedPlant, handleKeyDown]);
 
-    const groupedPlants = plants.reduce(
+    const groupedPlants = sortedPlants.reduce(
         (res, plant) => ({
             ...res,
             [plant.location]: [...(res[plant.location] || []), plant],
