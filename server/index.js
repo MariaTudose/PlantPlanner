@@ -76,3 +76,4 @@ app.listen(PORT, () => {
 });
 
 app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);

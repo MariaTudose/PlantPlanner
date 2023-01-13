@@ -10,6 +10,16 @@ const unknownEndpoint = (_, response) => {
     response.status(404).send({ error: 'unknown endpoint' });
 };
 
+const errorHandler = (error, _, response, next) => {
+    console.error(error.message);
+
+    if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message });
+    }
+
+    next(error);
+};
+
 /*const data = require('../build/formattedData.json');
 
 const calculateTimeDiff = (first, second = Date.now()) =>
@@ -46,6 +56,7 @@ const allPlants = data
 module.exports = {
     requestLogger,
     unknownEndpoint,
+    errorHandler,
     //allPlants,
     //calculateTimeDiff,
 };
