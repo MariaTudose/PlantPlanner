@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const actionSchema = new mongoose.Schema({
     _id: String,
-    createdAt: String,
     plantId: String, //{ type: String, ref: 'Plant' },
     action: String,
     date: String,

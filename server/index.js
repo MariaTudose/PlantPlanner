@@ -3,6 +3,7 @@ const cors = require('cors');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const Plant = require('./models/plant');
+const Action = require('./models/action');
 const middleware = require('./utils/middleware');
 
 const app = express();
@@ -55,6 +56,20 @@ app.put('/api/plants', (req, res, next) => {
         .catch(error => next(error));
 });
 
+app.get('/api/actions/:plantId', (req, res, next) => {
+    Action.find({ plantId: req.params.plantId, action: 'water' })
+        .then(actions => res.json(actions))
+        .catch(error => next(error));
+});
+
+app.post('/api/actions', (req, res, next) => {
+    // TODO: update plant dates
+    Action.insertMany(req.body)
+        .then(actions => {
+            res.json(actions);
+        })
+        .catch(error => next(error));
+});
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
