@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { add } from 'date-fns';
+import { add, parseISO } from 'date-fns';
 
 import { ReactComponent as Drink } from '../../static/drink.svg';
 import { ReactComponent as Drop } from '../../static/drop.svg';
@@ -32,13 +32,12 @@ const ActionPopup = ({ visible, selectedPlants }) => {
         });
     };
 
-    // Always move watering date in relation to today
+    // Always move watering date in relation to next watering date unless watering is overdue
     const moveWatering = i => {
-        const currentDate = new Date();
         const plantBody = selectedPlants.map(plant => ({
             id: plant.id,
             lastWateringDate: plant.lastWateringDate,
-            nextWateringDate: add(currentDate, { days: i }),
+            nextWateringDate: i === 0 ? new Date() : add(parseISO(plant.nextWateringDate), { days: i }),
         }));
         updatePlants(plantBody).then(updatedPlants => {
             setPlants(updatedPlants);
@@ -62,8 +61,7 @@ const ActionPopup = ({ visible, selectedPlants }) => {
     );
 };
 
-const ScheduleCard = ({ day, plants }) => {
-    const [waterMode, setWaterMode] = useState(false);
+const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
     const [selectedPlants, setSelectedPlants] = useState([]);
 
     const dayForm = day < -1 || day > 1 ? 'days' : 'day';
@@ -82,38 +80,49 @@ const ScheduleCard = ({ day, plants }) => {
     };
 
     const toggleWaterMode = () => {
-        if (waterMode) setSelectedPlants([]);
-        setWaterMode(!waterMode);
+        if (selectedDay === day) setSelectedDay(null);
+        else setSelectedDay(day);
     };
 
     return (
         <div className="schedule-card">
             <div className="card-header">
                 <span className="title">{title}</span>
-                {waterMode && (
+                {selectedDay === day && (
                     <button onClick={toggleAllPlants} className="select-button">
                         Select all
                     </button>
                 )}
-                <button onClick={toggleWaterMode} className={`water-button ${waterMode ? 'watering' : ''}`}>
+                <button onClick={toggleWaterMode} className={`water-button ${selectedDay === day ? 'watering' : ''}`}>
                     <Drink />
                 </button>
             </div>
-            <PlantGrid plants={plants} selectPlant={waterMode ? selectPlant : null} selectedPlants={selectedPlants} />
-            <ActionPopup visible={waterMode} selectedPlants={selectedPlants} />
+            <PlantGrid
+                plants={plants}
+                selectPlant={selectedDay === day ? selectPlant : null}
+                selectedPlants={selectedPlants}
+            />
+            <ActionPopup visible={selectedDay === day} selectedPlants={selectedPlants} />
         </div>
     );
 };
 
 const Schedule = () => {
     const { plants } = useContext(PlantContext);
+    const [selectedDay, setSelectedDay] = useState(null);
 
     return (
         <div id="schedule">
             {Object.entries(groupPlants(plants))
                 .sort((a, b) => a[0] - b[0])
                 .map(([day, plantsByDay]) => (
-                    <ScheduleCard key={day} day={day} plants={plantsByDay} />
+                    <ScheduleCard
+                        key={day}
+                        day={day}
+                        plants={plantsByDay}
+                        selectedDay={selectedDay}
+                        setSelectedDay={setSelectedDay}
+                    />
                 ))}
         </div>
     );
