@@ -43,6 +43,10 @@
         margin: 1em;
         padding: 1em;
         border-radius: .5em;
+
+        .plant-card {
+            flex: 0 1 calc(25% - 1em);
+        }
     }
 
     .action-popup {

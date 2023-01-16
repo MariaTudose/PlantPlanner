@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { add, parseISO } from 'date-fns';
+import { add } from 'date-fns';
 
 import { ReactComponent as Drink } from '../../static/drink.svg';
-import { getAllPlants, updatePlant, updatePlants } from '../../services/plants';
+import { updatePlants } from '../../services/plants';
 import { createActions } from '../../services/actions';
 
 import { PlantContext } from '../App';
@@ -13,34 +13,44 @@ import { groupPlants } from './utils';
 import './style.scss';
 
 const ActionPopup = ({ visible, selectedPlants }) => {
-    const waterPlant = () => {
-        selectedPlants.forEach(plant => {
-            // TODO: create watering action
-            moveWatering(plant.interval);
+    const { setPlants } = useContext(PlantContext);
+
+    const waterPlants = () => {
+        const currentDate = new Date();
+        const plantBody = selectedPlants.map(plant => ({
+            id: plant.id,
+            lastWateringDate: currentDate,
+            nextWateringDate: add(currentDate, { days: plant.interval }),
+        }));
+        const actionBody = selectedPlants.map(plant => ({ plantId: plant.id, action: 'water', date: currentDate }));
+
+        updatePlants(plantBody).then(updatedPlants => {
+            setPlants(updatedPlants);
+            createActions(actionBody);
         });
     };
 
+    // Always move watering date in relation to today
     const moveWatering = i => {
-        selectedPlants.forEach(plant => {
-            const cur = new Date();
-            const newDate = cur.setDate(cur.getDate() + i);
-            onUpdatePlant(plant, format(newDate, 'yyyy-MM-dd'));
+        const currentDate = new Date();
+        const plantBody = selectedPlants.map(plant => ({
+            id: plant.id,
+            lastWateringDate: plant.lastWateringDate,
+            nextWateringDate: add(currentDate, { days: i }),
+        }));
+        updatePlants(plantBody).then(updatedPlants => {
+            setPlants(updatedPlants);
         });
-    };
-
-    const onUpdatePlant = (plant, date) => {
-        const body = { nextWateringDate: new Date(date) };
-        updatePlant(plant.id, body);
-        getAllPlants();
-        window.location.reload(); // temp
     };
 
     return (
         <div className={`action-popup ${visible ? 'visible' : ''}`}>
             <div className={'action-content'}>
-                <button onClick={waterPlant}>Water</button>
+                <button onClick={waterPlants}>Water</button>
+                <button onClick={() => moveWatering(0)}>Today</button>
                 <button onClick={() => moveWatering(2)}>+2</button>
-                <button onClick={() => moveWatering(2)}>+7</button>
+                <button onClick={() => moveWatering(3)}>+3</button>
+                <button onClick={() => moveWatering(7)}>+7</button>
             </div>
         </div>
     );

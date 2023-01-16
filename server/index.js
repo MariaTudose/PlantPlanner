@@ -44,14 +44,21 @@ app.put('/api/plants', (req, res, next) => {
                 _id: plant.id,
             },
             update: {
+                lastWateringDate: plant.lastWateringDate,
                 nextWateringDate: plant.nextWateringDate,
             },
         },
     }));
 
     Plant.bulkWrite(bulkOps)
-        .then(updatedPlants => {
-            res.json(updatedPlants);
+        .then(opResult => {
+            if (opResult.ok) {
+                Plant.find({ isDeleted: false })
+                    .populate('scheduleId')
+                    .then(plants => {
+                        res.json(plants);
+                    });
+            }
         })
         .catch(error => next(error));
 });
