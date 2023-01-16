@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { add } from 'date-fns';
 
 import { ReactComponent as Drink } from '../../static/drink.svg';
+import { ReactComponent as Drop } from '../../static/drop.svg';
+import { ReactComponent as Today } from '../../static/today.svg';
 import { updatePlants } from '../../services/plants';
 import { createActions } from '../../services/actions';
 
@@ -46,15 +48,15 @@ const ActionPopup = ({ visible, selectedPlants }) => {
     return (
         <div className={`action-popup ${visible ? 'visible' : ''}`}>
             <div className={'action-content'}>
-                <div>
-                    <button onClick={waterPlants}>Water</button>
-                    <button onClick={() => moveWatering(0)}>Today</button>
-                </div>
-                <div>
-                    <button onClick={() => moveWatering(2)}>+2</button>
-                    <button onClick={() => moveWatering(3)}>+3</button>
-                    <button onClick={() => moveWatering(7)}>+7</button>
-                </div>
+                <button className="icon-button" onClick={waterPlants}>
+                    <Drop />
+                </button>
+                <button className="icon-button" onClick={() => moveWatering(0)}>
+                    <Today />
+                </button>
+                <button onClick={() => moveWatering(2)}>+2</button>
+                <button onClick={() => moveWatering(3)}>+3</button>
+                <button onClick={() => moveWatering(7)}>+7</button>
             </div>
         </div>
     );

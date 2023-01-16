@@ -5,7 +5,7 @@
     flex-flow: column;
     justify-content: space-between;
     text-align: left;
-    margin: 0 auto 9rem;
+    margin: 0 auto 8rem;
 
     .card-header {
         display: flex;
@@ -60,7 +60,7 @@
         transform: translateY(100px);
         transition: all .2s;
         pointer-events: none;
-        margin: 0 1rem;
+        margin: 0 1.5rem;
 
         .action-content {
             display: flex;
@@ -79,7 +79,13 @@
             background: var(--accent-color);
             border-radius: 2rem;
             margin: .5rem;
-            width: 5rem;
+            width: 3rem;
+        }
+
+        .icon-button svg {
+            width: 2rem;
+            height: 2rem;
+            margin: auto;
         }
 
         &.visible {
@@ -100,7 +106,7 @@
         }
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 380px) {
         .schedule-card .plant-card {
             flex: 0 1 calc(50% - 1em);
         }
