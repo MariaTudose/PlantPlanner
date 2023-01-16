@@ -46,11 +46,15 @@ const ActionPopup = ({ visible, selectedPlants }) => {
     return (
         <div className={`action-popup ${visible ? 'visible' : ''}`}>
             <div className={'action-content'}>
-                <button onClick={waterPlants}>Water</button>
-                <button onClick={() => moveWatering(0)}>Today</button>
-                <button onClick={() => moveWatering(2)}>+2</button>
-                <button onClick={() => moveWatering(3)}>+3</button>
-                <button onClick={() => moveWatering(7)}>+7</button>
+                <div>
+                    <button onClick={waterPlants}>Water</button>
+                    <button onClick={() => moveWatering(0)}>Today</button>
+                </div>
+                <div>
+                    <button onClick={() => moveWatering(2)}>+2</button>
+                    <button onClick={() => moveWatering(3)}>+3</button>
+                    <button onClick={() => moveWatering(7)}>+7</button>
+                </div>
             </div>
         </div>
     );

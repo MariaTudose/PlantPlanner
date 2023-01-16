@@ -5,7 +5,7 @@
     flex-flow: column;
     justify-content: space-between;
     text-align: left;
-    margin: auto;
+    margin: 0 auto 9rem;
 
     .card-header {
         display: flex;
@@ -60,10 +60,13 @@
         transform: translateY(100px);
         transition: all .2s;
         pointer-events: none;
+        margin: 0 1rem;
 
         .action-content {
             display: flex;
-            width: max-content;
+            flex-flow: wrap;
+            max-width: max-content;
+            justify-content: center;
             font-size: x-large;
             background: var(--background-color);
             border-radius: 1rem;
@@ -84,6 +87,22 @@
             opacity: 1;
             transform: translateY(0px);
 
+        }
+    }
+
+    @media (max-width: 800px) {
+        .schedule-card .plant-card {
+            flex: 0 1 calc(33% - 1em);
+        }
+
+        .action-popup .action-content {
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .schedule-card .plant-card {
+            flex: 0 1 calc(50% - 1em);
         }
     }
 }
