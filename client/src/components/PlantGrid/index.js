@@ -76,6 +76,8 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
                                     src={getPhotoSrc(plant)}
                                     onError={setPlaceholder}
                                     alt={plant.name}
+                                    width="500"
+                                    height="500"
                                 ></img>
                                 <span>{plant.name}</span>
                             </button>
