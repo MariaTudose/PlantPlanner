@@ -53,7 +53,7 @@ const ActionPopup = ({ visible, selectedPlants }) => {
                 <button className="icon-button" onClick={() => moveWatering(0)}>
                     <Today />
                 </button>
-                <button onClick={() => moveWatering(2)}>+2</button>
+                <button onClick={() => moveWatering(1)}>+1</button>
                 <button onClick={() => moveWatering(3)}>+3</button>
                 <button onClick={() => moveWatering(7)}>+7</button>
             </div>
@@ -93,7 +93,11 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
                         Select all
                     </button>
                 )}
-                <button onClick={toggleWaterMode} className={`water-button ${selectedDay === day ? 'watering' : ''}`}>
+                <button
+                    aria-label="water-mode"
+                    onClick={toggleWaterMode}
+                    className={`water-button ${selectedDay === day ? 'watering' : ''}`}
+                >
                     <Drink />
                 </button>
             </div>

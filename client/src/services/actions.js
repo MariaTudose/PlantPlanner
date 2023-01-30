@@ -7,8 +7,8 @@ export const getActions = plantId => {
     return request.then(response => response.data).catch(e => console.log('error: ', e));
 };
 
-export const createActions = action => {
-    const request = axios.post(baseUrl, action);
+export const createActions = actions => {
+    const request = axios.post(baseUrl, actions);
 
     return request.then(response => response.data).catch(e => console.log('error: ', e));
 };
