@@ -1,37 +1,108 @@
-import React from 'react';
-import { getPhotoSrc, setPlaceholder } from '../utils';
+import React, { useContext, useEffect, useState } from 'react';
+import { format, parseISO } from 'date-fns';
+
+import { updatePlant } from '../../../services/plants';
+import { PlantContext } from '../../App';
+import { getPhotoSrc, getPrevIntervals, setPlaceholder, weightedAvg } from '../utils';
 
 import './style.scss';
 
-const weightedAvg = intervals =>
-    [0.7, 0.2, 0.1].reduce((acc, weight, i) => {
-        return acc + intervals[i] * weight;
-    }, 0) || 0;
+const PlantModal = ({ plant, visibility, closeModal }) => {
+    const [nextWateringDate, setNextWateringDate] = useState(new Date());
+    const [interval, setInterval] = useState(0);
+    const [location, setLocation] = useState('');
+    const [intervals, setIntervals] = useState([]);
+    const { plants, setPlants } = useContext(PlantContext);
 
-const PlantModal = ({ plant, visibility, closeModal }) => (
-    <div id="plant-modal" className={`${visibility ? 'visible' : ''}`}>
-        <button type="button" className="modal-backdrop" onClick={closeModal} />
-        {plant && (
-            <div className="modal-content">
-                <img className="plant-pic" src={getPhotoSrc(plant)} onError={setPlaceholder} alt={plant.name}></img>
-                <div className="plant-info">
-                    <h1>{plant.name}</h1>
-                    <p>{plant.userEnteredPlantType}</p>
-                    <p>Interval: {plant.interval} days</p>
-                        {/*
-                    <p>Calculated interval: {weightedAvg(plant.prevIntervals).toFixed(1)} days</p>
-                    <p>Prev intervals: {plant.prevIntervals.slice(0, 10).join(', ')}</p>
-                        */}
-                    <p>Next Watering date: {plant.nextWateringDate}</p>
-                </div>
-                <div className="plant-actions">
-                    <button>Water</button>
-                    <button>+1 days</button>
-                    <button>+2 days</button>
-                </div>
-            </div>
-        )}
-    </div>
-);
+    useEffect(() => {
+        if (plant?.id) getPrevIntervals(plant.id).then(intervals => setIntervals(intervals));
+    }, [plant]);
+
+    useEffect(() => {
+        if (plant && plant.nextWateringDate) {
+            setNextWateringDate(format(parseISO(plant.nextWateringDate), 'yyyy-MM-dd'));
+            setInterval(plant.interval);
+            setLocation(plant.location);
+        }
+    }, [plant]);
+
+    const onSubmit = e => {
+        e.preventDefault();
+        const body = { nextWateringDate, interval, location };
+        updatePlant(plant.id, body).then(updatedPlant =>
+            setPlants(plants.map(plant => (plant.id === updatedPlant.id ? updatedPlant : plant)))
+        );
+
+        closeModal();
+    };
+
+    return (
+        <div id="plant-modal" className={`${visibility ? 'visible' : ''}`}>
+            <button type="button" className="modal-backdrop" onClick={closeModal} />
+            {plant && (
+                <form className="modal-content" onSubmit={onSubmit}>
+                    <div className="plant-pic-container">
+                        <img
+                            className="plant-pic"
+                            src={getPhotoSrc(plant)}
+                            onError={setPlaceholder}
+                            alt={plant.name}
+                            height="500"
+                            width="500"
+                        />
+                        <div className="plant-pic-overlay">
+                            <h1>{plant.name}</h1>
+                            <i>{plant.userEnteredPlantType}</i>
+                        </div>
+                    </div>
+                    <div className="plant-info">
+                        <label>
+                            <span>Next Watering date: </span>
+                            <input
+                                type="date"
+                                name="watering"
+                                value={nextWateringDate}
+                                onChange={e => setNextWateringDate(e.target.value)}
+                            />
+                        </label>
+                        <label>
+                            <span>Interval: </span>
+                            <input
+                                className="interval-input"
+                                type="number"
+                                name="interval"
+                                value={interval}
+                                onChange={e => setInterval(e.target.value)}
+                            />
+                            <span> days</span>
+                        </label>
+                        {intervals && (
+                            <>
+                                <p>Calculated interval: {weightedAvg(intervals).toFixed(1)} days</p>
+                                <p>Prev intervals: {intervals.slice(0, 10).join(', ')}</p>
+                            </>
+                        )}
+                        <label>
+                            <span>Location: </span>
+                            <input
+                                className="location-input"
+                                type="string"
+                                name="location"
+                                value={location}
+                                onChange={e => setLocation(e.target.value)}
+                            ></input>
+                        </label>
+                    </div>
+                    <div className="plant-actions">
+                        <button>Water</button>
+                        <button>+1 days</button>
+                        <button>+2 days</button>
+                        <button type="submit">Confirm</button>
+                    </div>
+                </form>
+            )}
+        </div>
+    );
+};
 
 export default PlantModal;

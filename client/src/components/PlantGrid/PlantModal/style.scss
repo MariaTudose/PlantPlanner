@@ -1,6 +1,7 @@
 #plant-modal {
     visibility: hidden;
     position: fixed;
+    display: flex;
     top: 0;
     right: 0;
     bottom: 0;
@@ -32,16 +33,35 @@
     .modal-content {
         position: relative;
         background-color: var(--card-background);
-        border-radius: 4rem;
-        width: 35em;
-        margin: 5rem auto;
+        border-radius: 3rem;
+        width: fit-content;
         padding-bottom: 2em;
         transform: scale(0.8);
         transition: all .15s;
+        height: fit-content;
+        margin: auto;
+
+        .plant-pic-container {
+            position: relative;
+            border-top-left-radius: inherit;
+            border-top-right-radius: inherit;
+        }
 
         .plant-pic {
             border-radius: inherit;
-            width: 100%;
+            width: 26.5em;
+            height: auto;
+
+            &-overlay {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                padding: 1.5rem;
+                background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))
+            }
         }
 
         .plant-info {
@@ -52,10 +72,44 @@
             padding: 0 2em;
         }
 
+        label {
+            display: block;
+        }
+
+        input {
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            background-color: white;
+            width: max-content;
+        }
+
+        .interval-input {
+            width: 2.6rem;
+        }
+
         button {
-            background-color: #97c83e;
+            background-color: var(--accent-color);
             border-radius: 3rem;
             margin-right: .75em;
         }
+
+        button:last-child {
+            float: right;
+        }
     }
+
+    @media (max-width: 600px) {
+        .modal-content {
+            width: 90%;
+
+            .plant-info {
+                padding: 1em;
+            }
+
+            .plant-actions {
+                padding: 0 1em;
+            }
+        }
+    }
+
 }
