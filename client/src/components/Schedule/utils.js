@@ -2,13 +2,11 @@ import { differenceInCalendarDays, parseISO } from 'date-fns';
 
 export const groupPlants = plants =>
     plants
+        .filter(plant => plant.wateringDiff !== null)
         .map(plant => ({
             ...plant,
-            wateringDiff: plant.nextWateringDate
-                ? differenceInCalendarDays(parseISO(plant.nextWateringDate), Date.now())
-                : null,
+            wateringDiff: differenceInCalendarDays(parseISO(plant.nextWateringDate), Date.now()),
         }))
-        .filter(plant => plant.wateringDiff !== null)
         .reduce(
             (res, plant) => ({
                 ...res,

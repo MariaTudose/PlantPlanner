@@ -32,21 +32,18 @@ const ActionPopup = ({ visible, selectedPlants }) => {
         });
     };
 
-    // Always move watering date in relation to next watering date unless watering is overdue
     const moveWatering = i => {
         const plantBody = selectedPlants.map(plant => ({
             id: plant.id,
             lastWateringDate: plant.lastWateringDate,
             nextWateringDate: i === 0 ? new Date() : add(parseISO(plant.nextWateringDate), { days: i }),
         }));
-        updatePlants(plantBody).then(updatedPlants => {
-            setPlants(updatedPlants);
-        });
+        updatePlants(plantBody).then(setPlants);
     };
 
     return (
         <div className={`action-popup ${visible ? 'visible' : ''}`}>
-            <div className={'action-content'}>
+            <div className="action-content">
                 <button className="icon-button" onClick={waterPlants}>
                     <Drop />
                 </button>
@@ -71,7 +68,7 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
 
     const selectPlant = newPlant => {
         if (selectedPlants.includes(newPlant)) setSelectedPlants(selectedPlants.filter(plant => plant !== newPlant));
-        else setSelectedPlants([...selectedPlants, newPlant]);
+        else setSelectedPlants(selectedPlants.concat(newPlant));
     };
 
     const toggleAllPlants = () => {
@@ -87,7 +84,7 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
     return (
         <div className="schedule-card">
             <div className="card-header">
-                <span className="title">{title}</span>
+                <h4 className="title">{title}</h4>
                 {selectedDay === day && (
                     <button onClick={toggleAllPlants} className="select-button">
                         Select all

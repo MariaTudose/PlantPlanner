@@ -28,7 +28,10 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
             if (selectedPlant) {
                 if (keyCode === 37) scrollPlant(-1);
                 else if (keyCode === 39) scrollPlant(1);
-                else if (keyCode === 27) setVisibility(false);
+                else if (keyCode === 27) {
+                    setVisibility(false);
+                    setSelectedPlant(null);
+                }
             }
         },
         [scrollPlant, selectedPlant]
@@ -51,37 +54,34 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
     );
 
     return (
-        <div id="plant-grid">
+        <div className={`plant-grid ${selectPlant ? 'select-mode' : ''} `}>
             <PlantModal plant={selectedPlant} visibility={visibility} closeModal={() => setVisibility(false)} />
             {Object.entries(groupedPlants).map(([location, plants]) => (
                 <React.Fragment key={location}>
-                    <div className="location">{location}</div>
-                    {plants
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map(plant => (
-                            <button
-                                key={plant.id}
-                                className={`plant-card 
-                                ${selectPlant ? 'select-mode' : ''} 
+                    <h3 className="location">{location}</h3>
+                    {plants.map(plant => (
+                        <button
+                            key={plant.id}
+                            className={`plant-card 
                                 ${selectPlant && selectedPlants.includes(plant) ? 'selected' : ''}`}
-                                onClick={() => {
-                                    setSelectedPlant(plant);
-                                    selectPlant ? selectPlant(plant) : setVisibility(true);
-                                }}
-                            >
-                                <Done />
-                                <span>{plant.interval}</span>
-                                <img
-                                    className="plant-pic"
-                                    src={getPhotoSrc(plant)}
-                                    onError={setPlaceholder}
-                                    alt={plant.name}
-                                    width="500"
-                                    height="500"
-                                ></img>
-                                <span>{plant.name}</span>
-                            </button>
-                        ))}
+                            onClick={() => {
+                                setSelectedPlant(plant);
+                                selectPlant ? selectPlant(plant) : setVisibility(true);
+                            }}
+                        >
+                            <Done />
+                            <span title="Watering interval">{plant.interval}</span>
+                            <img
+                                className="plant-pic"
+                                src={getPhotoSrc(plant)}
+                                onError={setPlaceholder}
+                                alt={plant.name}
+                                width="500"
+                                height="500"
+                            ></img>
+                            <span>{plant.name}</span>
+                        </button>
+                    ))}
                 </React.Fragment>
             ))}
         </div>

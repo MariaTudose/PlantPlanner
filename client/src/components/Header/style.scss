@@ -1,11 +1,11 @@
 #header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: .5em;
     position: sticky;
     top: 0;
     z-index: 999;
     background: var(--background-color);
+    height: var(--header-height);
 
     >a {
         color: var(--navlink-color);

@@ -4,7 +4,6 @@
     display: flex;
     flex-flow: column;
     justify-content: space-between;
-    text-align: left;
     margin: 0 auto 8rem;
 
     .card-header {
@@ -32,13 +31,10 @@
 
         .title {
             flex: 1;
-            font-size: large;
         }
     }
 
     .schedule-card {
-        display: flex;
-        flex-direction: column;
         background: var(--card-background);
         margin: 1em;
         padding: 1em;
@@ -73,13 +69,14 @@
             margin: 3rem auto;
             padding: .5rem;
             pointer-events: auto;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         }
 
         button {
             background: var(--accent-color);
             border-radius: 2rem;
             margin: .5rem;
-            width: 3rem;
+            padding: .1em .5em;
         }
 
         .icon-button svg {
