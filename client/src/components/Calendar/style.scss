@@ -44,41 +44,52 @@
         }
 
         .other-month {
-            color: gray
+            color: var(--calendar-secondary)
         }
 
-        >div {
+        .day {
+            display: flex;
+            flex-direction: column;
             padding: .5rem;
-            text-align: left;
-            border: .5px solid gray;
+            border: .5px solid var(--calendar-secondary);
 
-            >button:hover {
+            &:hover {
                 background-color: var(--card-background);
             }
         }
 
-        .interval {
+        .interval-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .interval,
+        .plant-amount {
             background: var(--accent-color);
         }
 
-        button {
+        .date,
+        .interval,
+        .plant-amount {
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            border: none;
             margin: 0 .3em .3em 0;
             width: 1.5em;
             height: 1.5em;
             border-radius: 50%;
             text-align: center;
-            text-decoration: none;
-            color: var(--white);
             outline: none;
         }
+
+        .plant-amount {
+            display: none;
+        }
+
     }
 
     .aside {
-        max-height: 40em;
+        max-height: calc(100vh - var(--header-height));
         width: 30%;
         margin: 0 .5em;
         display: flex;
@@ -89,7 +100,7 @@
             align-self: flex-end;
         }
 
-        #plant-grid {
+        .plant-grid {
             align-content: flex-start;
             overflow-y: auto;
         }
@@ -107,9 +118,23 @@
         flex-direction: column;
         padding: 0 .5em;
 
+        .month {
+            .interval-container {
+                display: none;
+            }
+
+            .plant-amount {
+                display: block;
+            }
+        }
+
         .aside {
             width: 100%;
             margin: 0;
+
+            .plant-grid {
+                overflow-y: visible;
+            }
         }
     }
 }

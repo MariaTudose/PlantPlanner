@@ -5,10 +5,10 @@ export const getFirstWeekday = date => (new Date(date.getFullYear(), date.getMon
 export const getLastWeekday = date => (new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay() + 6) % 7;
 export const getDaysInMonth = date => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
-export const plantsToday = (plants, selectedDate) =>
+export const getPlantsToday = (plants, selectedDate) =>
     plants.filter(plant => new Date(plant.nextWateringDate).toDateString() === selectedDate.toDateString());
 
-export const getIntervals = (plants, date) =>
-    plantsToday(plants, date)
+export const getIntervals = plants =>
+    plants
         .map(plants => plants.interval) // eslint-disable-next-line
         .reduce((res, interval) => ((res[interval] = (res[interval] || 0) + 1), res), {});
