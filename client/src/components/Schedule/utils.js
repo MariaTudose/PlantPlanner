@@ -7,10 +7,7 @@ export const groupPlants = plants =>
             ...plant,
             wateringDiff: differenceInCalendarDays(parseISO(plant.nextWateringDate), Date.now()),
         }))
-        .reduce(
-            (res, plant) => ({
-                ...res,
-                [plant.wateringDiff]: [...(res[plant.wateringDiff] || []), plant],
-            }),
-            {}
-        );
+        .reduce((res, plant) => {
+            (res[plant.wateringDiff] = res[plant.wateringDiff] || []).push(plant);
+            return res;
+        }, {});

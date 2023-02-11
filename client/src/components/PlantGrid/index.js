@@ -45,13 +45,10 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
         };
     }, [selectedPlant, handleKeyDown]);
 
-    const groupedPlants = sortedPlants.reduce(
-        (res, plant) => ({
-            ...res,
-            [plant.location]: [...(res[plant.location] || []), plant],
-        }),
-        {}
-    );
+    const groupedPlants = sortedPlants.reduce((res, plant) => {
+        (res[plant.location] = res[plant.location] || []).push(plant);
+        return res;
+    }, {});
 
     return (
         <div className={`plant-grid ${selectPlant ? 'select-mode' : ''} `}>

@@ -10,5 +10,8 @@ export const getPlantsToday = (plants, selectedDate) =>
 
 export const getIntervals = plants =>
     plants
-        .map(plants => plants.interval) // eslint-disable-next-line
-        .reduce((res, interval) => ((res[interval] = (res[interval] || 0) + 1), res), {});
+        .map(plants => plants.interval)
+        .reduce((res, interval) => {
+            res[interval] = (res[interval] || 0) + 1;
+            return res;
+        }, {});
