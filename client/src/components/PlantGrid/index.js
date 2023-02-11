@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import PlantModal from './PlantModal';
-import { getPhotoSrc, setPlaceholder } from './utils';
 import { ReactComponent as Done } from '../../static/done.svg';
+import PlantModal from './PlantModal';
+import PlantPic from './PlantPic';
 
 import './style.scss';
 
@@ -71,14 +71,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
                         >
                             <Done />
                             <span title="Watering interval">{plant.interval}</span>
-                            <img
-                                className="plant-pic"
-                                src={getPhotoSrc(plant)}
-                                onError={setPlaceholder}
-                                alt={plant.name}
-                                width="500"
-                                height="500"
-                            ></img>
+                            <PlantPic plant={plant} />
                             <span>{plant.name}</span>
                         </button>
                     ))}

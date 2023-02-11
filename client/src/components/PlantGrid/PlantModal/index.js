@@ -3,7 +3,8 @@ import { format, parseISO } from 'date-fns';
 
 import { updatePlant } from '../../../services/plants';
 import { PlantContext } from '../../App';
-import { getPhotoSrc, getPrevIntervals, setPlaceholder, weightedAvg } from '../utils';
+import PlantPic from '../PlantPic';
+import { getPrevIntervals, weightedAvg } from '../utils';
 
 import './style.scss';
 
@@ -42,14 +43,7 @@ const PlantModal = ({ plant, visibility, closeModal }) => {
             {plant && (
                 <form className="modal-content" onSubmit={onSubmit}>
                     <div className="plant-pic-container">
-                        <img
-                            className="plant-pic"
-                            src={getPhotoSrc(plant)}
-                            onError={setPlaceholder}
-                            alt={plant.name}
-                            height="500"
-                            width="500"
-                        />
+                        <PlantPic plant={plant} />
                         <div className="plant-pic-overlay">
                             <h1>{plant.name}</h1>
                             <i>{plant.userEnteredPlantType}</i>
