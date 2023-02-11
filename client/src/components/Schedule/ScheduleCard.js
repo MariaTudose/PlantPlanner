@@ -27,9 +27,9 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
     };
 
     return (
-        <div className="schedule-card">
-            <div className="card-header">
-                <h4 className="title">{title}</h4>
+        <section className="schedule-card">
+            <header className="card-header">
+                <h3 className="title">{title}</h3>
                 {selectedDay === day && (
                     <button onClick={toggleAllPlants} className="select-button">
                         Select all
@@ -42,14 +42,14 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
                 >
                     <Drink />
                 </button>
-            </div>
+            </header>
             <PlantGrid
                 plants={plants}
                 selectPlant={selectedDay === day ? selectPlant : null}
                 selectedPlants={selectedPlants}
             />
             <ActionPopup visible={selectedDay === day} selectedPlants={selectedPlants} />
-        </div>
+        </section>
     );
 };
 

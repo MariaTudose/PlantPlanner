@@ -8,12 +8,13 @@ import { groupPlants } from './utils';
 import './style.scss';
 
 const Schedule = () => {
-    const { plants } = useContext(PlantContext);
     const [selectedDay, setSelectedDay] = useState(null);
+    const { plants } = useContext(PlantContext);
+    const groupedPlants = groupPlants(plants);
 
     return (
-        <div id="schedule">
-            {Object.entries(groupPlants(plants))
+        <main id="schedule">
+            {Object.entries(groupedPlants)
                 .sort((a, b) => a[0] - b[0])
                 .map(([day, plantsByDay]) => (
                     <ScheduleCard
@@ -24,7 +25,7 @@ const Schedule = () => {
                         setSelectedDay={setSelectedDay}
                     />
                 ))}
-        </div>
+        </main>
     );
 };
 

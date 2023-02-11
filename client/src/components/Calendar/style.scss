@@ -12,6 +12,10 @@
         align-content: center;
         margin: .5em 0;
 
+        h2 {
+            line-height: 1.6;
+        }
+
         .date {
             display: flex;
             justify-content: space-between;
@@ -107,7 +111,7 @@
 
         .plant-card {
             flex: 0 1 calc(33% - 1em);
-            font-size: small;
+            font-size: 0.875rem;
         }
     }
 

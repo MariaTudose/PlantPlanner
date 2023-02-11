@@ -32,14 +32,14 @@ const Calendar = ({ plants, selectedDate, setSelectedDate }) => {
 
     return (
         <div className="calendar">
-            <div className="calendar-header">
-                <h1>{format(selectedDate, 'MMM yyyy')}</h1>
+            <header className="calendar-header">
+                <h2>{format(selectedDate, 'MMM yyyy')}</h2>
                 <div className="date">
                     <button onClick={() => setSelectedDate(subMonths(selectedDate, 1))}>{'<'}</button>
                     <button onClick={() => setSelectedDate(new Date())}>Today</button>
                     <button onClick={() => setSelectedDate(addMonths(selectedDate, 1))}>{'>'}</button>
                 </div>
-            </div>
+            </header>
             <div className="month">
                 {weekDays.map(weekDay => (
                     <div className="day" key={weekDay}>
@@ -61,16 +61,16 @@ const Calendar = ({ plants, selectedDate, setSelectedDate }) => {
 };
 
 const CalendarAside = ({ plants, setSelectedDate, selectedDate }) => (
-    <div className="aside">
+    <aside className="aside">
         <header className="calendar-header">
             <div className="date">
                 <button onClick={() => setSelectedDate(subDays(selectedDate, 1))}>{'<'}</button>
-                {format(selectedDate, 'E d.M')}
+                <h3>{format(selectedDate, 'E d.M')}</h3>
                 <button onClick={() => setSelectedDate(addDays(selectedDate, 1))}>{'>'}</button>
             </div>
         </header>
-        {plants.length ? <PlantGrid plants={plants} /> : <div>No plants to water today!</div>}
-    </div>
+        {plants.length ? <PlantGrid plants={plants} /> : <span>No plants to water today!</span>}
+    </aside>
 );
 
 const CalendarView = ({ plants }) => {
@@ -82,10 +82,10 @@ const CalendarView = ({ plants }) => {
     }, [plants, selectedDate]);
 
     return (
-        <div id="calendar">
+        <main id="calendar">
             <Calendar plants={plants} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             <CalendarAside plants={visiblePlants} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-        </div>
+        </main>
     );
 };
 

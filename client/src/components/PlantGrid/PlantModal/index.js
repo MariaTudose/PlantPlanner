@@ -39,7 +39,7 @@ const PlantModal = ({ plant, visibility, closeModal }) => {
 
     return (
         <div id="plant-modal" className={`${visibility ? 'visible' : ''}`}>
-            <button type="button" className="modal-backdrop" onClick={closeModal} />
+            <button type="button" className="modal-backdrop" aria-label="Close modal" onClick={closeModal} />
             {plant && (
                 <form className="modal-content" onSubmit={onSubmit}>
                     <div className="plant-pic-container">

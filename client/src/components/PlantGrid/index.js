@@ -57,8 +57,8 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
         <div className={`plant-grid ${selectPlant ? 'select-mode' : ''} `}>
             <PlantModal plant={selectedPlant} visibility={visibility} closeModal={() => setVisibility(false)} />
             {Object.entries(groupedPlants).map(([location, plants]) => (
-                <React.Fragment key={location}>
-                    <h3 className="location">{location}</h3>
+                <section key={location}>
+                    <h4 className="location">{location}</h4>
                     {plants.map(plant => (
                         <button
                             key={plant.id}
@@ -75,7 +75,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
                             <span>{plant.name}</span>
                         </button>
                     ))}
-                </React.Fragment>
+                </section>
             ))}
         </div>
     );
