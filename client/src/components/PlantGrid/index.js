@@ -51,10 +51,10 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
     }, {});
 
     return (
-        <div className={`plant-grid ${selectPlant ? 'select-mode' : ''} `}>
+        <div className={`plant-card ${selectPlant ? 'select-mode' : ''} `}>
             <PlantModal plant={selectedPlant} visibility={visibility} closeModal={() => setVisibility(false)} />
             {Object.entries(groupedPlants).map(([location, plants]) => (
-                <section key={location}>
+                <section className="plant-grid" key={location}>
                     <h4 className="location">{location}</h4>
                     {plants.map(plant => (
                         <button
@@ -66,10 +66,14 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
                                 selectPlant ? selectPlant(plant) : setVisibility(true);
                             }}
                         >
-                            <Done />
-                            <span title="Watering interval">{plant.interval}</span>
+                            <Done className="plant-select-icon" />
+                            <span className="plant-interval" title="Watering interval">
+                                {plant.interval}
+                            </span>
                             <PlantPic plant={plant} />
-                            <span>{plant.name}</span>
+                            <div className="plant-name-container">
+                                <span className="plant-name">{plant.name}</span>
+                            </div>
                         </button>
                     ))}
                 </section>
