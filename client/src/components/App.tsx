@@ -23,9 +23,9 @@ const App = () => {
             <Header />
             <PlantContext.Provider value={{ plants, setPlants }}>
                 <Routes>
-                    <Route exact path="/" element={<PlantGrid plants={plants} />}></Route>
-                    <Route exact path="/schedule" element={<Schedule />}></Route>
-                    <Route exact path="/calendar" element={<Calendar plants={plants} />}></Route>
+                    <Route path="/" element={<PlantGrid plants={plants} />}></Route>
+                    <Route path="/schedule" element={<Schedule />}></Route>
+                    <Route path="/calendar" element={<Calendar plants={plants} />}></Route>
                 </Routes>
             </PlantContext.Provider>
         </BrowserRouter>
