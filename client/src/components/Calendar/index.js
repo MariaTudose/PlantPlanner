@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { format, addDays, subDays, addMonths, subMonths, setDate, isEqual, isSameMonth } from 'date-fns';
+import { format, addMonths, subMonths, setDate, isEqual, isSameMonth } from 'date-fns';
+
+import { ReactComponent as ChevronLeft } from '../../static/chevron_left.svg';
+import { ReactComponent as ChevronRight } from '../../static/chevron_right.svg';
+
 import { weekDays, getFirstWeekday, getLastWeekday, getDaysInMonth, getPlantsToday, getIntervals } from './utils';
 import PlantGrid from '../PlantGrid';
 
@@ -34,11 +38,15 @@ const Calendar = ({ plants, selectedDate, setSelectedDate }) => {
         <div className="calendar">
             <header className="calendar-header">
                 <h2>{format(selectedDate, 'MMM yyyy')}</h2>
-                <div className="date">
-                    <button onClick={() => setSelectedDate(subMonths(selectedDate, 1))}>{'<'}</button>
-                    <button onClick={() => setSelectedDate(new Date())}>Today</button>
-                    <button onClick={() => setSelectedDate(addMonths(selectedDate, 1))}>{'>'}</button>
-                </div>
+                <button onClick={() => setSelectedDate(subMonths(selectedDate, 1))}>
+                    <ChevronLeft />
+                </button>
+                <button onClick={() => setSelectedDate(addMonths(selectedDate, 1))}>
+                    <ChevronRight />
+                </button>
+                <button className="today" onClick={() => setSelectedDate(new Date())}>
+                    Today
+                </button>
             </header>
             <div className="month">
                 {weekDays.map(weekDay => (
@@ -63,11 +71,7 @@ const Calendar = ({ plants, selectedDate, setSelectedDate }) => {
 const CalendarAside = ({ plants, setSelectedDate, selectedDate }) => (
     <aside className="aside">
         <header className="calendar-header">
-            <div className="date">
-                <button onClick={() => setSelectedDate(subDays(selectedDate, 1))}>{'<'}</button>
-                <h3>{format(selectedDate, 'E d.M')}</h3>
-                <button onClick={() => setSelectedDate(addDays(selectedDate, 1))}>{'>'}</button>
-            </div>
+            <h3>{format(selectedDate, 'E d.M')}</h3>
         </header>
         {plants.length ? <PlantGrid plants={plants} /> : <span>No plants to water today!</span>}
     </aside>
