@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { getPhotoSrc } from './utils';
 import placeholder from './placeholder.webp';
 
 import './style.scss';
 
-const PlantPic = ({ plant }) => {
-    const [erroredPlants, setErroredPlants] = useState([]);
+const PlantPic = ({ plant }: { plant: Plant }) => {
+    const [erroredPlants, setErroredPlants] = useState<Array<string>>([]);
 
-    const setPlantError = id => {
+    const setPlantError = (id: string) => {
         setErroredPlants(erroredPlants.concat(id));
     };
 

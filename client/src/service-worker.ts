@@ -1,3 +1,4 @@
+/// <reference lib="webworker" />
 /* eslint-disable no-restricted-globals */
 
 // This service worker can be customized!
@@ -11,8 +12,10 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import { StaleWhileRevalidate } from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+
+declare const self: ServiceWorkerGlobalScope;
 
 clientsClaim();
 
@@ -85,7 +88,7 @@ registerRoute(
 // Cache plant data
 registerRoute(
     ({ url }) => url.pathname.startsWith('/api/plants'),
-    new NetworkFirst({
+    new StaleWhileRevalidate({
         cacheName: 'plants',
         plugins: [
             new CacheableResponsePlugin({

@@ -1,37 +1,47 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ReactComponent as Done } from '../../static/done.svg';
 import PlantModal from './PlantModal';
 import PlantPic from './PlantPic';
 
 import './style.scss';
 
-const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
-    const [selectedPlant, setSelectedPlant] = useState(null);
+interface PlantGridProps {
+    plants: Array<Plant>;
+    selectPlant?: ((plant: Plant) => void) | null;
+    selectedPlants?: Array<Plant>;
+}
+
+const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
+    const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
     const [visibility, setVisibility] = useState(false);
-    const sortedPlants = plants.sort((a, b) =>
+    const sortedPlants = [...plants].sort((a, b) =>
         a.location === b.location ? a.name.localeCompare(b.name) : a.location.localeCompare(b.location)
     );
 
+    const closeModal = () => {
+        setVisibility(false);
+        setSelectedPlant(null);
+    };
+
     const scrollPlant = useCallback(
-        i => {
-            const n = sortedPlants.length;
-            const iCur = sortedPlants.indexOf(selectedPlant) + i;
-            const iNext = ((iCur % n) + n) % n;
-            setSelectedPlant(sortedPlants[iNext]);
+        (i: number) => {
+            if (selectedPlant) {
+                const n = sortedPlants.length;
+                const iCur = sortedPlants.indexOf(selectedPlant) + i;
+                const iNext = ((iCur % n) + n) % n;
+                setSelectedPlant(sortedPlants[iNext]);
+            }
         },
         [sortedPlants, selectedPlant]
     );
 
     const handleKeyDown = useCallback(
-        event => {
-            const { keyCode } = event;
+        (event: KeyboardEvent) => {
+            const { key } = event;
             if (selectedPlant) {
-                if (keyCode === 37) scrollPlant(-1);
-                else if (keyCode === 39) scrollPlant(1);
-                else if (keyCode === 27) {
-                    setVisibility(false);
-                    setSelectedPlant(null);
-                }
+                if (key === 'ArrowLeft') scrollPlant(-1);
+                else if (key === 'ArrowRight') scrollPlant(1);
+                else if (key === 'Escape') closeModal();
             }
         },
         [scrollPlant, selectedPlant]
@@ -45,14 +55,14 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
         };
     }, [selectedPlant, handleKeyDown]);
 
-    const groupedPlants = sortedPlants.reduce((res, plant) => {
+    const groupedPlants = sortedPlants.reduce((res: Record<string, Array<Plant>>, plant) => {
         (res[plant.location] = res[plant.location] || []).push(plant);
         return res;
     }, {});
 
     return (
         <div className={`plant-card ${selectPlant ? 'select-mode' : ''} `}>
-            <PlantModal plant={selectedPlant} visibility={visibility} closeModal={() => setVisibility(false)} />
+            <PlantModal plant={selectedPlant} visibility={visibility} closeModal={closeModal} />
             {Object.entries(groupedPlants).map(([location, plants]) => (
                 <section className="plant-grid" key={location}>
                     <h4 className="location">{location}</h4>
@@ -60,7 +70,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }) => {
                         <button
                             key={plant.id}
                             className={`plant-card 
-                                ${selectPlant && selectedPlants.includes(plant) ? 'selected' : ''}`}
+                                ${selectPlant && selectedPlants?.includes(plant) ? 'selected' : ''}`}
                             onClick={() => {
                                 setSelectedPlant(plant);
                                 selectPlant ? selectPlant(plant) : setVisibility(true);

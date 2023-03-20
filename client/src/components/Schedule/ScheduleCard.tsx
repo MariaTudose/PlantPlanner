@@ -3,15 +3,22 @@ import { ReactComponent as Drink } from '../../static/drink.svg';
 import PlantGrid from '../PlantGrid';
 import ActionPopup from './ActionPopup';
 
-const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
-    const [selectedPlants, setSelectedPlants] = useState([]);
+interface ScheduleCardProps {
+    day: number;
+    plants: Array<Plant>;
+    selectedDay: number | null;
+    setSelectedDay: (value: number | null) => void;
+}
+
+const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCardProps) => {
+    const [selectedPlants, setSelectedPlants] = useState<Array<Plant>>([]);
 
     const dayForm = day < -1 || day > 1 ? 'days' : 'day';
     let title = `In ${day} ${dayForm}`;
-    if (day === '0') title = 'Today';
-    else if (day < '0') title = `${Math.abs(day)} ${dayForm} overdue`;
+    if (day === 0) title = 'Today';
+    else if (day < 0) title = `${Math.abs(day)} ${dayForm} overdue`;
 
-    const selectPlant = newPlant => {
+    const selectPlant = (newPlant: Plant) => {
         if (selectedPlants.includes(newPlant)) setSelectedPlants(selectedPlants.filter(plant => plant !== newPlant));
         else setSelectedPlants(selectedPlants.concat(newPlant));
     };
@@ -22,6 +29,7 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }) => {
     };
 
     const toggleWaterMode = () => {
+        setSelectedPlants([]);
         if (selectedDay === day) setSelectedDay(null);
         else setSelectedDay(day);
     };

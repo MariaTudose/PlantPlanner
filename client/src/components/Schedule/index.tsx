@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 
-import { PlantContext } from '../App';
+import { PlantContextProps, PlantContext } from '../App';
 
 import ScheduleCard from './ScheduleCard';
 import { groupPlants } from './utils';
@@ -8,18 +8,18 @@ import { groupPlants } from './utils';
 import './style.scss';
 
 const Schedule = () => {
-    const [selectedDay, setSelectedDay] = useState(null);
-    const { plants } = useContext(PlantContext);
+    const [selectedDay, setSelectedDay] = useState<number | null>(null);
+    const { plants } = useContext(PlantContext) as PlantContextProps;
     const groupedPlants = groupPlants(plants);
 
     return (
         <main id="schedule">
             {Object.entries(groupedPlants)
-                .sort((a, b) => a[0] - b[0])
+                .sort((a, b) => Number(a[0]) - Number(b[0]))
                 .map(([day, plantsByDay]) => (
                     <ScheduleCard
                         key={day}
-                        day={day}
+                        day={Number(day)}
                         plants={plantsByDay}
                         selectedDay={selectedDay}
                         setSelectedDay={setSelectedDay}

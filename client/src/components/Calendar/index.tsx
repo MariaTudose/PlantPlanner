@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { format, addMonths, subMonths, setDate, isEqual, isSameMonth } from 'date-fns';
 
 import { ReactComponent as ChevronLeft } from '../../static/chevron_left.svg';
@@ -6,10 +6,18 @@ import { ReactComponent as ChevronRight } from '../../static/chevron_right.svg';
 
 import { weekDays, getFirstWeekday, getLastWeekday, getDaysInMonth, getPlantsToday, getIntervals } from './utils';
 import PlantGrid from '../PlantGrid';
+import { PlantContext, PlantContextProps } from '../App';
 
 import './style.scss';
 
-const CalendarDay = ({ date, selectedDate, setSelectedDate, plants }) => {
+interface CalendarDayProps {
+    plants: Array<Plant>;
+    date: Date;
+    selectedDate: Date;
+    setSelectedDate: (value: Date) => void;
+}
+
+const CalendarDay = ({ date, selectedDate, setSelectedDate, plants }: CalendarDayProps) => {
     const plantsToday = getPlantsToday(plants, date);
     return (
         <button
@@ -29,7 +37,13 @@ const CalendarDay = ({ date, selectedDate, setSelectedDate, plants }) => {
     );
 };
 
-const Calendar = ({ plants, selectedDate, setSelectedDate }) => {
+interface CalendarProps {
+    plants: Array<Plant>;
+    selectedDate: Date;
+    setSelectedDate: (value: Date) => void;
+}
+
+const Calendar = ({ plants, selectedDate, setSelectedDate }: CalendarProps) => {
     const prevMonthDays = getFirstWeekday(selectedDate);
     const nextMonthDays = 6 - getLastWeekday(selectedDate);
     const visibleDays = getDaysInMonth(selectedDate) + prevMonthDays + nextMonthDays;
@@ -54,7 +68,7 @@ const Calendar = ({ plants, selectedDate, setSelectedDate }) => {
                         {weekDay}
                     </div>
                 ))}
-                {[...Array(visibleDays).keys()].map(i => (
+                {Array.from(Array(visibleDays).keys()).map(i => (
                     <CalendarDay
                         key={i}
                         date={setDate(selectedDate, -prevMonthDays + i + 1)}
@@ -68,7 +82,12 @@ const Calendar = ({ plants, selectedDate, setSelectedDate }) => {
     );
 };
 
-const CalendarAside = ({ plants, setSelectedDate, selectedDate }) => (
+interface CalendarAsideProps {
+    plants: Array<Plant>;
+    selectedDate: Date;
+}
+
+const CalendarAside = ({ plants, selectedDate }: CalendarAsideProps) => (
     <aside className="aside">
         <header className="calendar-header">
             <h3>{format(selectedDate, 'E d.M')}</h3>
@@ -77,9 +96,10 @@ const CalendarAside = ({ plants, setSelectedDate, selectedDate }) => (
     </aside>
 );
 
-const CalendarView = ({ plants }) => {
+const CalendarView = () => {
+    const { plants } = useContext(PlantContext) as PlantContextProps;
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [visiblePlants, setVisiblePlants] = useState([]);
+    const [visiblePlants, setVisiblePlants] = useState<Array<Plant>>([]);
 
     useEffect(() => {
         setVisiblePlants(getPlantsToday(plants, selectedDate));
@@ -88,7 +108,7 @@ const CalendarView = ({ plants }) => {
     return (
         <main id="calendar">
             <Calendar plants={plants} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-            <CalendarAside plants={visiblePlants} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+            <CalendarAside plants={visiblePlants} selectedDate={selectedDate} />
         </main>
     );
 };

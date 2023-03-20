@@ -1,21 +1,27 @@
 import axios from 'axios';
+import { parseISO } from 'date-fns';
 const baseUrl = process.env.REACT_APP_API_URL + 'api/plants';
-//'http://localhost:3001/api/plants';
 
-export const getAllPlants = () => {
-    const request = axios.get(baseUrl);
+const convertPlantDates = (plant: RawPlant): Plant => ({
+    ...plant,
+    lastWateringDate: parseISO(plant.lastWateringDate),
+    nextWateringDate: parseISO(plant.nextWateringDate),
+});
 
-    return request.then(response => response.data).catch(e => console.log('error: ', e));
+export const getAllPlants = (): Promise<Array<Plant>> => {
+    const request = axios.get<Array<RawPlant>>(baseUrl);
+
+    return request.then(response => response.data.map((plant: RawPlant) => convertPlantDates(plant)));
 };
 
-export const updatePlant = (id, plant) => {
-    const request = axios.put(`${baseUrl}/${id}`, plant);
+export const updatePlant = (id: string, plant: Partial<Plant>) => {
+    const request = axios.put<RawPlant>(`${baseUrl}/${id}`, plant);
 
-    return request.then(response => response.data).catch(e => console.log('error: ', e));
+    return request.then(response => convertPlantDates(response.data));
 };
 
-export const updatePlants = plants => {
-    const request = axios.put(baseUrl, plants);
+export const updatePlants = (plants: Array<Partial<Plant>>) => {
+    const request = axios.put<Array<RawPlant>>(baseUrl, plants);
 
-    return request.then(response => response.data).catch(e => console.log('error: ', e));
+    return request.then(response => response.data.map((plant: RawPlant) => convertPlantDates(plant)));
 };

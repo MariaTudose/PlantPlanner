@@ -1,19 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { format, parseISO } from 'date-fns';
+import { FormEvent, useContext, useEffect, useState } from 'react';
+import { format } from 'date-fns';
 
 import { updatePlant } from '../../../services/plants';
-import { PlantContext } from '../../App';
+import { PlantContextProps, PlantContext } from '../../App';
 import PlantPic from '../PlantPic';
 import { getPrevIntervals, weightedAvg } from '../utils';
 
 import './style.scss';
 
-const PlantModal = ({ plant, visibility, closeModal }) => {
-    const [nextWateringDate, setNextWateringDate] = useState(new Date());
-    const [interval, setInterval] = useState(0);
+interface PlantModalProps {
+    plant: Plant | null;
+    visibility: boolean;
+    closeModal: () => void;
+}
+
+const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
+    const [nextWateringDate, setNextWateringDate] = useState<Date>(new Date());
+    const [interval, setInterval] = useState('0');
     const [location, setLocation] = useState('');
-    const [intervals, setIntervals] = useState([]);
-    const { plants, setPlants } = useContext(PlantContext);
+    const [intervals, setIntervals] = useState<Array<number>>([]);
+    const { plants, setPlants } = useContext(PlantContext) as PlantContextProps;
 
     useEffect(() => {
         if (plant?.id) getPrevIntervals(plant.id).then(intervals => setIntervals(intervals));
@@ -21,20 +27,22 @@ const PlantModal = ({ plant, visibility, closeModal }) => {
 
     useEffect(() => {
         if (plant && plant.nextWateringDate) {
-            setNextWateringDate(format(parseISO(plant.nextWateringDate), 'yyyy-MM-dd'));
+            setNextWateringDate(plant.nextWateringDate);
             setInterval(plant.interval);
             setLocation(plant.location);
         }
     }, [plant]);
 
-    const onSubmit = e => {
+    const onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        const body = { nextWateringDate, interval, location };
-        updatePlant(plant.id, body).then(updatedPlant =>
-            setPlants(plants.map(plant => (plant.id === updatedPlant.id ? updatedPlant : plant)))
-        );
+        if (plant) {
+            const body = { nextWateringDate, interval, location };
+            updatePlant(plant.id, body).then(updatedPlant =>
+                setPlants(plants.map(plant => (plant.id === updatedPlant.id ? updatedPlant : plant)))
+            );
 
-        closeModal();
+            closeModal();
+        }
     };
 
     return (
@@ -55,8 +63,8 @@ const PlantModal = ({ plant, visibility, closeModal }) => {
                             <input
                                 type="date"
                                 name="watering"
-                                value={nextWateringDate}
-                                onChange={e => setNextWateringDate(e.target.value)}
+                                value={format(nextWateringDate, 'yyyy-MM-dd')}
+                                onChange={e => setNextWateringDate(new Date(e.target.value))}
                             />
                         </label>
                         <label>

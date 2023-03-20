@@ -1,15 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './components/App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 import './base.scss';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
     <React.StrictMode>
         <App />
-    </React.StrictMode>,
-    document.getElementById('root')
+    </React.StrictMode>
 );
 
 serviceWorkerRegistration.register({
@@ -18,7 +19,8 @@ serviceWorkerRegistration.register({
 
         if (waitingServiceWorker) {
             waitingServiceWorker.addEventListener('statechange', event => {
-                if (event.target.state === 'activated') {
+                const sw = event?.target as ServiceWorker;
+                if (sw?.state === 'activated') {
                     window.location.reload();
                 }
             });

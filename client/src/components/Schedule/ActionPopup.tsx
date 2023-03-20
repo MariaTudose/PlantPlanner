@@ -1,20 +1,25 @@
-import { add, parseISO } from 'date-fns';
+import { add } from 'date-fns';
 import { useContext } from 'react';
 import { ReactComponent as Drop } from '../../static/drop.svg';
 import { ReactComponent as Today } from '../../static/today.svg';
 import { createActions } from '../../services/actions';
 import { updatePlants } from '../../services/plants';
-import { PlantContext } from '../App';
+import { PlantContextProps, PlantContext } from '../App';
 
-const ActionPopup = ({ visible, selectedPlants }) => {
-    const { setPlants } = useContext(PlantContext);
+interface ActionPopupProps {
+    visible: boolean;
+    selectedPlants: Array<Plant>;
+}
+
+const ActionPopup = ({ visible, selectedPlants }: ActionPopupProps) => {
+    const { setPlants } = useContext(PlantContext) as PlantContextProps;
 
     const waterPlants = () => {
         const currentDate = new Date();
         const plantBody = selectedPlants.map(plant => ({
             id: plant.id,
             lastWateringDate: currentDate,
-            nextWateringDate: add(currentDate, { days: plant.interval }),
+            nextWateringDate: add(currentDate, { days: Number(plant.interval) }),
         }));
         const actionBody = selectedPlants.map(plant => ({ plantId: plant.id, action: 'water', date: currentDate }));
 
@@ -24,11 +29,11 @@ const ActionPopup = ({ visible, selectedPlants }) => {
         });
     };
 
-    const moveWatering = i => {
+    const moveWatering = (i: number) => {
         const plantBody = selectedPlants.map(plant => ({
             id: plant.id,
             lastWateringDate: plant.lastWateringDate,
-            nextWateringDate: i === 0 ? new Date() : add(parseISO(plant.nextWateringDate), { days: i }),
+            nextWateringDate: i === 0 ? new Date() : add(plant.nextWateringDate, { days: i }),
         }));
         updatePlants(plantBody).then(setPlants);
     };
