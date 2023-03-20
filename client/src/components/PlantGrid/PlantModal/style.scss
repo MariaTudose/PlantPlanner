@@ -6,15 +6,14 @@
     right: 0;
     bottom: 0;
     left: 0;
-    opacity: 0;
+    filter: opacity(0);
     z-index: 999;
     padding: 2em 1em;
-    transition: visibility .1s, opacity .1s;
-    will-change: visibility, opacity;
+    transition: visibility .2s ease-out, filter .2s ease-out;
 
     &.visible {
         visibility: visible;
-        opacity: 1;
+        filter: opacity(1);
 
         .modal-content {
             transform: scale(1);
@@ -31,17 +30,22 @@
         height: 100%;
         background-color: var(--modal-backdrop);
         backdrop-filter: blur(2px);
+
+        &:hover {
+            filter: brightness(1);
+        }
     }
 
     .modal-content {
+        display: inline-block;
         background-color: var(--card-background);
         border-radius: 1rem;
         max-width: 100%;
         max-height: 100%;
         overflow-y: auto;
         padding-bottom: 2em;
-        transform: scale(0.8);
-        transition: transform(scale) .2s;
+        transform: scale(.3);
+        transition: transform .2s ease-out;
         will-change: scale;
         margin: auto;
 

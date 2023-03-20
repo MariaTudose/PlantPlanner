@@ -20,7 +20,9 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
 
     const closeModal = () => {
         setVisibility(false);
-        setSelectedPlant(null);
+        setTimeout(() => {
+            setSelectedPlant(null);
+        }, 300);
     };
 
     const scrollPlant = useCallback(

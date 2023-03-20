@@ -48,61 +48,59 @@ const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
     return (
         <div id="plant-modal" className={`${visibility ? 'visible' : ''}`}>
             <button type="button" className="modal-backdrop" aria-label="Close modal" onClick={closeModal} />
-            {plant && (
-                <form className="modal-content" onSubmit={onSubmit}>
-                    <div className="plant-pic-container">
-                        <PlantPic plant={plant} />
-                        <div className="plant-pic-overlay">
-                            <h1>{plant.name}</h1>
-                            <i>{plant.userEnteredPlantType}</i>
-                        </div>
+            <form className="modal-content" onSubmit={onSubmit}>
+                <div className="plant-pic-container">
+                    <PlantPic plant={plant} />
+                    <div className="plant-pic-overlay">
+                        <h1>{plant?.name}</h1>
+                        <i>{plant?.userEnteredPlantType}</i>
                     </div>
-                    <div className="plant-info">
-                        <label>
-                            <span>Next Watering date: </span>
-                            <input
-                                type="date"
-                                name="watering"
-                                value={format(nextWateringDate, 'yyyy-MM-dd')}
-                                onChange={e => setNextWateringDate(new Date(e.target.value))}
-                            />
-                        </label>
-                        <label>
-                            <span>Interval: </span>
-                            <input
-                                className="interval-input"
-                                type="number"
-                                name="interval"
-                                value={interval}
-                                onChange={e => setInterval(e.target.value)}
-                            />
-                            <span> days</span>
-                        </label>
-                        {intervals && (
-                            <>
-                                <p>Calculated interval: {weightedAvg(intervals).toFixed(1)} days</p>
-                                <p>Prev intervals: {intervals.slice(0, 10).join(', ')}</p>
-                            </>
-                        )}
-                        <label>
-                            <span>Location: </span>
-                            <input
-                                className="location-input"
-                                type="string"
-                                name="location"
-                                value={location}
-                                onChange={e => setLocation(e.target.value)}
-                            ></input>
-                        </label>
-                    </div>
-                    <div className="plant-actions">
-                        <button>Water</button>
-                        <button>+1 days</button>
-                        <button>+2 days</button>
-                        <button type="submit">Confirm</button>
-                    </div>
-                </form>
-            )}
+                </div>
+                <div className="plant-info">
+                    <label>
+                        <span>Next Watering date: </span>
+                        <input
+                            type="date"
+                            name="watering"
+                            value={format(nextWateringDate, 'yyyy-MM-dd')}
+                            onChange={e => setNextWateringDate(new Date(e.target.value))}
+                        />
+                    </label>
+                    <label>
+                        <span>Interval: </span>
+                        <input
+                            className="interval-input"
+                            type="number"
+                            name="interval"
+                            value={interval}
+                            onChange={e => setInterval(e.target.value)}
+                        />
+                        <span> days</span>
+                    </label>
+                    {intervals && (
+                        <>
+                            <p>Calculated interval: {weightedAvg(intervals).toFixed(1)} days</p>
+                            <p>Prev intervals: {intervals.slice(0, 10).join(', ')}</p>
+                        </>
+                    )}
+                    <label>
+                        <span>Location: </span>
+                        <input
+                            className="location-input"
+                            type="string"
+                            name="location"
+                            value={location}
+                            onChange={e => setLocation(e.target.value)}
+                        ></input>
+                    </label>
+                </div>
+                <div className="plant-actions">
+                    <button>Water</button>
+                    <button>+1 days</button>
+                    <button>+2 days</button>
+                    <button type="submit">Confirm</button>
+                </div>
+            </form>
         </div>
     );
 };

@@ -4,12 +4,14 @@ import placeholder from './placeholder.webp';
 
 import './style.scss';
 
-const PlantPic = ({ plant }: { plant: Plant }) => {
+const PlantPic = ({ plant }: { plant: Plant | null }) => {
     const [erroredPlants, setErroredPlants] = useState<Array<string>>([]);
 
     const setPlantError = (id: string) => {
         setErroredPlants(erroredPlants.concat(id));
     };
+
+    if (!plant) return null;
 
     return (
         <img
