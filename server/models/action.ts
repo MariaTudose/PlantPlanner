@@ -1,6 +1,13 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const actionSchema = new mongoose.Schema({
+interface IAction {
+    _id: string;
+    plantId: string;
+    action: string;
+    date: string;
+}
+
+const actionSchema = new Schema<IAction>({
     _id: String,
     plantId: String, //{ type: String, ref: 'Plant' },
     action: String,
@@ -14,4 +21,4 @@ actionSchema.set('toJSON', {
     },
 });
 
-module.exports = mongoose.model('Action', actionSchema);
+export default model<IAction>('Action', actionSchema);
