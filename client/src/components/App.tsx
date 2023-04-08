@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import PlantGrid from './PlantGrid';
 import Schedule from './Schedule';
 import Calendar from './Calendar';
-import Header from './Header';
+import Navigation from './Navigation';
 import { getAllPlants } from '../services/plants';
 
 export interface PlantContextProps {
@@ -25,7 +25,7 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <Header />
+            <Navigation />
             <PlantContext.Provider value={{ plants, setPlants }}>
                 <Routes>
                     <Route path="/" element={<PlantGrid plants={plants} />}></Route>

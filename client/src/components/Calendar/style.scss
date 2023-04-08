@@ -83,7 +83,7 @@
     }
 
     .aside {
-        max-height: calc(100vh - var(--header-height));
+        max-height: calc(100vh - var(--navigation-height));
         width: 30%;
         display: flex;
         flex-direction: column;

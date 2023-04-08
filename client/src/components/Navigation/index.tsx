@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import './style.scss';
 
-const Header = () => (
-    <div id="header">
+const Navigation = () => (
+    <nav id="navigation">
         <NavLink to="/">Plants</NavLink>
         <NavLink to="/schedule">Schedule</NavLink>
         <NavLink to="/calendar">Calendar</NavLink>
-    </div>
+    </nav>
 );
 
-export default Header;
+export default Navigation;

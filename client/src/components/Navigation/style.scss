@@ -1,11 +1,11 @@
-#header {
+#navigation {
     display: flex;
     justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 999;
     background: var(--background-color);
-    height: var(--header-height);
+    height: var(--navigation-height);
 
     >a {
         color: var(--navlink-color);
@@ -21,6 +21,26 @@
 
         &.active {
             border-bottom: 2px solid var(--accent-color);
+        }
+    }
+}
+
+@media (max-width: 50rem) {
+    #navigation {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: unset;
+
+        >a {
+            border-bottom: unset;
+            border-top: 2px solid var(--navlink-color);
+
+            &.active {
+                border-bottom: unset;
+                border-top: 2px solid var(--accent-color);
+            }
         }
     }
 }
