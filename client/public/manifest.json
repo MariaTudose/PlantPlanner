@@ -42,7 +42,6 @@
     ],
     "id": "/",
     "start_url": "/",
-    "display": "fullscreen",
-    "theme_color": "#97c83e",
+    "display": "standalone",
     "background_color": "#262626"
 }
