@@ -25,7 +25,12 @@
     }
 }
 
+// If screen is smaller than 50rem, move navigation bar to bottom and adjust views accordingly
 @media (max-width: 50rem) {
+    body {
+        padding-bottom: var(--navigation-height);
+    }
+
     #navigation {
         position: fixed;
         bottom: 0;
@@ -41,6 +46,14 @@
                 border-bottom: unset;
                 border-top: 2px solid var(--accent-color);
             }
+        }
+    }
+
+    #schedule {
+        padding-bottom: 5rem;
+
+        .action-popup .action-content {
+            margin-top: calc(-4rem - var(--navigation-height))
         }
     }
 }
