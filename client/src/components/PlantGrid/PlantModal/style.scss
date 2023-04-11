@@ -61,22 +61,83 @@
 
             &-overlay {
                 display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
+                justify-content: space-between;
+                align-items: flex-end;
                 position: absolute;
                 bottom: 0;
                 width: 100%;
                 padding: 1.5rem;
-                background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7))
+                background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+
+                .icon-button {
+                    background-color: var(--accent-color);
+                    border-radius: 3rem;
+                    height: 3rem;
+                    width: 3rem;
+                }
+
+                .water-dropdown {
+                    position: relative;
+                }
+
+                .water-dropdown-menu {
+                    display: flex;
+                    align-items: center;
+                    position: absolute;
+                    right: 0;
+                    visibility: hidden;
+                    opacity: 0;
+                    background-color: var(--menu-background);
+                    box-shadow: var(--box-shadow-strong);
+                    border-radius: .3rem;
+                    padding: .3rem;
+                    transition: visibility .2s, opacity .2s;
+                }
+
+                .water-dropdown-menu.open {
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+                .menu-confirm-button {
+                    flex: 0 0 auto;
+                    margin-left: .3rem;
+
+                    svg {
+                        background-color: var(--accent-color);
+                        border-radius: 50%;
+                        padding: 0.2rem;
+                        width: 1.75rem;
+                        height: 1.75rem;
+                        line-height: 1.75rem;
+
+                    }
+                }
             }
         }
 
         .plant-info {
-            padding: 2em;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            padding: 1.5rem 1rem 1rem;
+
+            .add-button {
+                margin-right: .5rem;
+            }
+
+            .info-title {
+                font-weight: 600;
+            }
+
+            .info-value {
+                float: right;
+            }
         }
 
         .plant-actions {
-            padding: 0 2em;
+            padding: 0 1rem;
+            text-align: center;
         }
 
         label {
@@ -87,33 +148,18 @@
             border: 1px solid var(--accent-color);
             border-radius: 5px;
             background-color: white;
-            width: max-content;
+            width: 9rem;
         }
 
         .interval-input {
             width: 2.6rem;
         }
 
-        button {
+        .add-button,
+        .confirm-button {
             background-color: var(--accent-color);
             border-radius: 3rem;
             margin-right: .75em;
-        }
-
-        button:last-child {
-            float: right;
-        }
-    }
-
-    @media (max-width: 50rem) {
-        .modal-content {
-            .plant-info {
-                padding: 1em;
-            }
-
-            .plant-actions {
-                padding: 0 1em;
-            }
         }
     }
 

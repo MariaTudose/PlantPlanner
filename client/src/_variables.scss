@@ -2,6 +2,7 @@
     --white: #fff;
     --background-color: #262626;
     --card-background: #3c3c3c;
+    --menu-background: #5c5c5c;
     --accent-color: #97c83e;
     --calendar-secondary: #888888;
     --button-text: var(--white);
@@ -11,6 +12,10 @@
     --dark-overlay: rgba(0, 0, 0, .1);
 
     --navigation-height: 3em;
+
+    --box-shadow-light: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --box-shadow-medium: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    --box-shadow-strong: rgba(0, 0, 0, 0.5) 0px 5px 15px;
 
     --font-stack:
         -apple-system,
