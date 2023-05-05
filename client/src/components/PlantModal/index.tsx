@@ -1,6 +1,8 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { addDays, format } from 'date-fns';
 
+import { useDelay } from '../../hooks/useDelay';
+import { useScroll } from '../../hooks/useScroll';
 import { updatePlant } from '../../services/plants';
 import { createActions } from '../../services/actions';
 import { ReactComponent as Drop } from '../../static/drop.svg';
@@ -12,31 +14,43 @@ import { getPrevIntervals, weightedAvg } from './utils';
 import './style.scss';
 
 interface PlantModalProps {
-    plant: Plant | null;
-    visibility: boolean;
-    closeModal: () => void;
+    plantIndex: number;
+    setPlantIndex: (plant: number) => void;
+    modalPlants: Array<Plant>;
 }
 
-const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
+const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps) => {
+    const [plant, setPlant] = useState<Plant | null>(null);
+    const { plants, setPlants } = useContext(PlantContext) as PlantContextProps;
+
     const [nextWateringDate, setNextWateringDate] = useState(new Date());
     const [interval, setInterval] = useState('0');
     const [location, setLocation] = useState('');
     const [intervals, setIntervals] = useState<Array<number>>([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [waterOnDate, setWaterOnDate] = useState(new Date());
-    const { plants, setPlants } = useContext(PlantContext) as PlantContextProps;
+
+    const closeModal = () => setPlant(null);
+
+    useScroll(modalPlants, plantIndex, closeModal, setPlantIndex);
+    useDelay(!!plant, setPlantIndex);
 
     useEffect(() => {
-        if (plant?.id) getPrevIntervals(plant.id).then(intervals => setIntervals(intervals));
-    }, [plant]);
+        setPlant(modalPlants[plantIndex - 1]);
+    }, [modalPlants, plantIndex]);
 
     useEffect(() => {
-        if (plant && plant.nextWateringDate) {
+        if (plant) {
+            getPrevIntervals(plant.id).then(intervals => setIntervals(intervals));
             setNextWateringDate(plant.nextWateringDate);
             setInterval(plant.interval);
             setLocation(plant.location);
         }
     }, [plant]);
+
+    const updatePlants = (updatedPlant: Plant) => {
+        setPlants(plants.map(plant => (plant.id === updatedPlant.id ? updatedPlant : plant)));
+    };
 
     const updateDate = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newDate = new Date(e.target.value);
@@ -54,7 +68,7 @@ const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
             const plantBody = { nextWateringDate: addDays(waterOnDate, Number(interval)) };
             const actionBody = { plantId: plant.id, action: 'water', date: new Date() };
             updatePlant(plant.id, plantBody).then(updatedPlant => {
-                setPlants(plants.map(plant => (plant.id === updatedPlant.id ? updatedPlant : plant)));
+                updatePlants(updatedPlant);
                 setNextWateringDate(plantBody.nextWateringDate);
                 setDropdownOpen(false);
                 createActions([actionBody]);
@@ -66,16 +80,13 @@ const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
         e.preventDefault();
         if (plant) {
             const body = { nextWateringDate, interval, location };
-            updatePlant(plant.id, body).then(updatedPlant =>
-                setPlants(plants.map(plant => (plant.id === updatedPlant.id ? updatedPlant : plant)))
-            );
-
+            updatePlant(plant.id, body).then(updatedPlant => updatePlants(updatedPlant));
             closeModal();
         }
     };
 
     return (
-        <div id="plant-modal" className={`${visibility ? 'visible' : ''}`}>
+        <div id="plant-modal" className={`${plant ? 'visible' : ''}`}>
             <button type="button" className="modal-backdrop" aria-label="Close modal" onClick={closeModal} />
             <form className="modal-content" onSubmit={onSubmit}>
                 <div className="plant-pic-container">
@@ -146,18 +157,14 @@ const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
                             onChange={e => setInterval(e.target.value)}
                         />
                     </label>
-                    {intervals && (
-                        <>
-                            <div>
-                                <span className="info-title">Average interval (days)</span>
-                                <span className="info-value"> {weightedAvg(intervals).toFixed(1)}</span>
-                            </div>
-                            <div>
-                                <span className="info-title">Prev. intervals</span>
-                                <span className="info-value">{intervals.slice(0, 8).join(', ')}</span>
-                            </div>
-                        </>
-                    )}
+                    <div>
+                        <span className="info-title">Average interval (days)</span>
+                        <span className="info-value"> {weightedAvg(intervals).toFixed(1)}</span>
+                    </div>
+                    <div>
+                        <span className="info-title">Prev. intervals</span>
+                        <span className="info-value">{intervals.slice(0, 8).join(', ')}</span>
+                    </div>
                 </div>
                 <div className="plant-actions">
                     <button className="confirm-button" type="submit">

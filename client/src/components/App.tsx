@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import PlantGrid from './PlantGrid';
@@ -11,17 +11,15 @@ import PlantModal from './PlantModal';
 export interface PlantContextProps {
     plants: Array<Plant>;
     setPlants: (plants: Array<Plant>) => void;
-    selectedPlant: Plant | null;
-    setSelectedPlant: (plant: Plant | null) => void;
-    togglePlantModal: () => void;
+    openModal: (modalPlants: Array<Plant>, plant: number) => void;
 }
 
 export const PlantContext = createContext<PlantContextProps | null>(null);
 
 const App = () => {
     const [plants, setPlants] = useState<Array<Plant>>([]);
-    const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
-    const [modalVisibility, setModalVisibility] = useState(false);
+    const [plantIndex, setPlantIndex] = useState<number>(0);
+    const [modalPlants, setModalPlants] = useState<Array<Plant>>([]);
 
     useEffect(() => {
         getAllPlants().then(res => {
@@ -29,36 +27,21 @@ const App = () => {
         });
     }, []);
 
-    const closeModal = () => {
-        setModalVisibility(false);
-        setTimeout(() => {
-            setSelectedPlant(null);
-        }, 300);
-    };
-
-    const togglePlantModal = () => {
-        if (modalVisibility) closeModal();
-        else setModalVisibility(true);
+    const openModal = (modalPlants: Array<Plant>, plantIndex: number) => {
+        setPlantIndex(plantIndex);
+        setModalPlants(modalPlants);
     };
 
     return (
         <BrowserRouter>
             <Navigation />
-            <PlantContext.Provider
-                value={{
-                    plants,
-                    setPlants,
-                    selectedPlant,
-                    setSelectedPlant,
-                    togglePlantModal,
-                }}
-            >
+            <PlantContext.Provider value={{ plants, setPlants, openModal }}>
                 <Routes>
                     <Route path="/" element={<PlantGrid plants={plants} />}></Route>
                     <Route path="/schedule" element={<Schedule />}></Route>
                     <Route path="/calendar" element={<Calendar />}></Route>
                 </Routes>
-                <PlantModal plant={selectedPlant} visibility={modalVisibility} closeModal={closeModal} />
+                <PlantModal plantIndex={plantIndex} setPlantIndex={setPlantIndex} modalPlants={modalPlants} />
             </PlantContext.Provider>
         </BrowserRouter>
     );
