@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { ReactComponent as Done } from '../../static/done.svg';
-import PlantModal from './PlantModal';
 import PlantPic from './PlantPic';
 
 import './style.scss';
+import { PlantContext, PlantContextProps } from '../App';
 
 interface PlantGridProps {
     plants: Array<Plant>;
@@ -12,29 +12,21 @@ interface PlantGridProps {
 }
 
 const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
-    const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
-    const [visibility, setVisibility] = useState(false);
+    const { selectedPlant, setSelectedPlant, togglePlantModal } = useContext(PlantContext) as PlantContextProps;
     const sortedPlants = [...plants].sort((a, b) =>
         a.location === b.location ? a.name.localeCompare(b.name) : a.location.localeCompare(b.location)
     );
 
-    const closeModal = () => {
-        setVisibility(false);
-        setTimeout(() => {
-            setSelectedPlant(null);
-        }, 300);
-    };
-
     const scrollPlant = useCallback(
         (i: number) => {
-            if (selectedPlant) {
+            const plantIndex = sortedPlants.findIndex(plant => plant.id === selectedPlant?.id);
+            if (selectedPlant && plantIndex >= 0) {
                 const n = sortedPlants.length;
-                const iCur = sortedPlants.indexOf(selectedPlant) + i;
-                const iNext = ((iCur % n) + n) % n;
+                const iNext = (((plantIndex + i) % n) + n) % n;
                 setSelectedPlant(sortedPlants[iNext]);
             }
         },
-        [sortedPlants, selectedPlant]
+        [selectedPlant, sortedPlants, setSelectedPlant]
     );
 
     const handleKeyDown = useCallback(
@@ -43,10 +35,10 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
             if (selectedPlant) {
                 if (key === 'ArrowLeft') scrollPlant(-1);
                 else if (key === 'ArrowRight') scrollPlant(1);
-                else if (key === 'Escape') closeModal();
+                else if (key === 'Escape') togglePlantModal();
             }
         },
-        [scrollPlant, selectedPlant]
+        [togglePlantModal, scrollPlant, selectedPlant]
     );
 
     useEffect(() => {
@@ -55,7 +47,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [selectedPlant, handleKeyDown]);
+    }, [handleKeyDown]);
 
     const groupedPlants = sortedPlants.reduce((res: Record<string, Array<Plant>>, plant) => {
         (res[plant.location] = res[plant.location] || []).push(plant);
@@ -64,7 +56,6 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
 
     return (
         <div className={`plant-card ${selectPlant ? 'select-mode' : ''} `}>
-            <PlantModal plant={selectedPlant} visibility={visibility} closeModal={closeModal} />
             {Object.entries(groupedPlants).map(([location, plants]) => (
                 <section className="plant-grid" key={location}>
                     <h4 className="location">{location}</h4>
@@ -74,8 +65,11 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
                             className={`plant-card 
                                 ${selectPlant && selectedPlants?.includes(plant) ? 'selected' : ''}`}
                             onClick={() => {
-                                setSelectedPlant(plant);
-                                selectPlant ? selectPlant(plant) : setVisibility(true);
+                                if (selectPlant) selectPlant(plant);
+                                else {
+                                    setSelectedPlant(plant);
+                                    togglePlantModal();
+                                }
                             }}
                         >
                             <Done className="plant-select-icon" />

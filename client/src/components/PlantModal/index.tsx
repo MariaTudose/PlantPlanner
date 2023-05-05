@@ -1,13 +1,13 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { addDays, format } from 'date-fns';
 
-import { updatePlant } from '../../../services/plants';
-import { createActions } from '../../../services/actions';
-import { ReactComponent as Drop } from '../../../static/drop.svg';
-import { ReactComponent as Done } from '../../../static/done.svg';
-import { PlantContextProps, PlantContext } from '../../App';
-import PlantPic from '../PlantPic';
-import { getPrevIntervals, weightedAvg } from '../utils';
+import { updatePlant } from '../../services/plants';
+import { createActions } from '../../services/actions';
+import { ReactComponent as Drop } from '../../static/drop.svg';
+import { ReactComponent as Done } from '../../static/done.svg';
+import { PlantContextProps, PlantContext } from '../App';
+import PlantPic from '../PlantGrid/PlantPic';
+import { getPrevIntervals, weightedAvg } from './utils';
 
 import './style.scss';
 
@@ -37,8 +37,6 @@ const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
             setLocation(plant.location);
         }
     }, [plant]);
-
-    const onUpdateWateringDate = (days: number) => setNextWateringDate(addDays(nextWateringDate, days));
 
     const updateDate = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newDate = new Date(e.target.value);
@@ -113,11 +111,12 @@ const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
                     <label>
                         <span className="info-title">Next watering</span>
                         <div className="info-value">
-                            <button className="add-button" type="button" onClick={() => onUpdateWateringDate(1)}>
+                            <button
+                                className="add-button"
+                                type="button"
+                                onClick={() => setNextWateringDate(addDays(nextWateringDate, 1))}
+                            >
                                 +1
-                            </button>
-                            <button className="add-button" type="button" onClick={() => onUpdateWateringDate(2)}>
-                                +2
                             </button>
                             <input
                                 name="next-water-date"
@@ -155,7 +154,7 @@ const PlantModal = ({ plant, visibility, closeModal }: PlantModalProps) => {
                             </div>
                             <div>
                                 <span className="info-title">Prev. intervals</span>
-                                <span className="info-value">{intervals.slice(0, 10).join(', ')}</span>
+                                <span className="info-value">{intervals.slice(0, 8).join(', ')}</span>
                             </div>
                         </>
                     )}
