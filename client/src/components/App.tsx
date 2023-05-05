@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useRef } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import PlantGrid from './PlantGrid';
@@ -30,6 +30,7 @@ const App = () => {
     const openModal = (modalPlants: Array<Plant>, plantIndex: number) => {
         setPlantIndex(plantIndex);
         setModalPlants(modalPlants);
+        document.body.classList.add('has-modal');
     };
 
     return (

@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
 
 export const useScroll = (
     sortedPlants: Array<Plant>,
@@ -6,6 +7,16 @@ export const useScroll = (
     closeModal: () => void,
     setSelectedPlant: (plant: number) => void
 ) => {
+    const { ref: documentRef } = useSwipeable({
+        onSwipedLeft: () => scrollPlant(1),
+        onSwipedRight: () => scrollPlant(-1),
+    });
+
+    useEffect(() => {
+        documentRef(document.documentElement);
+        return () => documentRef(null);
+    });
+
     const scrollPlant = useCallback(
         (i: number) => {
             if (plantIndex) {

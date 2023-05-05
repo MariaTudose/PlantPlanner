@@ -30,7 +30,10 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [waterOnDate, setWaterOnDate] = useState(new Date());
 
-    const closeModal = () => setPlant(null);
+    const closeModal = () => {
+        setPlant(null);
+        document.body.classList.remove('has-modal');
+    };
 
     useScroll(modalPlants, plantIndex, closeModal, setPlantIndex);
     useDelay(!!plant, setPlantIndex);
