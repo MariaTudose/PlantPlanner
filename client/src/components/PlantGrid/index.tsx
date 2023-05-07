@@ -34,7 +34,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
                                 ${selectPlant && selectedPlants?.includes(plant) ? 'selected' : ''}`}
                             onClick={() => {
                                 if (selectPlant) selectPlant(plant);
-                                else openModal(sortedPlants, i + 1);
+                                else openModal(sortedPlants, sortedPlants.indexOf(plant) + 1);
                             }}
                         >
                             <Done className="plant-select-icon" />
