@@ -1,3 +1,5 @@
+@import url(./keyframes.scss);
+
 #plant-modal {
     visibility: hidden;
     position: fixed;
@@ -17,6 +19,9 @@
 
         .modal-content {
             transform: scale(1);
+
+            .modal-arrow-left { transform: translateX(-4rem) }
+            .modal-arrow-right { transform: translateX(4rem) }
         }
     }
 
@@ -42,7 +47,6 @@
         border-radius: 1rem;
         max-width: 100%;
         max-height: 100%;
-        overflow-y: auto;
         padding-bottom: 2em;
         transform: scale(.3);
         transition: transform .2s ease-out;
@@ -51,6 +55,49 @@
 
         .plant-pic-container {
             position: relative;
+            border-top-left-radius: inherit;
+            border-top-right-radius: inherit;
+            overflow-y: hidden;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0;
+            margin: 1.5rem;
+            border-radius: 50%;
+            background-color: var(--modal-backdrop);
+        }
+
+        .modal-arrow {
+            position: absolute;
+            top: calc(50% - 1.75rem);
+            padding: .1rem;
+            border-radius: 50%;
+            background-color: var(--card-background);
+            transition: transform .5s ease-out, margin .2s ease-out;
+
+            svg {
+                height: 2.5rem;
+                width: auto;
+            }
+        }
+
+        .modal-arrow-left {
+            left: 0em;
+            padding-right: .2rem;
+
+            &:focus { animation: nudge-left .2s }
+            &:active { animation: none }
+        }
+
+        .modal-arrow-right {
+            right: 0em;
+            padding-left: .2rem;
+
+            &:focus { animation: nudge-right .2s }
+            &:active { animation: none }
         }
 
         .plant-pic {
@@ -76,9 +123,7 @@
                     width: 3rem;
                 }
 
-                .water-dropdown {
-                    position: relative;
-                }
+                .water-dropdown { position: relative }
 
                 .water-dropdown-menu {
                     display: flex;
@@ -124,15 +169,12 @@
 
             .add-button {
                 margin-right: .5rem;
+                padding: 0 .3em;
             }
 
-            .info-title {
-                font-weight: 600;
-            }
+            .info-title { font-weight: 600 }
 
-            .info-value {
-                float: right;
-            }
+            .info-value { float: right }
         }
 
         .plant-actions {
@@ -151,9 +193,7 @@
             width: 9rem;
         }
 
-        .interval-input {
-            width: 2.6rem;
-        }
+        .interval-input { width: 2.6rem }
 
         .add-button,
         .confirm-button {

@@ -1,0 +1,11 @@
+@keyframes nudge-left {
+    0% { transform: translateX(-4rem) }
+    50% { transform: translateX(-4.3rem) }
+    100% { transform: translateX(-4rem) }
+}
+
+@keyframes nudge-right {
+    0% { transform: translateX(4rem) }
+    50% { transform: translateX(4.3rem) }
+    100% { transform: translateX(4rem) }
+}

@@ -48,4 +48,6 @@ export const useScroll = (
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [handleKeyDown]);
+
+    return { scrollPlant };
 };

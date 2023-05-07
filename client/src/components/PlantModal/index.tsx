@@ -5,8 +5,13 @@ import { useDelay } from '../../hooks/useDelay';
 import { useScroll } from '../../hooks/useScroll';
 import { updatePlant } from '../../services/plants';
 import { createActions } from '../../services/actions';
+
+import { ReactComponent as ChevronLeft } from '../../static/chevron_left.svg';
+import { ReactComponent as ChevronRight } from '../../static/chevron_right.svg';
+import { ReactComponent as Close } from '../../static/close.svg';
 import { ReactComponent as Drop } from '../../static/drop.svg';
 import { ReactComponent as Done } from '../../static/done.svg';
+
 import { PlantContextProps, PlantContext } from '../App';
 import PlantPic from '../PlantGrid/PlantPic';
 import { getPrevIntervals, weightedAvg } from './utils';
@@ -35,7 +40,7 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
         document.body.classList.remove('has-modal');
     };
 
-    useScroll(modalPlants, plantIndex, closeModal, setPlantIndex);
+    const { scrollPlant } = useScroll(modalPlants, plantIndex, closeModal, setPlantIndex);
     useDelay(!!plant, setPlantIndex);
 
     useEffect(() => {
@@ -92,8 +97,19 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
         <div id="plant-modal" className={`${plant ? 'visible' : ''}`}>
             <button type="button" className="modal-backdrop" aria-label="Close modal" onClick={closeModal} />
             <form className="modal-content" onSubmit={onSubmit}>
+                <button className="modal-arrow modal-arrow-left" type="button" onClick={() => scrollPlant(-1)}>
+                    <ChevronLeft />
+                </button>
+                <button className="modal-arrow modal-arrow-right" type="button" onClick={() => scrollPlant(1)}>
+                    <ChevronRight />
+                </button>
                 <div className="plant-pic-container">
-                    <PlantPic plant={plant} />
+                    <div>
+                        <PlantPic plant={plant} />
+                        <button className="close-button" type="button" onClick={closeModal}>
+                            <Close />
+                        </button>
+                    </div>
                     <div className="plant-pic-overlay">
                         <div>
                             <h1>{plant?.name}</h1>
