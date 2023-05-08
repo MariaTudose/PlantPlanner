@@ -104,12 +104,10 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
                     <ChevronRight />
                 </button>
                 <div className="plant-pic-container">
-                    <div>
-                        <PlantPic plant={plant} />
-                        <button className="close-button" type="button" onClick={closeModal}>
-                            <Close />
-                        </button>
-                    </div>
+                    <PlantPic plant={plant} />
+                    <button className="close-button" type="button" onClick={closeModal}>
+                        <Close />
+                    </button>
                     <div className="plant-pic-overlay">
                         <div>
                             <h1>{plant?.name}</h1>
