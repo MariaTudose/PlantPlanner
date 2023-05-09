@@ -14,6 +14,7 @@ export interface IPlant {
     acquisitionDate: string;
     lastWateringDate: string;
     nextWateringDate: string;
+    lastFertilizingDate: string;
     userEnteredPlantType: string;
 }
 
@@ -31,6 +32,7 @@ const plantSchema = new Schema<IPlant>({
     acquisitionDate: String,
     lastWateringDate: String,
     nextWateringDate: String,
+    lastFertilizingDate: String,
     userEnteredPlantType: String,
 });
 

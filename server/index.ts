@@ -39,11 +39,7 @@ app.put('/api/plants', (req: Request, res: Response, next: NextFunction) => {
             filter: {
                 _id: plant.id,
             },
-            update: {
-                interval: plant.interval,
-                lastWateringDate: plant.lastWateringDate,
-                nextWateringDate: plant.nextWateringDate,
-            },
+            update: { ...plant },
         },
     }));
 
