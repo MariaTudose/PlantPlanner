@@ -9,10 +9,9 @@ import { createActions } from '../../services/actions';
 
 import { ReactComponent as ChevronLeft } from '../../static/chevron_left.svg';
 import { ReactComponent as ChevronRight } from '../../static/chevron_right.svg';
+import { ReactComponent as Fertilizer } from '../../static/fertilizer.svg';
 import { ReactComponent as Close } from '../../static/close.svg';
 import { ReactComponent as Drop } from '../../static/drop.svg';
-import { ReactComponent as Done } from '../../static/done.svg';
-
 import { PlantContextProps, PlantContext } from '../App';
 import PlantPic from '../PlantGrid/PlantPic';
 import { getPrevIntervals, weightedAvg } from './utils';
@@ -71,16 +70,20 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
         }
     };
 
-    const onWater = (e: FormEvent) => {
+    const onWater = (e: FormEvent, fertilize: boolean = false) => {
         e.preventDefault();
         if (plant) {
-            const plantBody = { nextWateringDate: addDays(waterOnDate, Number(interval)) };
-            const actionBody = { plantId: plant.id, action: ActionType.WATER, date: new Date() };
+            const plantBody: Partial<Plant> = { nextWateringDate: addDays(waterOnDate, Number(interval)) };
+            const actionBody = [{ plantId: plant.id, action: ActionType.WATER, date: new Date() }];
+            if (fertilize) {
+                plantBody.lastFertilizingDate = new Date();
+                actionBody.push({ plantId: plant.id, action: ActionType.FERTILIZE, date: new Date() });
+            }
             updatePlant(plant.id, plantBody).then(updatedPlant => {
                 updatePlants(updatedPlant);
-                setNextWateringDate(plantBody.nextWateringDate);
+                setNextWateringDate(plantBody.nextWateringDate as Date);
                 setDropdownOpen(false);
-                createActions([actionBody]);
+                createActions(actionBody);
             });
         }
     };
@@ -130,7 +133,10 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
                                     onChange={updateDate}
                                 />
                                 <button className="menu-confirm-button" onClick={onWater}>
-                                    <Done />
+                                    <Drop />
+                                </button>
+                                <button className="menu-confirm-button" onClick={e => onWater(e, true)}>
+                                    <Fertilizer />
                                 </button>
                             </div>
                         </div>

@@ -131,6 +131,7 @@
                     align-items: center;
                     position: absolute;
                     right: 0;
+                    width: max-content;
                     visibility: hidden;
                     opacity: 0;
                     background-color: var(--menu-background);
@@ -148,6 +149,7 @@
                 .menu-confirm-button {
                     flex: 0 0 auto;
                     margin-left: .3rem;
+                    padding: 0;
 
                     svg {
                         background-color: var(--accent-color);
