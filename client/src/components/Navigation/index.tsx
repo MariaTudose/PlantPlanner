@@ -3,8 +3,8 @@ import './style.scss';
 
 const Navigation = () => (
     <nav id="navigation">
-        <NavLink to="/">Plants</NavLink>
-        <NavLink to="/schedule">Schedule</NavLink>
+        <NavLink to="/plants">Plants</NavLink>
+        <NavLink to="/">Schedule</NavLink>
         <NavLink to="/calendar">Calendar</NavLink>
     </nav>
 );

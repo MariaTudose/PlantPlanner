@@ -38,8 +38,8 @@ const App = () => {
             <Navigation />
             <PlantContext.Provider value={{ plants, setPlants, openModal }}>
                 <Routes>
-                    <Route path="/" element={<PlantGrid plants={plants} />}></Route>
-                    <Route path="/schedule" element={<Schedule />}></Route>
+                    <Route path="/plants" element={<PlantGrid plants={plants} />}></Route>
+                    <Route path="/" element={<Schedule />}></Route>
                     <Route path="/calendar" element={<Calendar />}></Route>
                 </Routes>
                 <PlantModal plantIndex={plantIndex} setPlantIndex={setPlantIndex} modalPlants={modalPlants} />
