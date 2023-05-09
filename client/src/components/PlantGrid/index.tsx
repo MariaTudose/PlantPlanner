@@ -1,9 +1,12 @@
 import { useContext } from 'react';
+import { differenceInDays } from 'date-fns';
+
 import { ReactComponent as Done } from '../../static/done.svg';
+import { ReactComponent as Hungry } from '../../static/hungry.svg';
+import { PlantContext, PlantContextProps } from '../App';
 import PlantPic from './PlantPic';
 
 import './style.scss';
-import { PlantContext, PlantContextProps } from '../App';
 
 interface PlantGridProps {
     plants: Array<Plant>;
@@ -22,8 +25,14 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
         return res;
     }, {});
 
+    const isHungry = (lastFertilizingDate: Date | null) => {
+        if (!lastFertilizingDate) return true;
+        const diff = differenceInDays(new Date(), lastFertilizingDate);
+        return diff >= 28;
+    };
+
     return (
-        <div className={`plant-card ${selectPlant ? 'select-mode' : ''} `}>
+        <div className={`plant-grid-container ${selectPlant ? 'select-mode' : ''} `}>
             {Object.entries(groupedPlants).map(([location, plants]) => (
                 <section className="plant-grid" key={location}>
                     <h4 className="location">{location}</h4>
@@ -41,6 +50,9 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
                             <span className="plant-interval" title="Watering interval">
                                 {plant.interval}
                             </span>
+                            <Hungry
+                                className={`plant-hungry-icon ${isHungry(plant.lastFertilizingDate) ? 'visible' : ''}`}
+                            />
                             <PlantPic plant={plant} />
                             <div className="plant-name-container">
                                 <span className="plant-name">{plant.name}</span>

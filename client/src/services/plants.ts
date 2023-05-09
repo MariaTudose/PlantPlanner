@@ -6,6 +6,7 @@ const convertPlantDates = (plant: RawPlant): Plant => ({
     ...plant,
     lastWateringDate: parseISO(plant.lastWateringDate),
     nextWateringDate: parseISO(plant.nextWateringDate),
+    lastFertilizingDate: plant.lastFertilizingDate ? parseISO(plant.lastFertilizingDate) : null,
 });
 
 export const getAllPlants = (): Promise<Array<Plant>> => {

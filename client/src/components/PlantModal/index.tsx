@@ -1,6 +1,7 @@
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { addDays, format } from 'date-fns';
 
+import { ActionType } from '../../enums';
 import { useDelay } from '../../hooks/useDelay';
 import { useScroll } from '../../hooks/useScroll';
 import { updatePlant } from '../../services/plants';
@@ -74,7 +75,7 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
         e.preventDefault();
         if (plant) {
             const plantBody = { nextWateringDate: addDays(waterOnDate, Number(interval)) };
-            const actionBody = { plantId: plant.id, action: 'water', date: new Date() };
+            const actionBody = { plantId: plant.id, action: ActionType.WATER, date: new Date() };
             updatePlant(plant.id, plantBody).then(updatedPlant => {
                 updatePlants(updatedPlant);
                 setNextWateringDate(plantBody.nextWateringDate);

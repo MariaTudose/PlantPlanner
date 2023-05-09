@@ -2,8 +2,10 @@ import { add } from 'date-fns';
 import { useContext } from 'react';
 import { ReactComponent as Drop } from '../../static/drop.svg';
 import { ReactComponent as Today } from '../../static/today.svg';
+import { ReactComponent as Fertilizer } from '../../static/fertilizer.svg';
 import { createActions } from '../../services/actions';
 import { updatePlants } from '../../services/plants';
+import { ActionType } from '../../enums';
 import { PlantContextProps, PlantContext } from '../App';
 
 interface ActionPopupProps {
@@ -14,14 +16,29 @@ interface ActionPopupProps {
 const ActionPopup = ({ visible, selectedPlants }: ActionPopupProps) => {
     const { setPlants } = useContext(PlantContext) as PlantContextProps;
 
-    const waterPlants = () => {
+    const waterPlants = (fertilize: boolean) => {
         const currentDate = new Date();
         const plantBody = selectedPlants.map(plant => ({
             id: plant.id,
             lastWateringDate: currentDate,
             nextWateringDate: add(currentDate, { days: Number(plant.interval) }),
+            lastFertilizingDate: fertilize ? currentDate : plant.lastFertilizingDate,
         }));
-        const actionBody = selectedPlants.map(plant => ({ plantId: plant.id, action: 'water', date: currentDate }));
+
+        const actionBody = selectedPlants.map(plant => ({
+            plantId: plant.id,
+            action: ActionType.WATER,
+            date: currentDate,
+        }));
+
+        if (fertilize) {
+            const fetrilizeActions = selectedPlants.map(plant => ({
+                plantId: plant.id,
+                action: ActionType.FERTILIZE,
+                date: currentDate,
+            }));
+            actionBody.concat(fetrilizeActions);
+        }
 
         updatePlants(plantBody).then(updatedPlants => {
             setPlants(updatedPlants);
@@ -41,15 +58,17 @@ const ActionPopup = ({ visible, selectedPlants }: ActionPopupProps) => {
     return (
         <div className={`action-popup ${visible ? 'visible' : ''}`}>
             <div className="action-content">
-                <button className="icon-button" onClick={waterPlants}>
+                <button className="icon-button" onClick={() => waterPlants(false)}>
                     <Drop />
+                </button>
+                <button className="icon-button" onClick={() => waterPlants(true)}>
+                    <Fertilizer />
                 </button>
                 <button className="icon-button" onClick={() => moveWatering(0)}>
                     <Today />
                 </button>
                 <button onClick={() => moveWatering(1)}>+1</button>
                 <button onClick={() => moveWatering(3)}>+3</button>
-                <button onClick={() => moveWatering(7)}>+7</button>
             </div>
         </div>
     );
