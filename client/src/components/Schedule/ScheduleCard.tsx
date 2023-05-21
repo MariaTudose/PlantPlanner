@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { ReactComponent as Today } from '../../static/today.svg';
 import { ReactComponent as Drink } from '../../static/drink.svg';
 import PlantGrid from '../PlantGrid';
 import ActionPopup from './ActionPopup';
+import { SelectMode } from '../../enums';
 
 interface ScheduleCardProps {
     day: number;
@@ -12,6 +14,7 @@ interface ScheduleCardProps {
 
 const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCardProps) => {
     const [selectedPlants, setSelectedPlants] = useState<Array<Plant>>([]);
+    const [selectMode, setSelectMode] = useState<SelectMode | null>(null);
 
     const dayForm = day < -1 || day > 1 ? 'days' : 'day';
     let title = `In ${day} ${dayForm}`;
@@ -28,10 +31,11 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCard
         else setSelectedPlants(plants);
     };
 
-    const toggleWaterMode = () => {
+    const toggleSelectMode = (newSelectMode: SelectMode) => {
+        setSelectedDay(day);
         setSelectedPlants([]);
-        if (selectedDay === day) setSelectedDay(null);
-        else setSelectedDay(day);
+        setSelectMode(newSelectMode);
+        if (selectedDay === day && newSelectMode === selectMode) setSelectedDay(null);
     };
 
     return (
@@ -44,9 +48,20 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCard
                     </button>
                 )}
                 <button
+                    aria-label="date-mode"
+                    onClick={() => toggleSelectMode(SelectMode.DATE)}
+                    className={`date-button ${
+                        selectMode === SelectMode.DATE && selectedDay === day ? 'selecting' : ''
+                    }`}
+                >
+                    <Today />
+                </button>
+                <button
                     aria-label="water-mode"
-                    onClick={toggleWaterMode}
-                    className={`water-button ${selectedDay === day ? 'watering' : ''}`}
+                    onClick={() => toggleSelectMode(SelectMode.WATER)}
+                    className={`water-button ${
+                        selectMode === SelectMode.WATER && selectedDay === day ? 'selecting' : ''
+                    }`}
                 >
                     <Drink />
                 </button>
@@ -56,7 +71,7 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCard
                 selectPlant={selectedDay === day ? selectPlant : null}
                 selectedPlants={selectedPlants}
             />
-            <ActionPopup visible={selectedDay === day} selectedPlants={selectedPlants} />
+            <ActionPopup visible={selectedDay === day} selectedPlants={selectedPlants} selectMode={selectMode} />
         </section>
     );
 };

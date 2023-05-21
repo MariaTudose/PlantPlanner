@@ -5,15 +5,16 @@ import { ReactComponent as Today } from '../../static/today.svg';
 import { ReactComponent as Fertilizer } from '../../static/fertilizer.svg';
 import { createActions } from '../../services/actions';
 import { updatePlants } from '../../services/plants';
-import { ActionType } from '../../enums';
+import { ActionType, SelectMode } from '../../enums';
 import { PlantContextProps, PlantContext } from '../App';
 
 interface ActionPopupProps {
     visible: boolean;
     selectedPlants: Array<Plant>;
+    selectMode: SelectMode | null;
 }
 
-const ActionPopup = ({ visible, selectedPlants }: ActionPopupProps) => {
+const ActionPopup = ({ visible, selectedPlants, selectMode }: ActionPopupProps) => {
     const { setPlants } = useContext(PlantContext) as PlantContextProps;
 
     const waterPlants = (fertilize: boolean) => {
@@ -58,17 +59,25 @@ const ActionPopup = ({ visible, selectedPlants }: ActionPopupProps) => {
     return (
         <div className={`action-popup ${visible ? 'visible' : ''}`}>
             <div className="action-content">
-                <button className="icon-button" onClick={() => waterPlants(false)}>
-                    <Drop />
-                </button>
-                <button className="icon-button" onClick={() => waterPlants(true)}>
-                    <Fertilizer />
-                </button>
-                <button className="icon-button" onClick={() => moveWatering(0)}>
-                    <Today />
-                </button>
-                <button onClick={() => moveWatering(1)}>+1</button>
-                <button onClick={() => moveWatering(3)}>+3</button>
+                {selectMode === SelectMode.WATER ? (
+                    <>
+                        <button className="icon-button" onClick={() => waterPlants(false)}>
+                            <Drop />
+                        </button>
+                        <button className="icon-button" onClick={() => waterPlants(true)}>
+                            <Fertilizer />
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <button onClick={() => moveWatering(-1)}>-1</button>
+                        <button className="icon-button" onClick={() => moveWatering(0)}>
+                            <Today />
+                        </button>
+                        <button onClick={() => moveWatering(1)}>+1</button>
+                        <button onClick={() => moveWatering(3)}>+3</button>
+                    </>
+                )}
             </div>
         </div>
     );

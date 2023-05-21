@@ -16,15 +16,17 @@
             border: 1px solid var(--accent-color);
             border-radius: .5rem;
             padding: .2rem 1rem;
-            margin-right: 1rem;
+            margin-right: .5rem;
         }
 
+        .date-button,
         .water-button {
             width: 2.5rem;
             height: 2.5rem;
             border-radius: 50%;
+            margin-left: .5rem;
 
-            &.watering {
+            &.selecting {
                 background-color: var(--accent-color);
             }
 
@@ -50,7 +52,7 @@
         left: 0;
         height: 0;
         opacity: 0;
-        z-index: 999;
+        z-index: 998;
         transform: translateY(100px);
         transition: all .2s;
 
@@ -66,7 +68,7 @@
             margin-top: -4em;
             padding: .5rem;
             pointer-events: auto;
-            box-shadow: var(--box-shadow-light);
+            box-shadow: var(--box-shadow-medium);
         }
 
         button {
