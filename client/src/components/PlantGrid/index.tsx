@@ -46,12 +46,14 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
                                 else openModal(sortedPlants, sortedPlants.indexOf(plant) + 1);
                             }}
                         >
-                            <Done className="plant-select-icon" />
-                            <span className="plant-interval" title="Watering interval">
+                            <Done className="plant-indicator plant-select appearing-indicator" />
+                            <span className="plant-indicator plant-interval" title="Watering interval">
                                 {plant.interval}
                             </span>
                             <Hungry
-                                className={`plant-hungry-icon ${isHungry(plant.lastFertilizingDate) ? 'visible' : ''}`}
+                                className={`plant-indicator plant-hungry appearing-indicator ${
+                                    isHungry(plant.lastFertilizingDate) ? 'visible' : ''
+                                }`}
                             />
                             <PlantPic plant={plant} />
                             <div className="plant-name-container">

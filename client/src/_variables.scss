@@ -8,14 +8,18 @@
     --button-text: var(--white);
     --navlink-color: var(--white);
     --text-color: var(--white);
-    --modal-backdrop: rgba(0, 0, 0, .3);
-    --dark-overlay: rgba(0, 0, 0, .1);
+    --plant-indicator: var(--dark-translucent-strong);
+    --modal-backdrop: var(--dark-translucent-light);
 
     --navigation-height: 3em;
 
-    --box-shadow-light: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    --box-shadow-medium: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    --box-shadow-strong: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+    --box-shadow-light: var(--dark-translucent-light) 0px 3px 8px;
+    --box-shadow-medium: var(--dark-translucent-medium) 0px 5px 15px;
+    --box-shadow-strong: var(--dark-translucent-medium) 0px 5px 15px;
+
+    --dark-translucent-light: rgba(0, 0, 0, .3);
+    --dark-translucent-medium: rgba(0, 0, 0, .5);
+    --dark-translucent-strong: rgba(0, 0, 0, .75);
 
     --font-stack:
         -apple-system,

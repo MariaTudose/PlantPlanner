@@ -13,8 +13,8 @@
     }
 
     &.select-mode .plant-card {
-        .plant-hungry-icon.visible,
-        .plant-select-icon {
+        .plant-hungry.visible,
+        .plant-select {
             visibility: visible;
             opacity: 1;
         }
@@ -37,14 +37,10 @@
         &.selected {
             outline: 2px solid var(--accent-color);
 
-            .plant-select-icon {
-                background: var(--accent-color);
-            }
+            .plant-select { background: var(--accent-color) }
         }
 
-        &:hover {
-            filter: brightness(1);
-        }
+        &:hover { filter: brightness(1) }
 
         &:hover::before,
         &.selected::before {
@@ -54,35 +50,36 @@
             right: 0;
             bottom: 0;
             left: 0;
-            background: var(--dark-overlay);
+            background: var(--dgitark-overlay);
 
         }
 
-        .plant-select-icon {
+        .plant-indicator {
+            position: absolute;
+            right: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            line-height: 1.75rem;
+            margin: .4rem;
+            border-radius: 50%;
+            font-size: small;
+            background: var(--plant-indicator);
+            padding: 0 .4em;
+        }
+
+        .appearing-indicator {
             visibility: hidden;
             opacity: 0;
             will-change: visibility, opacity, background-color, outline;
             transition: all .1s;
-            border-radius: 50%;
-            position: absolute;
+        }
+
+        .plant-select { 
+            background: transparent;
             padding: .2rem;
-            left: .4rem;
-            top: .4rem;
+            right: auto;
         }
-
-        .plant-interval,
-        .plant-hungry-icon,
-        .plant-select-icon {
-            width: 1.75rem;
-            height: 1.75rem;
-            line-height: 1.75rem;
-        }
-
-        .plant-hungry-icon { 
-            visibility: hidden;
-            opacity: 0;
-            top: 2rem
-        }
+        .plant-hungry { top: 2rem }
 
         .plant-name-container {
             display: flex;
@@ -104,19 +101,6 @@
             overflow: hidden;
             padding: .3rem;
         }
-
-        .plant-interval,
-        .plant-hungry-icon {
-            font-size: small;
-            position: absolute;
-            word-break: break-all;
-            background: rgba(0, 0, 0, 0.75);
-            border-radius: 1rem;
-            margin: .4rem;
-            padding: 0 .4em;
-            right: 0;
-        }
-
     }
 }
 
