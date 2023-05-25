@@ -35,10 +35,10 @@ const ActionPopup = ({ visible, selectedPlants, selectMode }: ActionPopupProps) 
         if (fertilize) {
             const fetrilizeActions = selectedPlants.map(plant => ({
                 plantId: plant.id,
-                action: ActionType.FERTILIZE,
+                action: ActionType.FERTILIZER,
                 date: currentDate,
             }));
-            actionBody.concat(fetrilizeActions);
+            actionBody.push(...fetrilizeActions);
         }
 
         updatePlants(plantBody).then(updatedPlants => {

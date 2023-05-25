@@ -77,7 +77,7 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
             const actionBody = [{ plantId: plant.id, action: ActionType.WATER, date: new Date() }];
             if (fertilize) {
                 plantBody.lastFertilizingDate = new Date();
-                actionBody.push({ plantId: plant.id, action: ActionType.FERTILIZE, date: new Date() });
+                actionBody.push({ plantId: plant.id, action: ActionType.FERTILIZER, date: new Date() });
             }
             updatePlant(plant.id, plantBody).then(updatedPlant => {
                 updatePlants(updatedPlant);

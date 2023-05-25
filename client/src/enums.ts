@@ -1,6 +1,6 @@
 export enum ActionType {
     WATER = 'water',
-    FERTILIZE = 'fertilize',
+    FERTILIZER = 'fertilizer',
 }
 
 export enum SelectMode {
