@@ -73,11 +73,15 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
     const onWater = (e: FormEvent, fertilize: boolean = false) => {
         e.preventDefault();
         if (plant) {
-            const plantBody: Partial<Plant> = { nextWateringDate: addDays(waterOnDate, Number(interval)) };
-            const actionBody = [{ plantId: plant.id, action: ActionType.WATER, date: new Date() }];
+            const plantBody: Partial<Plant> = {
+                lastWateringDate: waterOnDate,
+                nextWateringDate: addDays(waterOnDate, Number(interval)),
+                lastFertilizingDate: fertilize ? waterOnDate : plant.lastFertilizingDate,
+            };
+            const actionBody = [{ plantId: plant.id, action: ActionType.WATER, date: waterOnDate }];
             if (fertilize) {
-                plantBody.lastFertilizingDate = new Date();
-                actionBody.push({ plantId: plant.id, action: ActionType.FERTILIZER, date: new Date() });
+                plantBody.lastFertilizingDate = waterOnDate;
+                actionBody.push({ plantId: plant.id, action: ActionType.FERTILIZER, date: waterOnDate });
             }
             updatePlant(plant.id, plantBody).then(updatedPlant => {
                 updatePlants(updatedPlant);
