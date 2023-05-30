@@ -5,6 +5,10 @@ type Action = {
     action: ActionType;
 };
 
+type RawAction = Action & {
+    date: string;
+};
+
 type Plant = {
     id: string;
     name: string;

@@ -55,13 +55,17 @@ app.put('/api/plants', (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get('/api/actions/:plantId', (req: Request, res: Response, next: NextFunction) => {
-    Action.find({ plantId: req.params.plantId, action: 'water' })
+    Action.find({ plantId: req.params.plantId })
         .then(actions => res.json(actions))
         .catch(error => next(error));
 });
 
 app.post('/api/actions', (req: Request, res: Response, next: NextFunction) => {
     // TODO: update plant dates
+    req.body.forEach((action: IAction) => {
+        action._id = crypto.randomUUID();
+    });
+
     Action.insertMany(req.body)
         .then(actions => {
             res.json(actions);
