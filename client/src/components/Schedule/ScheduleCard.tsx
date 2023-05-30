@@ -71,7 +71,12 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCard
                 selectPlant={selectedDay === day ? selectPlant : null}
                 selectedPlants={selectedPlants}
             />
-            <ActionPopup visible={selectedDay === day} selectedPlants={selectedPlants} selectMode={selectMode} />
+            <ActionPopup
+                visible={selectedDay === day}
+                selectedPlants={selectedPlants}
+                setSelectedPlants={setSelectedPlants}
+                selectMode={selectMode}
+            />
         </section>
     );
 };

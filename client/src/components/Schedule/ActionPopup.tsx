@@ -11,10 +11,11 @@ import { PlantContextProps, PlantContext } from '../App';
 interface ActionPopupProps {
     visible: boolean;
     selectedPlants: Array<Plant>;
+    setSelectedPlants: (plants: Array<Plant>) => void;
     selectMode: SelectMode | null;
 }
 
-const ActionPopup = ({ visible, selectedPlants, selectMode }: ActionPopupProps) => {
+const ActionPopup = ({ visible, selectedPlants, setSelectedPlants, selectMode }: ActionPopupProps) => {
     const { setPlants } = useContext(PlantContext) as PlantContextProps;
 
     const waterPlants = (fertilize: boolean) => {
@@ -44,6 +45,7 @@ const ActionPopup = ({ visible, selectedPlants, selectMode }: ActionPopupProps) 
         updatePlants(plantBody).then(updatedPlants => {
             setPlants(updatedPlants);
             createActions(actionBody);
+            setSelectedPlants([]);
         });
     };
 
