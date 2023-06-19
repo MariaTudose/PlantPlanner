@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-interface IAction {
+export interface IAction {
     _id: string;
     plantId: string;
     action: string;

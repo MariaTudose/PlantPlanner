@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import Plant, { IPlant } from './models/plant';
-import Action from './models/action';
+import Action, { IAction } from './models/action';
 import middleware from './utils/middleware';
 
 dotenv.config();
