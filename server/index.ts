@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import crypto from 'crypto';
 import Plant, { IPlant } from './models/plant';
 import Action, { IAction } from './models/action';
 import middleware from './utils/middleware';
