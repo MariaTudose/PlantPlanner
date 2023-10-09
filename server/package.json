@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.ts",
     "scripts": {
-        "start": "tsc && node build/index.js",
-        "dev": "nodemon index.ts"
+        "start": "nodemon index.ts",
+        "build": "tsc && node build/index.js"
     },
     "author": "Maria Tudose",
     "license": "ISC",
