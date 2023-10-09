@@ -119,7 +119,7 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
                     <div className="plant-pic-overlay">
                         <div>
                             <h1>{plant?.name}</h1>
-                            <i>{plant?.userEnteredPlantType}</i>
+                            <i>{plant?.species}</i>
                         </div>
                         <div className="water-dropdown">
                             <button

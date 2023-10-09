@@ -20,6 +20,7 @@ type Plant = {
     nextWateringDate: Date;
     lastFertilizingDate: Date | null;
     userEnteredPlantType: string;
+    species: string;
 };
 
 type RawPlant = Plant & {
