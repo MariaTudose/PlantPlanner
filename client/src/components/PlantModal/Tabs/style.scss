@@ -1,0 +1,62 @@
+
+.tab-container {
+    width: 100%;
+    display: flex;
+    box-shadow: var(--box-shadow-light);
+
+    .tab {
+        flex: 1;
+        padding: .5em;
+    }
+
+    .tab.active {
+        border-bottom: 1px solid var(--accent-color);
+    }
+}
+
+.plant-info,
+.activity-panel {
+    display: none;
+}
+
+.plant-info.active {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1.5rem 1rem 1rem;
+
+    .add-button {
+        margin-right: .5rem;
+        padding: 0 .3em;
+    }
+
+    .info-title { font-weight: 600 }
+    .info-value { float: right }
+
+    .plant-actions {
+        padding: 0 1rem;
+        text-align: center;
+    }
+
+    label {
+        display: block;
+    }
+
+    input {
+        border: 1px solid var(--accent-color);
+        border-radius: 5px;
+        background-color: white;
+        width: 9rem;
+    }
+
+    .interval-input { width: 2.6rem }
+
+    .add-button,
+    .confirm-button {
+        background-color: var(--accent-color);
+        border-radius: 3rem;
+    }
+
+    .add-button { margin-right: .75em }
+    .confirm-button { margin-top: .5em }
+}

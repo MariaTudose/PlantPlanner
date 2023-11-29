@@ -47,11 +47,11 @@
         border-radius: 1rem;
         max-width: 100%;
         max-height: 100%;
-        padding-bottom: 2em;
         transform: scale(.3);
         transition: transform .2s ease-out;
         will-change: scale;
         margin: auto;
+        height: 45rem;
 
         .plant-pic-container {
             position: relative;
@@ -164,27 +164,6 @@
             }
         }
 
-        .plant-info {
-            display: flex;
-            flex-direction: column;
-            gap: .5rem;
-            padding: 1.5rem 1rem 1rem;
-
-            .add-button {
-                margin-right: .5rem;
-                padding: 0 .3em;
-            }
-
-            .info-title { font-weight: 600 }
-
-            .info-value { float: right }
-        }
-
-        .plant-actions {
-            padding: 0 1rem;
-            text-align: center;
-        }
-
         label {
             display: block;
         }
@@ -196,14 +175,6 @@
             width: 9rem;
         }
 
-        .interval-input { width: 2.6rem }
-
-        .add-button,
-        .confirm-button {
-            background-color: var(--accent-color);
-            border-radius: 3rem;
-            margin-right: .75em;
-        }
     }
 
 }
