@@ -94,11 +94,9 @@ const InfoTabPanel = ({
                 <span className="info-title">Prev. intervals</span>
                 <span className="info-value">{intervals.slice(0, 8).join(', ')}</span>
             </div>
-            <div className="plant-actions">
-                <button className="confirm-button" type="submit">
-                    Confirm
-                </button>
-            </div>
+            <button className="confirm-button" type="submit">
+                Confirm
+            </button>
         </form>
     );
 };

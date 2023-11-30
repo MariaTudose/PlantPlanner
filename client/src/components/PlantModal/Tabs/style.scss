@@ -22,7 +22,8 @@
 .plant-info.active {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    height: 100%;
+    gap: .75rem;
     padding: 1rem;
 
     .add-button {
@@ -32,11 +33,6 @@
 
     .info-title { font-weight: 600 }
     .info-value { float: right }
-
-    .plant-actions {
-        padding: 0 1rem;
-        text-align: center;
-    }
 
     label {
         display: block;
@@ -58,7 +54,10 @@
     }
 
     .add-button { margin-right: .75em }
-    .confirm-button { margin-top: .5em }
+    .confirm-button { 
+        margin: auto;
+        padding: .2rem 1rem;
+    }
 }
 
 .activity-panel.active {

@@ -52,7 +52,7 @@
         transition: transform .2s ease-out;
         will-change: scale;
         margin: auto;
-        height: 45rem;
+        height: 47rem;
 
         .plant-pic-container {
             position: relative;
@@ -178,4 +178,10 @@
 
     }
 
+}
+
+@media (max-width: 27rem) {
+    #plant-modal .modal-content{ 
+        height: 43rem;
+    }
 }
