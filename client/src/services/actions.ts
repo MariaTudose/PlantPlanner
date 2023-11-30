@@ -18,3 +18,9 @@ export const createActions = (actions: Array<Omit<Action, 'id'>>) => {
 
     return request.then(response => response.data);
 };
+
+export const deleteAction = (id: string): Promise<Array<Action>> => {
+    const request = axios.delete(`${baseUrl}/${id}`);
+
+    return request.then(response => response.data);
+};

@@ -16,9 +16,13 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
     });
 
     Action.insertMany(req.body)
-        .then(actions => {
-            res.json(actions);
-        })
+        .then(actions => res.json(actions))
+        .catch(error => next(error));
+});
+
+router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
+    Action.deleteOne({ _id: req.params.id })
+        .then(response => res.json(response))
         .catch(error => next(error));
 });
 
