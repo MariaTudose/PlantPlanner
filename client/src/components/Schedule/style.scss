@@ -97,15 +97,12 @@
     }
 
     @media (min-width: 50rem) {
-        .plant-card {
-            flex: 0 1 calc(25% - 1em);
-        }
+        .plant-card { flex: 0 1 calc(25% - 1em); }
     }
 
     @media (max-width: 28rem) {
-        .schedule-card {
-            padding: .5em;
-        }
+        .title { padding-left: .5em; }
+        .schedule-card { padding: .5em; }
     }
 
 
