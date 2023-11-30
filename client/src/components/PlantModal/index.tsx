@@ -5,7 +5,7 @@ import { ActionType } from '../../enums';
 import { useDelay } from '../../hooks/useDelay';
 import { useScroll } from '../../hooks/useScroll';
 import { updatePlant } from '../../services/plants';
-import { createActions } from '../../services/actions';
+import { createActions, getActions } from '../../services/actions';
 
 import { ReactComponent as ChevronLeft } from '../../static/chevron_left.svg';
 import { ReactComponent as ChevronRight } from '../../static/chevron_right.svg';
@@ -17,8 +17,10 @@ import PlantPic from '../PlantGrid/PlantPic';
 
 import Tabs from './Tabs';
 import InfoTabPanel from './Tabs/InfoTabPanel';
+import ActivityTabPanel from './Tabs/ActivityTabPanel';
 
 import './style.scss';
+import { sortActions } from './utils';
 
 interface PlantModalProps {
     plantIndex: number;
@@ -35,6 +37,7 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
     const [waterOnDate, setWaterOnDate] = useState(new Date());
     const [activeTab, setActiveTab] = useState(0);
     const [modalOpen, setModalOpen] = useState(false);
+    const [pastActions, setPastActions] = useState<Action[]>([]);
 
     const closeModal = () => {
         setModalOpen(false);
@@ -52,6 +55,7 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
         if (plant) {
             setNextWateringDate(plant.nextWateringDate);
             setModalOpen(true);
+            getActions(plant.id).then(actions => setPastActions(sortActions(actions)));
         }
     }, [plant]);
 
@@ -138,19 +142,23 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
                     </div>
                 </div>
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-                {plant ? (
-                    <InfoTabPanel
-                        active={activeTab === 0}
-                        plant={plant}
-                        closeModal={closeModal}
-                        updatePlants={updatePlants}
-                        nextWateringDate={nextWateringDate}
-                        setNextWateringDate={setNextWateringDate}
-                    />
-                ) : (
-                    <></>
+                {plant && (
+                    <>
+                        <InfoTabPanel
+                            active={activeTab === 0}
+                            plant={plant}
+                            closeModal={closeModal}
+                            updatePlants={updatePlants}
+                            nextWateringDate={nextWateringDate}
+                            setNextWateringDate={setNextWateringDate}
+                        />
+                        <ActivityTabPanel
+                            active={activeTab === 1}
+                            pastActions={pastActions}
+                            setPastActions={setPastActions}
+                        />
+                    </>
                 )}
-                {/* ActivityTabPanel */}
             </div>
         </div>
     );

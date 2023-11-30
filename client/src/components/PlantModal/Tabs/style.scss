@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
-    padding: 1.5rem 1rem 1rem;
+    padding: 1rem;
 
     .add-button {
         margin-right: .5rem;
@@ -59,4 +59,37 @@
 
     .add-button { margin-right: .75em }
     .confirm-button { margin-top: .5em }
+}
+
+.activity-panel.active {
+    display: flex;
+    overflow: scroll;
+
+    .action-list { 
+        width: 100%;
+        padding: .25rem 1rem;
+        list-style: none;
+    }
+
+    .action-item {
+        display: flex;
+        padding: .75rem 0;
+        line-height: 2.5rem;
+
+        .action-icon {
+            height: 2.5rem;
+            width: 2.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .action-name { 
+            text-transform: capitalize;
+            flex: 1;
+        }
+
+        .delete-button {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+    }
 }

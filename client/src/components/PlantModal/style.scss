@@ -42,7 +42,8 @@
     }
 
     .modal-content {
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
         background-color: var(--card-background);
         border-radius: 1rem;
         max-width: 100%;
