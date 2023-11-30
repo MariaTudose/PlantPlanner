@@ -33,50 +33,52 @@ const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCard
 
     const toggleSelectMode = (newSelectMode: SelectMode) => {
         setSelectedDay(day);
-        setSelectedPlants([]);
         setSelectMode(newSelectMode);
         if (selectedDay === day && newSelectMode === selectMode) setSelectedDay(null);
     };
 
     return (
-        <section className="schedule-card">
-            <header className="card-header">
-                <h3 className="title">{title}</h3>
-                {selectedDay === day && (
-                    <button onClick={toggleAllPlants} className="select-button">
-                        Select all
+        <section className="">
+            <h2 className="title">{title}</h2>
+            <div className="schedule-card">
+                <header className="card-header">
+                    <h3 className="plant-amount">{plants.length} plants</h3>
+                    {selectedDay === day && (
+                        <button onClick={toggleAllPlants} className="select-button">
+                            Select all
+                        </button>
+                    )}
+                    <button
+                        aria-label="date-mode"
+                        onClick={() => toggleSelectMode(SelectMode.DATE)}
+                        className={`date-button ${
+                            selectMode === SelectMode.DATE && selectedDay === day ? 'selecting' : ''
+                        }`}
+                    >
+                        <Today />
                     </button>
-                )}
-                <button
-                    aria-label="date-mode"
-                    onClick={() => toggleSelectMode(SelectMode.DATE)}
-                    className={`date-button ${
-                        selectMode === SelectMode.DATE && selectedDay === day ? 'selecting' : ''
-                    }`}
-                >
-                    <Today />
-                </button>
-                <button
-                    aria-label="water-mode"
-                    onClick={() => toggleSelectMode(SelectMode.WATER)}
-                    className={`water-button ${
-                        selectMode === SelectMode.WATER && selectedDay === day ? 'selecting' : ''
-                    }`}
-                >
-                    <Drink />
-                </button>
-            </header>
-            <PlantGrid
-                plants={plants}
-                selectPlant={selectedDay === day ? selectPlant : null}
-                selectedPlants={selectedPlants}
-            />
-            <ActionPopup
-                visible={selectedDay === day}
-                selectedPlants={selectedPlants}
-                setSelectedPlants={setSelectedPlants}
-                selectMode={selectMode}
-            />
+                    <button
+                        aria-label="water-mode"
+                        onClick={() => toggleSelectMode(SelectMode.WATER)}
+                        className={`water-button ${
+                            selectMode === SelectMode.WATER && selectedDay === day ? 'selecting' : ''
+                        }`}
+                    >
+                        <Drink />
+                    </button>
+                </header>
+                <PlantGrid
+                    plants={plants}
+                    selectPlant={selectedDay === day ? selectPlant : null}
+                    selectedPlants={selectedPlants}
+                />
+                <ActionPopup
+                    visible={selectedDay === day}
+                    selectedPlants={selectedPlants}
+                    setSelectedPlants={setSelectedPlants}
+                    selectMode={selectMode}
+                />
+            </div>
         </section>
     );
 };

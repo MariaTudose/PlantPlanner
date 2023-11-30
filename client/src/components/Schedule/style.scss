@@ -7,6 +7,16 @@
     margin: 0 auto;
     padding-bottom: 6.5rem;
 
+    .title {
+        padding: 2rem 1.5rem .75rem;
+    }
+
+    .schedule-card {
+        background: var(--card-background);
+        padding: 1em;
+        border-radius: .5em;
+    }
+
     .card-header {
         display: flex;
         align-items: center;
@@ -32,16 +42,9 @@
 
         }
 
-        .title {
+        .plant-amount {
             flex: 1;
         }
-    }
-
-    .schedule-card {
-        background: var(--card-background);
-        margin: 1em 0;
-        padding: 1em;
-        border-radius: .5em;
     }
 
     .action-popup {
