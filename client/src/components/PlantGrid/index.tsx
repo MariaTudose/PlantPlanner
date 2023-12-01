@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { differenceInDays } from 'date-fns';
 
-import { ReactComponent as Done } from '../../static/done.svg';
-import { ReactComponent as Hungry } from '../../static/hungry.svg';
+import Done from '../../static/done.svg?react';
+import Hungry from '../../static/hungry.svg?react';
 import { PlantContext, PlantContextProps } from '../App';
 import PlantPic from './PlantPic';
 
@@ -41,7 +41,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
             {Object.entries(groupedPlants).map(([location, plants]) => (
                 <section className="plant-grid" key={location}>
                     <h4 className="location">{location}</h4>
-                    {plants.map((plant, i) => (
+                    {plants.map(plant => (
                         <button
                             key={plant.id}
                             className={`plant-card 

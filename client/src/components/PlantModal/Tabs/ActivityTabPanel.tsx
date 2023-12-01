@@ -1,8 +1,8 @@
 import { format } from 'date-fns';
 import { deleteAction } from '../../../services/actions';
-import { ReactComponent as Drop } from '../../../static/drop.svg';
-import { ReactComponent as Fertilizer } from '../../../static/fertilizer.svg';
-import { ReactComponent as Close } from '../../../static/close.svg';
+import Drop from '../../../static/drop.svg?react';
+import Fertilizer from '../../../static/fertilizer.svg?react';
+import Close from '../../../static/close.svg?react';
 
 import './style.scss';
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { parseISO } from 'date-fns';
-const baseUrl = process.env.REACT_APP_API_URL + 'api/plants';
+const baseUrl = import.meta.env.VITE_APP_API_URL + 'api/plants';
 
 const convertPlantDates = (plant: RawPlant): Plant => ({
     ...plant,

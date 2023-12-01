@@ -7,11 +7,11 @@ import { useScroll } from '../../hooks/useScroll';
 import { updatePlant } from '../../services/plants';
 import { createActions, getActions } from '../../services/actions';
 
-import { ReactComponent as ChevronLeft } from '../../static/chevron_left.svg';
-import { ReactComponent as ChevronRight } from '../../static/chevron_right.svg';
-import { ReactComponent as Fertilizer } from '../../static/fertilizer.svg';
-import { ReactComponent as Close } from '../../static/close.svg';
-import { ReactComponent as Drop } from '../../static/drop.svg';
+import ChevronLeft from '../../static/chevron_left.svg?react';
+import ChevronRight from '../../static/chevron_right.svg?react';
+import Fertilizer from '../../static/fertilizer.svg?react';
+import Close from '../../static/close.svg?react';
+import Drop from '../../static/drop.svg?react';
 import { PlantContextProps, PlantContext } from '../App';
 import PlantPic from '../PlantGrid/PlantPic';
 
@@ -73,7 +73,7 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
         }
     };
 
-    const onWater = (e: FormEvent, fertilize: boolean = false) => {
+    const onWater = (e: FormEvent, fertilize = false) => {
         e.preventDefault();
         if (plant) {
             const plantBody: Partial<Plant> = {

@@ -1,8 +1,8 @@
 import { add } from 'date-fns';
 import { useContext } from 'react';
-import { ReactComponent as Drop } from '../../static/drop.svg';
-import { ReactComponent as Today } from '../../static/today.svg';
-import { ReactComponent as Fertilizer } from '../../static/fertilizer.svg';
+import Drop from '../../static/drop.svg?react';
+import Today from '../../static/today.svg?react';
+import Fertilizer from '../../static/fertilizer.svg?react';
 import { createActions } from '../../services/actions';
 import { updatePlants } from '../../services/plants';
 import { ActionType, SelectMode } from '../../enums';

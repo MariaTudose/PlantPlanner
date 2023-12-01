@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { format, addMonths, subMonths, setDate, isEqual, isSameMonth } from 'date-fns';
 
-import { ReactComponent as ChevronLeft } from '../../static/chevron_left.svg';
-import { ReactComponent as ChevronRight } from '../../static/chevron_right.svg';
+import ChevronLeft from '../../static/chevron_left.svg?react';
+import ChevronRight from '../../static/chevron_right.svg?react';
 
 import { weekDays, getFirstWeekday, getLastWeekday, getDaysInMonth, getPlantsToday, getIntervals } from './utils';
 import PlantGrid from '../PlantGrid';

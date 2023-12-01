@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ReactComponent as Today } from '../../static/today.svg';
-import { ReactComponent as Drink } from '../../static/drink.svg';
+import Today from '../../static/today.svg?react';
+import Drink from '../../static/drink.svg?react';
 import PlantGrid from '../PlantGrid';
 import ActionPopup from './ActionPopup';
 import { SelectMode } from '../../enums';

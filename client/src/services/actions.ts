@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { parseISO } from 'date-fns';
-const baseUrl = process.env.REACT_APP_API_URL + 'api/actions';
+const baseUrl = import.meta.env.VITE_APP_API_URL + 'api/actions';
 
 const convertActionDates = (action: RawAction): Action => ({
     ...action,
