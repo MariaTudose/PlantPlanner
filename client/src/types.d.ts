@@ -15,7 +15,7 @@ type Plant = {
     interval: string;
     location: string;
     wateringDiff?: number;
-    pictures: Array<string>;
+    pictures: string[];
     lastWateringDate: Date;
     nextWateringDate: Date;
     lastFertilizingDate: Date | null;

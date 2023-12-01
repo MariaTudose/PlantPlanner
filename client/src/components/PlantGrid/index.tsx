@@ -12,9 +12,9 @@ const JUNE = 5;
 const AUGUST = 7;
 
 interface PlantGridProps {
-    plants: Array<Plant>;
+    plants: Plant[];
     selectPlant?: ((plant: Plant) => void) | null;
-    selectedPlants?: Array<Plant>;
+    selectedPlants?: Plant[];
 }
 
 const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
@@ -23,7 +23,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
         a.location === b.location ? a.name.localeCompare(b.name) : a.location.localeCompare(b.location)
     );
 
-    const groupedPlants = sortedPlants.reduce((res: Record<string, Array<Plant>>, plant) => {
+    const groupedPlants = sortedPlants.reduce((res: Record<string, Plant[]>, plant) => {
         (res[plant.location] = res[plant.location] || []).push(plant);
         return res;
     }, {});

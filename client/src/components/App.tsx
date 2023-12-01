@@ -9,17 +9,17 @@ import { getAllPlants } from '../services/plants';
 import PlantModal from './PlantModal';
 
 export interface PlantContextProps {
-    plants: Array<Plant>;
-    setPlants: (plants: Array<Plant>) => void;
-    openModal: (modalPlants: Array<Plant>, plant: number) => void;
+    plants: Plant[];
+    setPlants: (plants: Plant[]) => void;
+    openModal: (modalPlants: Plant[], plant: number) => void;
 }
 
 export const PlantContext = createContext<PlantContextProps | null>(null);
 
 const App = () => {
-    const [plants, setPlants] = useState<Array<Plant>>([]);
+    const [plants, setPlants] = useState<Plant[]>([]);
     const [plantIndex, setPlantIndex] = useState<number>(0);
-    const [modalPlants, setModalPlants] = useState<Array<Plant>>([]);
+    const [modalPlants, setModalPlants] = useState<Plant[]>([]);
 
     useEffect(() => {
         getAllPlants().then(res => {
@@ -27,7 +27,7 @@ const App = () => {
         });
     }, []);
 
-    const openModal = (modalPlants: Array<Plant>, plantIndex: number) => {
+    const openModal = (modalPlants: Plant[], plantIndex: number) => {
         setPlantIndex(plantIndex);
         setModalPlants(modalPlants);
         document.body.classList.add('has-modal');

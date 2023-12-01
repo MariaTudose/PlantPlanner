@@ -5,7 +5,7 @@ import placeholder from './placeholder.webp';
 import './style.scss';
 
 const PlantPic = ({ plant }: { plant: Plant | null }) => {
-    const [erroredPlants, setErroredPlants] = useState<Array<string>>([]);
+    const [erroredPlants, setErroredPlants] = useState<string[]>([]);
 
     const setPlantError = (id: string) => {
         setErroredPlants(erroredPlants.concat(id));

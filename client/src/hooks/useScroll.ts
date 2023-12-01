@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
 
 export const useScroll = (
-    sortedPlants: Array<Plant>,
+    sortedPlants: Plant[],
     plantIndex: number,
     closeModal: () => void,
     setSelectedPlant: (plant: number) => void

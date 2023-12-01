@@ -7,13 +7,13 @@ import { SelectMode } from '../../enums';
 
 interface ScheduleCardProps {
     day: number;
-    plants: Array<Plant>;
+    plants: Plant[];
     selectedDay: number | null;
     setSelectedDay: (value: number | null) => void;
 }
 
 const ScheduleCard = ({ day, plants, selectedDay, setSelectedDay }: ScheduleCardProps) => {
-    const [selectedPlants, setSelectedPlants] = useState<Array<Plant>>([]);
+    const [selectedPlants, setSelectedPlants] = useState<Plant[]>([]);
     const [selectMode, setSelectMode] = useState<SelectMode | null>(null);
 
     const dayForm = day < -1 || day > 1 ? 'days' : 'day';

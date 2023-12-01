@@ -1,7 +1,7 @@
 import { differenceInCalendarDays } from 'date-fns';
 import { ActionType } from '../../enums';
 
-export const weightedAvg = (intervals: Array<number>) =>
+export const weightedAvg = (intervals: number[]) =>
     [0.7, 0.2, 0.1].reduce((acc, weight, i) => {
         return acc + intervals[i] * weight;
     }, 0) || 0;
@@ -12,7 +12,7 @@ export const sortActions = (actions: Action[]) =>
 export const parseActions = (actions: Action[]) => {
     const waterActions = sortActions(actions).filter(action => action.action === ActionType.WATER);
 
-    const intervals: Array<number> = [];
+    const intervals: number[] = [];
     waterActions.reduce((a, b) => {
         intervals.push(differenceInCalendarDays(new Date(a.date), new Date(b.date)));
         return b;

@@ -6,7 +6,7 @@ export interface IPlant {
     notes: string;
     interval: number;
     location: string;
-    pictures: Array<string>;
+    pictures: string[];
     isDeleted: boolean;
     updatedAt: String;
     createdAt: String;

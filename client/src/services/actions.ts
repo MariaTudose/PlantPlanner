@@ -7,19 +7,19 @@ const convertActionDates = (action: RawAction): Action => ({
     date: parseISO(action.date),
 });
 
-export const getActions = (plantId: string): Promise<Array<Action>> => {
+export const getActions = (plantId: string): Promise<Action[]> => {
     const request = axios.get(`${baseUrl}/${plantId}`);
 
     return request.then(response => response.data.map((action: RawAction) => convertActionDates(action)));
 };
 
-export const createActions = (actions: Array<Omit<Action, 'id'>>) => {
+export const createActions = (actions: Omit<Action, 'id'>[]) => {
     const request = axios.post(baseUrl, actions);
 
     return request.then(response => response.data);
 };
 
-export const deleteAction = (id: string): Promise<Array<Action>> => {
+export const deleteAction = (id: string): Promise<Action[]> => {
     const request = axios.delete(`${baseUrl}/${id}`);
 
     return request.then(response => response.data);

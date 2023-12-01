@@ -11,7 +11,7 @@ import { PlantContext, PlantContextProps } from '../App';
 import './style.scss';
 
 interface CalendarDayProps {
-    plants: Array<Plant>;
+    plants: Plant[];
     date: Date;
     selectedDate: Date;
     setSelectedDate: (value: Date) => void;
@@ -38,7 +38,7 @@ const CalendarDay = ({ date, selectedDate, setSelectedDate, plants }: CalendarDa
 };
 
 interface CalendarProps {
-    plants: Array<Plant>;
+    plants: Plant[];
     selectedDate: Date;
     setSelectedDate: (value: Date) => void;
 }
@@ -83,7 +83,7 @@ const Calendar = ({ plants, selectedDate, setSelectedDate }: CalendarProps) => {
 };
 
 interface CalendarAsideProps {
-    plants: Array<Plant>;
+    plants: Plant[];
     selectedDate: Date;
 }
 
@@ -99,7 +99,7 @@ const CalendarAside = ({ plants, selectedDate }: CalendarAsideProps) => (
 const CalendarView = () => {
     const { plants } = useContext(PlantContext) as PlantContextProps;
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [visiblePlants, setVisiblePlants] = useState<Array<Plant>>([]);
+    const [visiblePlants, setVisiblePlants] = useState<Plant[]>([]);
 
     useEffect(() => {
         setVisiblePlants(getPlantsToday(plants, selectedDate));

@@ -9,8 +9,8 @@ const convertPlantDates = (plant: RawPlant): Plant => ({
     lastFertilizingDate: plant.lastFertilizingDate ? parseISO(plant.lastFertilizingDate) : null,
 });
 
-export const getAllPlants = (): Promise<Array<Plant>> => {
-    const request = axios.get<Array<RawPlant>>(baseUrl);
+export const getAllPlants = (): Promise<Plant[]> => {
+    const request = axios.get<RawPlant[]>(baseUrl);
 
     return request.then(response => response.data.map((plant: RawPlant) => convertPlantDates(plant)));
 };
@@ -21,8 +21,8 @@ export const updatePlant = (id: string, plant: Partial<Plant>) => {
     return request.then(response => convertPlantDates(response.data));
 };
 
-export const updatePlants = (plants: Array<Partial<Plant>>) => {
-    const request = axios.put<Array<RawPlant>>(baseUrl, plants);
+export const updatePlants = (plants: Partial<Plant>[]) => {
+    const request = axios.put<RawPlant[]>(baseUrl, plants);
 
     return request.then(response => response.data.map((plant: RawPlant) => convertPlantDates(plant)));
 };

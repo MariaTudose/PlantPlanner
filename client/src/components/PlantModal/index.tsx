@@ -25,7 +25,7 @@ import { sortActions } from './utils';
 interface PlantModalProps {
     plantIndex: number;
     setPlantIndex: (plant: number) => void;
-    modalPlants: Array<Plant>;
+    modalPlants: Plant[];
 }
 
 const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps) => {

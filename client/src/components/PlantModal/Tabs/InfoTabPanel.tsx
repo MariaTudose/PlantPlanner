@@ -24,7 +24,7 @@ const InfoTabPanel = ({
 }: InfoTabPanelProps) => {
     const [interval, setInterval] = useState(plant.interval);
     const [location, setLocation] = useState(plant.location);
-    const [intervals, setIntervals] = useState<Array<number>>([]);
+    const [intervals, setIntervals] = useState<number[]>([]);
 
     useEffect(() => {
         setInterval(plant.interval);

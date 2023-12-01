@@ -10,8 +10,8 @@ import { PlantContextProps, PlantContext } from '../App';
 
 interface ActionPopupProps {
     visible: boolean;
-    selectedPlants: Array<Plant>;
-    setSelectedPlants: (plants: Array<Plant>) => void;
+    selectedPlants: Plant[];
+    setSelectedPlants: (plants: Plant[]) => void;
     selectMode: SelectMode | null;
 }
 
