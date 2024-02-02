@@ -40,6 +40,22 @@
             "purpose": "maskable"
         }
     ],
+    "screenshots": [
+        {
+            "src": "screenshot1.png",
+            "sizes": "820x1820",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Homescreen of PlantPlanner on mobile"
+        },
+        {
+            "src": "screenshot2.png",
+            "sizes": "2060x1540",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Homescreen of PlantPlanner on desktop"
+        }
+    ],
     "id": "/",
     "start_url": "/",
     "display": "standalone",
