@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { Plant } from '../types';
 
 export const useDelay = (
     modalOpen: boolean,

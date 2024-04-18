@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useSwipeable } from 'react-swipeable';
+import { Plant } from '../types';
 
 export const useScroll = (
     sortedPlants: Plant[],

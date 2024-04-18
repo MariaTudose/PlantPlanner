@@ -3,6 +3,8 @@ import { differenceInDays } from 'date-fns';
 
 import Done from '../../static/done.svg?react';
 import Hungry from '../../static/hungry.svg?react';
+import { Plant } from '../../types';
+
 import { PlantContext, PlantContextProps } from '../App';
 import PlantPic from './PlantPic';
 

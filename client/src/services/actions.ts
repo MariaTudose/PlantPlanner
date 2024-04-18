@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { parseISO } from 'date-fns';
+import { RawAction, Action } from '../types';
+
 const baseUrl = import.meta.env.VITE_APP_API_URL + 'api/actions';
 
 const convertActionDates = (action: RawAction): Action => ({

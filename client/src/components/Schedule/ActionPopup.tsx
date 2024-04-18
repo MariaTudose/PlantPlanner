@@ -1,11 +1,14 @@
 import { add } from 'date-fns';
 import { useContext } from 'react';
+
 import Drop from '../../static/drop.svg?react';
 import Today from '../../static/today.svg?react';
 import Fertilizer from '../../static/fertilizer.svg?react';
 import { createActions } from '../../services/actions';
 import { updatePlants } from '../../services/plants';
 import { ActionType, SelectMode } from '../../enums';
+import { Plant } from '../../types';
+
 import { PlantContextProps, PlantContext } from '../App';
 
 interface ActionPopupProps {

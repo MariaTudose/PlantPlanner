@@ -2,6 +2,8 @@ import { addDays, format } from 'date-fns';
 import { useState, useEffect, FormEvent } from 'react';
 import { getActions } from '../../../services/actions';
 import { updatePlant } from '../../../services/plants';
+import { Plant } from '../../../types';
+
 import { parseActions, weightedAvg } from '../utils';
 import './style.scss';
 

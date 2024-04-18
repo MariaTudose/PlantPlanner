@@ -1,11 +1,13 @@
 import { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import { getAllPlants } from '../services/plants';
+import { Plant } from '../types';
+
 import PlantGrid from './PlantGrid';
 import Schedule from './Schedule';
 import Calendar from './Calendar';
 import Navigation from './Navigation';
-import { getAllPlants } from '../services/plants';
 import PlantModal from './PlantModal';
 
 export interface PlantContextProps {

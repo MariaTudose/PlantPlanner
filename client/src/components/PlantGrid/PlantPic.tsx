@@ -1,4 +1,7 @@
 import { useState } from 'react';
+
+import { Plant } from '../../types';
+
 import { getPhotoSrc } from './utils';
 import placeholder from './placeholder.webp';
 

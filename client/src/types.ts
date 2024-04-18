@@ -1,15 +1,17 @@
-type Action = {
+import { ActionType } from './enums';
+
+export type Action = {
     id: string;
     plantId: string;
     date: Date;
     action: ActionType;
 };
 
-type RawAction = Action & {
+export type RawAction = Action & {
     date: string;
 };
 
-type Plant = {
+export type Plant = {
     id: string;
     name: string;
     interval: string;
@@ -23,7 +25,7 @@ type Plant = {
     species: string;
 };
 
-type RawPlant = Plant & {
+export type RawPlant = Plant & {
     lastWateringDate: string;
     nextWateringDate: string;
     lastFertilizingDate: string;

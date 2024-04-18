@@ -12,15 +12,17 @@ import ChevronRight from '../../static/chevron_right.svg?react';
 import Fertilizer from '../../static/fertilizer.svg?react';
 import Close from '../../static/close.svg?react';
 import Drop from '../../static/drop.svg?react';
+import { Plant, Action } from '../../types';
+
 import { PlantContextProps, PlantContext } from '../App';
 import PlantPic from '../PlantGrid/PlantPic';
 
 import Tabs from './Tabs';
 import InfoTabPanel from './Tabs/InfoTabPanel';
 import ActivityTabPanel from './Tabs/ActivityTabPanel';
+import { sortActions } from './utils';
 
 import './style.scss';
-import { sortActions } from './utils';
 
 interface PlantModalProps {
     plantIndex: number;

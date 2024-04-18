@@ -1,4 +1,5 @@
 import { differenceInCalendarDays } from 'date-fns';
+import { Plant } from '../../types';
 
 export const groupPlants = (plants: Plant[]) =>
     plants

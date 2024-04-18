@@ -3,6 +3,7 @@ import { deleteAction } from '../../../services/actions';
 import Drop from '../../../static/drop.svg?react';
 import Fertilizer from '../../../static/fertilizer.svg?react';
 import Close from '../../../static/close.svg?react';
+import { Action } from '../../../types';
 
 import './style.scss';
 

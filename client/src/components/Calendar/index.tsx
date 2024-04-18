@@ -3,6 +3,7 @@ import { format, addMonths, subMonths, setDate, isEqual, isSameMonth } from 'dat
 
 import ChevronLeft from '../../static/chevron_left.svg?react';
 import ChevronRight from '../../static/chevron_right.svg?react';
+import { Plant } from '../../types';
 
 import { weekDays, getFirstWeekday, getLastWeekday, getDaysInMonth, getPlantsToday, getIntervals } from './utils';
 import PlantGrid from '../PlantGrid';

@@ -1,5 +1,6 @@
 import { differenceInCalendarDays } from 'date-fns';
 import { ActionType } from '../../enums';
+import { Action } from '../../types';
 
 export const weightedAvg = (intervals: number[]) =>
     [0.7, 0.2, 0.1].reduce((acc, weight, i) => {

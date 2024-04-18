@@ -1,9 +1,12 @@
 import { useState } from 'react';
+
 import Today from '../../static/today.svg?react';
 import Drink from '../../static/drink.svg?react';
+import { SelectMode } from '../../enums';
+import { Plant } from '../../types';
+
 import PlantGrid from '../PlantGrid';
 import ActionPopup from './ActionPopup';
-import { SelectMode } from '../../enums';
 
 interface ScheduleCardProps {
     day: number;
