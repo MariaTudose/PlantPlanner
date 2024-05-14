@@ -129,8 +129,8 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
                             <div className={`water-dropdown-menu ${dropdownOpen ? 'open' : ''}`}>
                                 <input
                                     name="water-date"
-                                    type="date"
-                                    value={format(waterOnDate, 'yyyy-MM-dd')}
+                                    type="datetime-local"
+                                    value={format(waterOnDate, "yyyy-MM-dd'T'HH:mm")}
                                     onChange={updateDate}
                                 />
                                 <button className="menu-confirm-button" onClick={onWater}>
