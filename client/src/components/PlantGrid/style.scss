@@ -22,7 +22,7 @@
 
     .plant-card {
         position: relative;
-        flex: 0 1 calc(20% - 1em);
+        flex: 0 1 calc(14% - 1em);
         border-radius: .3rem;
         margin: .5rem;
         padding: 0;
@@ -101,6 +101,13 @@
             overflow: hidden;
             padding: .3rem;
         }
+    }
+}
+
+@media (max-width: 100rem) {
+    .plant-grid .plant-card {
+        flex: 0 1 calc(20% - 1rem);
+        font-size: small;
     }
 }
 
