@@ -33,6 +33,9 @@ export const useScroll = (
     const handleKeyDown = useCallback(
         (event: KeyboardEvent) => {
             const { key } = event;
+            if (event.target instanceof Element && event.target.matches('input')) {
+                return;
+            }
             if (plantIndex) {
                 if (key === 'ArrowLeft') scrollPlant(-1);
                 else if (key === 'ArrowRight') scrollPlant(1);
