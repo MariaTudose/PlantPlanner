@@ -26,11 +26,13 @@ const InfoTabPanel = ({
 }: InfoTabPanelProps) => {
     const [interval, setInterval] = useState(plant.interval);
     const [location, setLocation] = useState(plant.location);
+    const [needsFertilizer, setNeedsFertilizer] = useState(plant.needsFertilizer);
     const [intervals, setIntervals] = useState<number[]>([]);
 
     useEffect(() => {
         setInterval(plant.interval);
         setLocation(plant.location);
+        setNeedsFertilizer(plant.needsFertilizer);
         getActions(plant.id).then(actions => {
             setIntervals(parseActions(actions));
         });
@@ -44,10 +46,11 @@ const InfoTabPanel = ({
 
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        const body = { nextWateringDate, interval, location };
+        const body = { nextWateringDate, interval, location, needsFertilizer };
         updatePlant(plant.id, body).then(updatedPlant => updatePlants(updatedPlant));
         closeModal();
     };
+
     return (
         <form className={`plant-info ${active ? 'active' : ''}`} onSubmit={onSubmit}>
             <label>
@@ -87,6 +90,17 @@ const InfoTabPanel = ({
                     value={interval}
                     onChange={e => setInterval(e.target.value)}
                 />
+            </label>
+            <label className="checkbox-container">
+                <span className="info-title">Needs fertilizer</span>
+                <input
+                    className="info-value checkbox"
+                    type="checkbox"
+                    name="fertilizer"
+                    checked={needsFertilizer}
+                    onChange={e => setNeedsFertilizer(e.target.checked)}
+                />
+                <span className="custom-checkbox" />
             </label>
             <div>
                 <span className="info-title">Average interval (days)</span>

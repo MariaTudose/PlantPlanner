@@ -10,9 +10,6 @@ import PlantPic from './PlantPic';
 
 import './style.scss';
 
-const JUNE = 5;
-const AUGUST = 7;
-
 interface PlantGridProps {
     plants: Plant[];
     selectPlant?: ((plant: Plant) => void) | null;
@@ -31,8 +28,6 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
     }, {});
 
     const isHungry = (lastFertilizingDate: Date | null) => {
-        const currentMonth = new Date().getMonth();
-        if (JUNE > currentMonth || currentMonth > AUGUST) return false;
         if (!lastFertilizingDate) return true;
         const diff = differenceInDays(new Date(), lastFertilizingDate);
         return diff >= 28;
@@ -59,7 +54,7 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
                             </span>
                             <Hungry
                                 className={`plant-indicator plant-hungry appearing-indicator ${
-                                    isHungry(plant.lastFertilizingDate) ? 'visible' : ''
+                                    plant.needsFertilizer && isHungry(plant.lastFertilizingDate) ? 'visible' : ''
                                 }`}
                             />
                             <PlantPic plant={plant} />

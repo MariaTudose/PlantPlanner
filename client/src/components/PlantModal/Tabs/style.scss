@@ -46,6 +46,52 @@
     }
 
     .interval-input { width: 2.6rem }
+    
+    .checkbox-container {
+        position: relative;
+
+        // Hide default checkbox
+        .checkbox {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        // Style custom checkbox
+        .custom-checkbox {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            background-color: var(--white);
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+        }
+        
+        // Style custom checkmark
+        .custom-checkbox:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            opacity: 0;
+            width: 9px;
+            height: 15px;
+            transition: all .1s;
+            border: solid var(--accent-color);
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+        }
+        
+        .checkbox:checked ~ .custom-checkbox:after {
+            opacity: 1;
+        }
+    }
 
     .add-button,
     .confirm-button {
@@ -54,7 +100,7 @@
     }
 
     .add-button { margin-right: .75em }
-    .confirm-button { 
+    .confirm-button {
         margin: auto;
         padding: .2rem 1rem;
     }
@@ -64,7 +110,7 @@
     display: flex;
     overflow: scroll;
 
-    .action-list { 
+    .action-list {
         width: 100%;
         padding: .25rem 1rem;
         list-style: none;
@@ -76,14 +122,14 @@
         line-height: 2.5rem;
 
         .action-icon {
-            height: 2.5rem;
             width: 2.5rem;
+            height: 2.5rem;
             margin-right: 0.5rem;
         }
 
-        .action-name { 
-            text-transform: capitalize;
+        .action-name {
             flex: 1;
+            text-transform: capitalize;
         }
 
         .delete-button {

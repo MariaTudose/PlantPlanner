@@ -52,7 +52,7 @@
         transition: transform .2s ease-out;
         will-change: scale;
         margin: auto;
-        height: 47rem;
+        height: 47.5rem;
 
         .plant-pic-container {
             position: relative;
@@ -140,6 +140,13 @@
                     border-radius: .3rem;
                     padding: .3rem;
                     transition: visibility .2s, opacity .2s;
+                    
+                    input {
+                        border: 1px solid var(--accent-color);
+                        border-radius: 5px;
+                        background-color: white;
+                        width: 11rem;
+                    }
                 }
 
                 .water-dropdown-menu.open {
@@ -164,20 +171,7 @@
                 }
             }
         }
-
-        label {
-            display: block;
-        }
-
-        input {
-            border: 1px solid var(--accent-color);
-            border-radius: 5px;
-            background-color: white;
-            width: 9rem;
-        }
-
     }
-
 }
 
 @media (max-width: 27rem) {
