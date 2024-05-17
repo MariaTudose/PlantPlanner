@@ -1,7 +1,7 @@
 import { addDays, format } from 'date-fns';
 import { useState, useEffect, FormEvent } from 'react';
 import { getActions } from '../../../services/actions';
-import { updatePlant } from '../../../services/plants';
+import { getPlantLocations, updatePlant } from '../../../services/plants';
 import { Plant } from '../../../types';
 
 import { parseActions, weightedAvg } from '../utils';
@@ -9,7 +9,7 @@ import './style.scss';
 
 interface InfoTabPanelProps {
     active: boolean;
-    plant: Plant;
+    plant: Plant | null;
     closeModal: () => void;
     updatePlants: (plant: Plant) => void;
     nextWateringDate: Date;
@@ -24,18 +24,27 @@ const InfoTabPanel = ({
     nextWateringDate,
     setNextWateringDate,
 }: InfoTabPanelProps) => {
-    const [interval, setInterval] = useState(plant.interval);
-    const [location, setLocation] = useState(plant.location);
-    const [needsFertilizer, setNeedsFertilizer] = useState(plant.needsFertilizer);
+    const [interval, setInterval] = useState('');
+    const [location, setLocation] = useState('');
+    const [needsFertilizer, setNeedsFertilizer] = useState(false);
     const [intervals, setIntervals] = useState<number[]>([]);
+    const [locations, setLocations] = useState([]);
 
     useEffect(() => {
-        setInterval(plant.interval);
-        setLocation(plant.location);
-        setNeedsFertilizer(plant.needsFertilizer);
-        getActions(plant.id).then(actions => {
-            setIntervals(parseActions(actions));
+        getPlantLocations().then(res => {
+            if (res) setLocations(res);
         });
+    }, []);
+
+    useEffect(() => {
+        if (plant) {
+            setInterval(plant.interval);
+            setLocation(plant.location);
+            setNeedsFertilizer(plant.needsFertilizer);
+            getActions(plant.id).then(actions => {
+                setIntervals(parseActions(actions));
+            });
+        }
     }, [plant]);
 
     const updateDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +84,17 @@ const InfoTabPanel = ({
                 <span className="info-title">Location</span>
                 <input
                     className="info-value location-input"
-                    type="string"
+                    type="search"
                     name="location"
                     value={location}
                     onChange={e => setLocation(e.target.value)}
-                ></input>
+                    list="locations"
+                />
+                <datalist id="locations">
+                    {locations.map(location => (
+                        <option key={location}>{location}</option>
+                    ))}
+                </datalist>
             </label>
             <label>
                 <span className="info-title">Interval (days)</span>

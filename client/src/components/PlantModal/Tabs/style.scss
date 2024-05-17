@@ -44,7 +44,11 @@
         background-color: white;
         width: 9rem;
     }
-
+    
+    input::-webkit-calendar-picker-indicator {
+        display: none !important;
+    }
+ 
     .interval-input { width: 2.6rem }
     
     .checkbox-container {

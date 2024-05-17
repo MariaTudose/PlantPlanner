@@ -144,23 +144,15 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
                     </div>
                 </div>
                 <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-                {plant && (
-                    <>
-                        <InfoTabPanel
-                            active={activeTab === 0}
-                            plant={plant}
-                            closeModal={closeModal}
-                            updatePlants={updatePlants}
-                            nextWateringDate={nextWateringDate}
-                            setNextWateringDate={setNextWateringDate}
-                        />
-                        <ActivityTabPanel
-                            active={activeTab === 1}
-                            pastActions={pastActions}
-                            setPastActions={setPastActions}
-                        />
-                    </>
-                )}
+                <InfoTabPanel
+                    active={activeTab === 0}
+                    plant={plant}
+                    closeModal={closeModal}
+                    updatePlants={updatePlants}
+                    nextWateringDate={nextWateringDate}
+                    setNextWateringDate={setNextWateringDate}
+                />
+                <ActivityTabPanel active={activeTab === 1} pastActions={pastActions} setPastActions={setPastActions} />
             </div>
         </div>
     );

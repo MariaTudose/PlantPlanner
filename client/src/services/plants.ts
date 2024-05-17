@@ -28,3 +28,9 @@ export const updatePlants = (plants: Partial<Plant>[]) => {
 
     return request.then(response => response.data.map((plant: RawPlant) => convertPlantDates(plant)));
 };
+
+export const getPlantLocations = () => {
+    const request = axios.get<string[]>(`${baseUrl}/locations`);
+
+    return request.then(response => response.data);
+};

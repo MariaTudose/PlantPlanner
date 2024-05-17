@@ -9,6 +9,15 @@ router.get('/', (req: Request, res: Response) => {
     });
 });
 
+router.get('/locations', async (_, res: Response, next: NextFunction) => {
+    Plant.find({ isDeleted: false })
+        .distinct('location')
+        .then(locations => {
+            res.json(locations);
+        })
+        .catch(error => next(error));
+});
+
 router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
     Plant.findByIdAndUpdate(req.params.id, req.body, { new: true })
         .then(updatedPlant => {
