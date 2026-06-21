@@ -153,6 +153,33 @@
             }
         }
 
+        .picture-label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .picture-input-wrapper {
+                float: none;
+
+                input[type='file'] {
+                    width: auto;
+                    border: none;
+                    background: none;
+                    padding: 0;
+                    cursor: pointer;
+                    color: var(--text-color);
+                }
+            }
+
+            .picture-preview {
+                width: 100%;
+                max-height: 12rem;
+                object-fit: cover;
+                border-radius: 0.4rem;
+                border: 1px solid var(--accent-color);
+            }
+        }
+
         .confirm-button {
             align-self: flex-end;
             margin-top: 0.5rem;

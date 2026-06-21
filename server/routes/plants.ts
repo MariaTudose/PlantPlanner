@@ -14,6 +14,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         userEnteredPlantType,
         acquisitionDate,
         needsFertilizer,
+        pictures,
     } = req.body;
     const last = new Date(lastWateringDate);
     const nextWatering = new Date(last);
@@ -25,7 +26,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         name,
         interval,
         location,
-        pictures: [],
+        pictures: Array.isArray(pictures) ? pictures : [],
         isDeleted: false,
         createdAt: now,
         updatedAt: now,
