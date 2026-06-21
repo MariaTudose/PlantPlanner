@@ -40,3 +40,5 @@ export const createPlant = (plant: Partial<Plant>) => {
 
     return request.then(response => convertPlantDates(response.data));
 };
+
+export const deletePlant = (id: string) => axios.delete(`${baseUrl}/${id}`);

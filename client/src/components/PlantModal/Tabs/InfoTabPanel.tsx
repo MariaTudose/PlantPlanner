@@ -28,7 +28,7 @@ const InfoTabPanel = ({
     const [location, setLocation] = useState('');
     const [needsFertilizer, setNeedsFertilizer] = useState(false);
     const [intervals, setIntervals] = useState<number[]>([]);
-    const [locations, setLocations] = useState([]);
+    const [locations, setLocations] = useState<string[]>([]);
 
     useEffect(() => {
         getPlantLocations().then(res => {
@@ -56,7 +56,7 @@ const InfoTabPanel = ({
     const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         const body = { nextWateringDate, interval, location, needsFertilizer };
-        updatePlant(plant.id, body).then(updatedPlant => updatePlants(updatedPlant));
+        updatePlant(plant!.id, body).then(updatedPlant => updatePlants(updatedPlant));
         closeModal();
     };
 

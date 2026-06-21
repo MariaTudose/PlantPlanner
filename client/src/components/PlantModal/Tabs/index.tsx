@@ -14,8 +14,11 @@ const Tabs = ({ activeTab, setActiveTab }: TabsProps) => {
             <button type="button" className={`tab ${activeTab === 1 ? 'active' : ''}`} onClick={() => setActiveTab(1)}>
                 Activity
             </button>
-            {/*
             <button type="button" className={`tab ${activeTab === 2 ? 'active' : ''}`} onClick={() => setActiveTab(2)}>
+                Edit
+            </button>
+            {/*
+            <button type="button" className={`tab ${activeTab === 3 ? 'active' : ''}`} onClick={() => setActiveTab(3)}>
                 Photos?
             </button>
             */}

@@ -68,6 +68,12 @@ router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
         .catch(error => next(error));
 });
 
+router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
+    Plant.findByIdAndUpdate(req.params.id, { isDeleted: true }, { new: true })
+        .then(() => res.status(204).end())
+        .catch(error => next(error));
+});
+
 router.put('/', (req: Request, res: Response, next: NextFunction) => {
     const bulkOps = req.body.map((plant: IPlant & { id: string }) => ({
         updateOne: {

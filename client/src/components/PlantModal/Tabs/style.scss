@@ -1,4 +1,3 @@
-
 .tab-container {
     width: 100%;
     display: flex;
@@ -6,7 +5,7 @@
 
     .tab {
         flex: 1;
-        padding: .5em;
+        padding: 0.5em;
     }
 
     .tab.active {
@@ -23,16 +22,20 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    gap: .75rem;
+    gap: 0.75rem;
     padding: 1rem;
 
     .add-button {
-        margin-right: .5rem;
-        padding: 0 .3em;
+        margin-right: 0.5rem;
+        padding: 0 0.3em;
     }
 
-    .info-title { font-weight: 600 }
-    .info-value { float: right }
+    .info-title {
+        font-weight: 600;
+    }
+    .info-value {
+        float: right;
+    }
 
     label {
         display: block;
@@ -44,13 +47,15 @@
         background-color: white;
         width: 9rem;
     }
-    
+
     input::-webkit-calendar-picker-indicator {
         display: none !important;
     }
- 
-    .interval-input { width: 2.6rem }
-    
+
+    .interval-input {
+        width: 2.6rem;
+    }
+
     .checkbox-container {
         position: relative;
 
@@ -61,7 +66,7 @@
             width: 0;
             height: 0;
         }
-        
+
         // Style custom checkbox
         .custom-checkbox {
             position: absolute;
@@ -73,10 +78,10 @@
             border: 1px solid var(--accent-color);
             border-radius: 5px;
         }
-        
+
         // Style custom checkmark
         .custom-checkbox:after {
-            content: "";
+            content: '';
             display: block;
             position: absolute;
             top: 4px;
@@ -84,14 +89,14 @@
             opacity: 0;
             width: 9px;
             height: 15px;
-            transition: all .1s;
+            transition: all 0.1s;
             border: solid var(--accent-color);
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
             -webkit-transform: rotate(45deg);
             -ms-transform: rotate(45deg);
         }
-        
+
         .checkbox:checked ~ .custom-checkbox:after {
             opacity: 1;
         }
@@ -103,10 +108,105 @@
         border-radius: 3rem;
     }
 
-    .add-button { margin-right: .75em }
+    .add-button {
+        margin-right: 0.75em;
+    }
     .confirm-button {
         margin: auto;
-        padding: .2rem 1rem;
+        padding: 0.2rem 1rem;
+    }
+
+    .picture-label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+
+        .picture-input-wrapper {
+            float: none;
+
+            input[type='file'] {
+                width: auto;
+                border: none;
+                background: none;
+                padding: 0;
+                cursor: pointer;
+                color: var(--text-color);
+            }
+        }
+
+        .picture-preview {
+            width: 100%;
+            max-height: 8rem;
+            object-fit: cover;
+            border-radius: 0.4rem;
+            border: 1px solid var(--accent-color);
+        }
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+
+        .delete-button {
+            font-size: 0.8rem;
+            color: #e07070;
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .confirm-button {
+            margin: 0;
+        }
+
+        .delete-confirm {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+
+            .cancel-delete-button {
+                background: var(--menu-background);
+                border-radius: 3rem;
+                padding: 0.15rem 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .confirm-delete-button {
+                background: #e07070;
+                border-radius: 3rem;
+                padding: 0.15rem 0.6rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: var(--white);
+            }
+        }
+    }
+
+    .edit-details-toggle {
+        background: none;
+        border-radius: 0;
+        padding: 0;
+        font-size: 0.8rem;
+        color: var(--calendar-secondary);
+        text-align: left;
+        border-top: 1px solid var(--menu-background);
+        padding-top: 0.5rem;
+    }
+
+    .edit-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease-out;
+
+        &.open {
+            max-height: 40rem;
+        }
     }
 }
 
@@ -116,13 +216,13 @@
 
     .action-list {
         width: 100%;
-        padding: .25rem 1rem;
+        padding: 0.25rem 1rem;
         list-style: none;
     }
 
     .action-item {
         display: flex;
-        padding: .75rem 0;
+        padding: 0.75rem 0;
         line-height: 2.5rem;
 
         .action-icon {

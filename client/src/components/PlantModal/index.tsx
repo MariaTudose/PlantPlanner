@@ -20,6 +20,7 @@ import PlantPic from '../PlantGrid/PlantPic';
 import Tabs from './Tabs';
 import InfoTabPanel from './Tabs/InfoTabPanel';
 import ActivityTabPanel from './Tabs/ActivityTabPanel';
+import EditTabPanel from './Tabs/EditTabPanel';
 import { sortActions } from './utils';
 
 import './style.scss';
@@ -63,6 +64,11 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
 
     const updatePlants = (updatedPlant: Plant) => {
         setPlants(plants.map(plant => (plant.id === updatedPlant.id ? updatedPlant : plant)));
+    };
+
+    const onDeletePlant = () => {
+        setPlants(plants.filter(p => p.id !== plant?.id));
+        closeModal();
     };
 
     const updateDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,6 +159,13 @@ const PlantModal = ({ plantIndex, setPlantIndex, modalPlants }: PlantModalProps)
                     setNextWateringDate={setNextWateringDate}
                 />
                 <ActivityTabPanel active={activeTab === 1} pastActions={pastActions} setPastActions={setPastActions} />
+                <EditTabPanel
+                    active={activeTab === 2}
+                    plant={plant}
+                    closeModal={closeModal}
+                    updatePlants={updatePlants}
+                    onDeletePlant={onDeletePlant}
+                />
             </div>
         </div>
     );
