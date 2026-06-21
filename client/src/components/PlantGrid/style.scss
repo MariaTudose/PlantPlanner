@@ -1,6 +1,16 @@
 .plant-grid-container {
     height: 100%;
 
+    .add-plant-button {
+        display: block;
+        margin: 0.75rem 0.5rem;
+        padding: 0.35rem 0.9rem;
+        background-color: var(--accent-color);
+        border-radius: 0.4rem;
+        font-weight: 600;
+        color: var(--background-color);
+    }
+
     .plant-grid {
         display: flex;
         flex-flow: row wrap;
@@ -8,7 +18,7 @@
 
     .location {
         width: 100%;
-        margin: .5rem;
+        margin: 0.5rem;
         border-bottom: 1px solid var(--white);
     }
 
@@ -23,13 +33,13 @@
     .plant-card {
         position: relative;
         flex: 0 1 calc(14% - 1em);
-        border-radius: .3rem;
-        margin: .5rem;
+        border-radius: 0.3rem;
+        margin: 0.5rem;
         padding: 0;
         overflow: hidden;
         cursor: pointer;
 
-        >img {
+        > img {
             border-radius: inherit;
             height: auto;
         }
@@ -37,10 +47,14 @@
         &.selected {
             outline: 2px solid var(--accent-color);
 
-            .plant-select { background: var(--accent-color) }
+            .plant-select {
+                background: var(--accent-color);
+            }
         }
 
-        &:hover { filter: brightness(1) }
+        &:hover {
+            filter: brightness(1);
+        }
 
         &:hover::before,
         &.selected::before {
@@ -50,8 +64,7 @@
             right: 0;
             bottom: 0;
             left: 0;
-            background: var(--dgitark-overlay);
-
+            background: var(--dark-overlay);
         }
 
         .plant-indicator {
@@ -60,26 +73,28 @@
             width: 1.75rem;
             height: 1.75rem;
             line-height: 1.75rem;
-            margin: .4rem;
+            margin: 0.4rem;
             border-radius: 50%;
             font-size: small;
             background: var(--plant-indicator);
-            padding: 0 .4em;
+            padding: 0 0.4em;
         }
 
         .appearing-indicator {
             visibility: hidden;
             opacity: 0;
             will-change: visibility, opacity, background-color, outline;
-            transition: all .1s;
+            transition: all 0.1s;
         }
 
-        .plant-select { 
+        .plant-select {
             background: transparent;
-            padding: .2rem;
+            padding: 0.2rem;
             right: auto;
         }
-        .plant-hungry { top: 2rem }
+        .plant-hungry {
+            top: 2rem;
+        }
 
         .plant-name-container {
             display: flex;
@@ -96,10 +111,11 @@
             display: -webkit-box;
             word-break: break-all;
             text-overflow: ellipsis;
+            line-clamp: 1;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            padding: .3rem;
+            padding: 0.3rem;
         }
     }
 }
@@ -120,6 +136,6 @@
 
 @media (max-width: 23.5rem) {
     .plant-grid .plant-card {
-        flex: 0 1 calc(50% - 1rem)
+        flex: 0 1 calc(50% - 1rem);
     }
 }

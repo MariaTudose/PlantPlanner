@@ -9,6 +9,7 @@ import Schedule from './Schedule';
 import Calendar from './Calendar';
 import Navigation from './Navigation';
 import PlantModal from './PlantModal';
+import AddPlantModal from './AddPlantModal';
 
 export interface PlantContextProps {
     plants: Plant[];
@@ -22,6 +23,7 @@ const App = () => {
     const [plants, setPlants] = useState<Plant[]>([]);
     const [plantIndex, setPlantIndex] = useState<number>(0);
     const [modalPlants, setModalPlants] = useState<Plant[]>([]);
+    const [addPlantOpen, setAddPlantOpen] = useState(false);
 
     useEffect(() => {
         getAllPlants().then(res => {
@@ -40,11 +42,15 @@ const App = () => {
             <Navigation />
             <PlantContext.Provider value={{ plants, setPlants, openModal }}>
                 <Routes>
-                    <Route path="/plants" element={<PlantGrid plants={plants} />}></Route>
+                    <Route
+                        path="/plants"
+                        element={<PlantGrid plants={plants} onAddPlant={() => setAddPlantOpen(true)} />}
+                    ></Route>
                     <Route path="/" element={<Schedule />}></Route>
                     <Route path="/calendar" element={<Calendar />}></Route>
                 </Routes>
                 <PlantModal plantIndex={plantIndex} setPlantIndex={setPlantIndex} modalPlants={modalPlants} />
+                <AddPlantModal isOpen={addPlantOpen} onClose={() => setAddPlantOpen(false)} />
             </PlantContext.Provider>
         </BrowserRouter>
     );

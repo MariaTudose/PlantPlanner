@@ -1,0 +1,166 @@
+#add-plant-modal {
+    visibility: hidden;
+    position: fixed;
+    display: flex;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    filter: opacity(0);
+    z-index: 999;
+    padding: 2em 1em;
+    transition:
+        visibility 0.2s ease-out,
+        filter 0.2s ease-out;
+
+    &.visible {
+        visibility: visible;
+        filter: opacity(1);
+
+        .modal-content {
+            transform: scale(1);
+        }
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--modal-backdrop);
+        backdrop-filter: blur(2px);
+
+        &:hover {
+            filter: brightness(1);
+        }
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--card-background);
+        border-radius: 1rem;
+        max-width: 28rem;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        transform: scale(0.3);
+        transition: transform 0.2s ease-out;
+        will-change: scale;
+        margin: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.25rem 0.5rem;
+
+        h2 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .close-button {
+            padding: 0;
+            border-radius: 50%;
+            background-color: var(--modal-backdrop);
+
+            svg {
+                height: 1.75rem;
+                width: auto;
+            }
+        }
+    }
+
+    .add-plant-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem 1.5rem;
+
+        .info-title {
+            font-weight: 600;
+        }
+
+        .info-value {
+            float: right;
+        }
+
+        label {
+            display: block;
+        }
+
+        input[type='text'],
+        input[type='search'],
+        input[type='date'] {
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            background-color: white;
+            width: 9rem;
+        }
+
+        input[type='date']::-webkit-calendar-picker-indicator {
+            display: none !important;
+        }
+
+        .interval-input {
+            width: 2.6rem;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .checkbox-container {
+            position: relative;
+
+            .checkbox {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .custom-checkbox {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 1.75rem;
+                height: 1.75rem;
+                background-color: var(--white);
+                border: 1px solid var(--accent-color);
+                border-radius: 5px;
+            }
+
+            .custom-checkbox:after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0.55rem;
+                top: 0.25rem;
+                width: 0.45rem;
+                height: 0.8rem;
+                border: solid var(--accent-color);
+                border-width: 0 3px 3px 0;
+                transform: rotate(45deg);
+                display: none;
+            }
+
+            input:checked ~ .custom-checkbox:after {
+                display: block;
+            }
+        }
+
+        .confirm-button {
+            align-self: flex-end;
+            margin-top: 0.5rem;
+            padding: 0.4rem 1.2rem;
+            background-color: var(--accent-color);
+            border-radius: 0.4rem;
+            font-weight: 600;
+            color: var(--background-color);
+        }
+    }
+}

@@ -34,3 +34,9 @@ export const getPlantLocations = () => {
 
     return request.then(response => response.data);
 };
+
+export const createPlant = (plant: Partial<Plant>) => {
+    const request = axios.post<RawPlant>(baseUrl, plant);
+
+    return request.then(response => convertPlantDates(response.data));
+};

@@ -1,7 +1,48 @@
+import { randomUUID } from 'crypto';
 import express, { Request, Response, NextFunction } from 'express';
 import Plant, { IPlant } from '../models/plant';
 
 const router = express.Router();
+
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    const {
+        name,
+        interval,
+        location,
+        lastWateringDate,
+        species,
+        userEnteredPlantType,
+        acquisitionDate,
+        needsFertilizer,
+    } = req.body;
+    const last = new Date(lastWateringDate);
+    const nextWatering = new Date(last);
+    nextWatering.setDate(nextWatering.getDate() + Number(interval));
+    const now = new Date().toISOString();
+
+    const plant = new Plant({
+        _id: randomUUID(),
+        name,
+        interval,
+        location,
+        pictures: [],
+        isDeleted: false,
+        createdAt: now,
+        updatedAt: now,
+        acquisitionDate: acquisitionDate || now,
+        lastWateringDate: last.toISOString(),
+        nextWateringDate: nextWatering.toISOString(),
+        lastFertilizingDate: null,
+        userEnteredPlantType: userEnteredPlantType || '',
+        species: species || '',
+        needsFertilizer: needsFertilizer || false,
+    });
+
+    plant
+        .save()
+        .then(savedPlant => res.status(201).json(savedPlant))
+        .catch(error => next(error));
+});
 
 router.get('/', (req: Request, res: Response) => {
     Plant.find({ isDeleted: false }).then(plants => {

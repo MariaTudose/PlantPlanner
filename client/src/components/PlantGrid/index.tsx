@@ -14,12 +14,13 @@ interface PlantGridProps {
     plants: Plant[];
     selectPlant?: ((plant: Plant) => void) | null;
     selectedPlants?: Plant[];
+    onAddPlant?: () => void;
 }
 
-const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
+const PlantGrid = ({ plants, selectPlant, selectedPlants, onAddPlant }: PlantGridProps) => {
     const { openModal } = useContext(PlantContext) as PlantContextProps;
     const sortedPlants = [...plants].sort((a, b) =>
-        a.location === b.location ? a.name.localeCompare(b.name) : a.location.localeCompare(b.location)
+        a.location === b.location ? a.name.localeCompare(b.name) : a.location.localeCompare(b.location),
     );
 
     const groupedPlants = sortedPlants.reduce((res: Record<string, Plant[]>, plant) => {
@@ -35,6 +36,11 @@ const PlantGrid = ({ plants, selectPlant, selectedPlants }: PlantGridProps) => {
 
     return (
         <div className={`plant-grid-container ${selectPlant ? 'select-mode' : ''} `}>
+            {onAddPlant && (
+                <button className="add-plant-button" type="button" onClick={onAddPlant}>
+                    + Add Plant
+                </button>
+            )}
             {Object.entries(groupedPlants).map(([location, plants]) => (
                 <section className="plant-grid" key={location}>
                     <h4 className="location">{location}</h4>
